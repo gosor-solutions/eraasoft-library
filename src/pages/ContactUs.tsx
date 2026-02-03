@@ -1,4 +1,4 @@
-import { ContactUsForm } from "@/components/features/ContactUsForm";
+import { ContactUsForm } from "@/components/features/contactUs/ContactUsForm";
 import { Banner } from "@/components/shared/Banner";
 
 export function ContactUs() {
