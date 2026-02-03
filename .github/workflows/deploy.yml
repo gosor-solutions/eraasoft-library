@@ -3,12 +3,12 @@ name: Deploy to Hostinger Staging
 on:
   push:
     branches:
-      - staging
+      - englivision
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: staging # Specifies the environment to use
+    environment: englivision # Specifies the environment to use
 
     steps:
       - name: Checkout code
