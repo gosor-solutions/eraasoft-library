@@ -35,5 +35,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-          TARGET: /home/u928593761/domains/engli-vision.com/public_html/library
-          SOURCE: ./dist
+          TARGET: /home/u928593761/domains/engli-vision.com/public_html/library/
+          SOURCE: ./dist/
