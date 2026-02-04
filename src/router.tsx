@@ -1,8 +1,10 @@
 import { createBrowserRouter } from "react-router";
 import { ContactUs } from "./pages/ContactUs";
+import { CoursesPage } from "./pages/Courses/CoursesPage";
+import { SingleCoursePage } from "./pages/Courses/SingleCoursePage";
 import { Home } from "./pages/Home";
 import { MainLayout } from "./pages/Layouts/MainLayout";
-import { CoursesPage } from "./pages/CoursesPage";
+import { ProfilePage } from "./pages/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -19,7 +21,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "courses",
-        element: <CoursesPage />,
+        children: [
+          {
+            index: true,
+            element: <CoursesPage />,
+          },
+          {
+            path: ":id",
+            element: <SingleCoursePage />,
+          },
+        ],
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
       },
     ],
   },

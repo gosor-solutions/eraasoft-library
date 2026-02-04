@@ -1,9 +1,12 @@
 import { Button } from "@/components/shared/button";
+import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
 import { CiDollar } from "react-icons/ci";
 import { TfiStatsUp } from "react-icons/tfi";
 
 // Course Card Component
 export function CourseCard({ course }: { course: any }) {
+  const navigate = useCustomNavigation();
+
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Course Image */}
@@ -44,7 +47,12 @@ export function CourseCard({ course }: { course: any }) {
           </div>
         </div>
 
-        <Button className="w-full">Details</Button>
+        <Button
+          onClick={() => navigate(`/courses/${course.id}`)}
+          className="w-full"
+        >
+          Details
+        </Button>
       </div>
     </div>
   );
