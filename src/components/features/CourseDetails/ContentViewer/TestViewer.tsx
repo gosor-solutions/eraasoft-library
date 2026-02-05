@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Clock, ChevronLeft } from "lucide-react";
+import { Clock } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const TestViewer = ({ testData }) => {
   const [started, setStarted] = useState(false);
