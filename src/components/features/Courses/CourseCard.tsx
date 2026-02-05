@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/shared/button";
 import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
 import { CiDollar } from "react-icons/ci";
@@ -33,7 +35,7 @@ export function CourseCard({ course }: { course: any }) {
           {/* Level */}
           <div className="flex items-center gap-2 text-gray-700">
             <div className="bg-brand-secondary rounded-full flex items-center justify-center">
-              <TfiStatsUp className="m-1.5 size-5" />
+              <TfiStatsUp className="m-1.5 size-5 text-2xl text-brand-primary" />
             </div>
             <span className="text-sm font-medium">{course.level}</span>
           </div>
@@ -41,7 +43,7 @@ export function CourseCard({ course }: { course: any }) {
           {/* Price */}
           <div className="flex items-center gap-2 text-gray-700">
             <div className="bg-brand-secondary rounded-full flex items-center justify-center">
-              <CiDollar className="m-1 size-6" />
+              <CiDollar className="m-1 size-6 text-2xl text-brand-primary" />
             </div>
             <span className="text-sm font-medium">{course.price}</span>
           </div>

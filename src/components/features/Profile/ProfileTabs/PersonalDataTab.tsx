@@ -1,3 +1,5 @@
+"use client";
+
 import { TextInput } from "@/components/shared/Inputs/TextInput";
 import { Button } from "@/components/shared/button";
 import { Label } from "@/components/shared/label";
@@ -83,9 +85,7 @@ export function PersonalDataTab() {
 
         {/* Save Button */}
         <div className="flex justify-end pt-4">
-          <Button size="lg">
-            Save Changes
-          </Button>
+          <Button size="lg">Save Changes</Button>
         </div>
       </form>
     </div>

@@ -35,7 +35,7 @@ export function CourseHeroSection() {
             {/* Level */}
             <div className="flex items-center gap-3">
               <div className="bg-brand-secondary rounded-lg flex items-center justify-center">
-                <TfiStatsUp className="m-2 p-1 size-9" />
+                <TfiStatsUp className="m-2 p-1 size-9 text-2xl text-brand-primary" />
               </div>
               <span className="text-sm font-medium md:text-base">
                 Level: A1
@@ -45,7 +45,7 @@ export function CourseHeroSection() {
             {/* Sessions */}
             <div className="flex items-center gap-3 ">
               <div className="bg-brand-secondary rounded-lg flex items-center justify-center">
-                <PiVideo className="m-2 p-1 size-9" />
+                <PiVideo className="m-2 p-1 size-9 text-2xl text-brand-primary" />
               </div>
               <span className="text-sm font-medium md:text-base">
                 sessions: 24
@@ -55,7 +55,7 @@ export function CourseHeroSection() {
             {/* Duration */}
             <div className="flex items-center gap-3 ">
               <div className="bg-brand-secondary rounded-lg flex items-center justify-center">
-                <LuCalendarClock className="m-2 p-1 size-9" />
+                <LuCalendarClock className="m-2 p-1 size-9 text-2xl text-brand-primary" />
               </div>{" "}
               <span className="text-sm font-medium md:text-base">8 weeks</span>
             </div>
@@ -63,7 +63,7 @@ export function CourseHeroSection() {
             {/* Price */}
             <div className="flex items-center gap-3 ">
               <div className="bg-brand-secondary rounded-lg flex items-center justify-center">
-                <CiDollar className="m-2 p-1 size-9" />
+                <CiDollar className="m-2 p-1 size-9 text-2xl text-brand-primary" />
               </div>{" "}
               <span className="text-sm font-medium md:text-base">5000 EGP</span>
             </div>
@@ -73,7 +73,7 @@ export function CourseHeroSection() {
           <button className="flex w-full items-center justify-between border-2 p-4 rounded-lg">
             <div className="flex items-center gap-3">
               <div className="bg-brand-secondary rounded-lg flex items-center justify-center">
-                <FaListCheck className="m-2 p-1 size-8" />
+                <FaListCheck className="m-2 p-1 size-8 text-2xl text-brand-primary" />
               </div>
               <span className="text-sm font-medium md:text-base">
                 Learning Plan

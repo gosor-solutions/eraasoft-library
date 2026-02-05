@@ -21,10 +21,10 @@ export function Footer() {
             exercitationem.
           </p>
           <div className="flex gap-2">
-            <FaTiktok className="bg-white rounded-sm p-1.5 size-8" />
-            <FaInstagram className="bg-white rounded-sm p-1.5 size-8" />
-            <FaFacebookF className="bg-white rounded-sm p-1.5 size-8" />
-            <FaTelegramPlane className="bg-white rounded-sm p-1.5 size-8" />
+            <FaTiktok className="bg-white rounded-sm p-1.5 size-8 text-2xl text-brand-primary" />
+            <FaInstagram className="bg-white rounded-sm p-1.5 size-8 text-2xl text-brand-primary" />
+            <FaFacebookF className="bg-white rounded-sm p-1.5 size-8 text-2xl text-brand-primary" />
+            <FaTelegramPlane className="bg-white rounded-sm p-1.5 size-8 text-2xl text-brand-primary" />
           </div>
         </div>
         <Links />

@@ -39,7 +39,7 @@ function AppContent() {
           href="#"
           className="inline-flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
         >
-          <FaGooglePlay color="white" />
+          <FaGooglePlay color="white" className="text-2xl" />
           <div className="text-left">
             <div className="text-xs">GET IT ON</div>
             <div className="text-sm font-semibold">Google Play</div>
@@ -50,7 +50,7 @@ function AppContent() {
           href="#"
           className="inline-flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
         >
-          <FaApple color="white" size={30} />
+          <FaApple color="white" size={30} className="text-2xl" />
           <div className="text-left">
             <div className="text-xs">Download on the</div>
             <div className="text-sm font-semibold">Apple Store</div>

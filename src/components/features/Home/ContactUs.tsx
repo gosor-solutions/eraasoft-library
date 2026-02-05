@@ -1,3 +1,5 @@
+"use client";
+
 import { Circle } from "@/components/shared/Circle";
 import { TextArea } from "@/components/shared/Inputs/TextArea";
 import { TextInput } from "@/components/shared/Inputs/TextInput";

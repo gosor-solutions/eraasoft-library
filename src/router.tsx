@@ -5,13 +5,11 @@ import CourseTest from "./pages/CourseTest";
 import { CoursesPage } from "./pages/Courses/CoursesPage";
 import { SingleCoursePage } from "./pages/Courses/SingleCoursePage";
 import { Home } from "./pages/Home";
-import { MainLayout } from "./pages/Layouts/MainLayout";
 import { ProfilePage } from "./pages/Profile";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
     children: [
       {
         path: "",

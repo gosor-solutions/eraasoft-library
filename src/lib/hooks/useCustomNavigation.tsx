@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router";
+import { useRouter } from "next/navigation";
 
 export function useCustomNavigation() {
-  return useNavigate();
+  const router = useRouter();
+  return router.push;
 }

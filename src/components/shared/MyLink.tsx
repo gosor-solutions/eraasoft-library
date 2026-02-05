@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import Link from "next/link";
 
 export function MyLink({
   to,
@@ -7,5 +7,5 @@ export function MyLink({
   to: string;
   children: React.ReactNode;
 }) {
-  return <Link to={to}>{children}</Link>;
+  return <Link href={to}>{children}</Link>;
 }
