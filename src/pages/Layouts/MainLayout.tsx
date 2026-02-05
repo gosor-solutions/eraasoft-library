@@ -6,7 +6,9 @@ export function MainLayout() {
   return (
     <>
       <NavBar />
-      <Outlet />
+      <div className="mt-16">
+        <Outlet />
+      </div>
       <Footer />
     </>
   );
