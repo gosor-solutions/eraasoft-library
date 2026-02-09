@@ -44,7 +44,6 @@ export const router = createBrowserRouter([
         element: <CourseDetails />,
       },
       {
-        // path: "courses/:courseId",
         path: "course-test",
         element: <CourseTest />,
       },
