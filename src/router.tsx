@@ -6,6 +6,11 @@ import { CoursesPage } from "./pages/Courses/CoursesPage";
 import { SingleCoursePage } from "./pages/Courses/SingleCoursePage";
 import { Home } from "./pages/Home";
 import { ProfilePage } from "./pages/Profile";
+import Login from "./pages/AuthPages/Login";
+import OTP from "./pages/AuthPages/OTP";
+import ForgetPassword from "./pages/AuthPages/ForgetPassword";
+import CreateNewPassword from "./pages/AuthPages/CreateNewPassword";
+import SignupForm from "./pages/AuthPages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -42,9 +47,28 @@ export const router = createBrowserRouter([
         element: <CourseDetails />,
       },
       {
-        // path: "courses/:courseId",
         path: "course-test",
         element: <CourseTest />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <SignupForm />,
+      },
+      {
+        path: "otp",
+        element: <OTP />,
+      },
+      {
+        path: "forget-password",
+        element: <ForgetPassword />,
+      },
+      {
+        path: "reset-password",
+        element: <CreateNewPassword />,
       },
     ],
   },

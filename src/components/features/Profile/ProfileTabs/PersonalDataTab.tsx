@@ -1,7 +1,7 @@
 "use client";
 
 import { TextInput } from "@/components/shared/Inputs/TextInput";
-import { Button } from "@/components/shared/button";
+import { Button } from "@/components/shared/Button";
 import { Label } from "@/components/shared/label";
 import {
   Select,

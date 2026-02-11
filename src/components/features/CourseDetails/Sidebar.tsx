@@ -1,5 +1,4 @@
-// components/Sidebar/Sidebar.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ChevronDown,
   ChevronRight,
@@ -311,29 +310,42 @@ const Sidebar = ({ onItemClick, activeItemId }) => {
           height: `calc(100vh - 80px)`,
         }}
       >
-        {courseData.sections.map((section) => (
-          <div key={section.id} className="border-b border-gray-200">
-            <button
-              onClick={() => toggleSection(section.id)}
-              className="w-full flex items-center justify-between px-6 py-4 bg-gray-100 hover:bg-gray-150 transition-colors"
-            >
-              <span className="text-sm font-medium text-gray-800">
-                {section.title}
-              </span>
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-600">
-                  {section.progress}
-                </span>
-                {expandedSections.includes(section.id) ? (
-                  <ChevronDown className="w-4 h-4 text-gray-600" />
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-gray-600" />
-                )}
-              </div>
-            </button>
+        {courseData.sections.map((section) => {
+          const isExpanded = expandedSections.includes(section.id);
 
-            {expandedSections.includes(section.id) && (
-              <div className="bg-gray-50">
+          return (
+            <div key={section.id} className="border-b border-gray-200">
+              <button
+                onClick={() => toggleSection(section.id)}
+                className="w-full flex items-center justify-between px-6 py-4 bg-gray-100 hover:bg-gray-150 transition-colors"
+              >
+                <span className="text-sm font-medium text-gray-800">
+                  {section.title}
+                </span>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-600">
+                    {section.progress}
+                  </span>
+                  <div
+                    className={`transform transition-transform duration-300 ${isExpanded ? "rotate-0" : "rotate-0"}`}
+                  >
+                    {isExpanded ? (
+                      <ChevronDown className="w-4 h-4 text-gray-600" />
+                    ) : (
+                      <ChevronRight className="w-4 h-4 text-gray-600" />
+                    )}
+                  </div>
+                </div>
+              </button>
+
+              {/* Animated Dropdown */}
+              <div
+                className={`bg-gray-50 overflow-hidden transition-all duration-300 ease-in-out ${
+                  isExpanded
+                    ? "max-h-[2000px] opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
                 {section.items.map((item) => (
                   <div
                     key={item.id}
@@ -361,9 +373,9 @@ const Sidebar = ({ onItemClick, activeItemId }) => {
                   </div>
                 ))}
               </div>
-            )}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
     </aside>
   );
