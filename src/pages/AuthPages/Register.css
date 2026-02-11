@@ -1,0 +1,35 @@
+.logo-circle {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background-color: #e9f2fb80;
+  top: -120px;
+  left: -120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 50px;
+  padding-top: 50px;
+  img {
+    width: 105px;
+  }
+}
+
+.bottom-left-circle,
+.small-circle {
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background-color: #e9f2fb80;
+  position: absolute;
+  bottom: -90px;
+  left: -90px;
+}
+
+.small-circle {
+  width: 100px;
+  height: 100px;
+  bottom: 100px;
+  left: 100px;
+  z-index: -1;
+}

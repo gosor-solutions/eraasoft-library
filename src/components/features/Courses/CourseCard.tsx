@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/button";
+import { Button } from "@/components/shared/Button";
 import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
 import { CiDollar } from "react-icons/ci";
 import { TfiStatsUp } from "react-icons/tfi";
