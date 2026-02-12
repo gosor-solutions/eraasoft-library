@@ -1,21 +1,29 @@
 "use client";
 
-import { Button } from "@/components/shared/button";
-import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
+import { Course } from "@/api/types/course";
+import { Button } from "@/components/shared/Button";
+import { MyLink } from "@/components/shared/MyLink";
+import { getRandomCourseImage } from "@/lib/utils";
+import Image from "next/image";
+import { useState } from "react";
 import { CiDollar } from "react-icons/ci";
 import { TfiStatsUp } from "react-icons/tfi";
 
 // Course Card Component
-export function CourseCard({ course }: { course: any }) {
-  const navigate = useCustomNavigation();
+export function CourseCard({ course }: { course: Course }) {
+  const randomImage = getRandomCourseImage();
+  const [image, setImage] = useState(course.image);
 
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Course Image */}
       <div className="relative">
-        <img
-          src={course.image}
-          alt={course.name}
+        <Image
+          src={image}
+          alt={course.title}
+          onError={() => setImage(randomImage)}
+          width={300}
+          height={300}
           className="w-full aspect-4/3 object-cover"
         />
       </div>
@@ -23,10 +31,10 @@ export function CourseCard({ course }: { course: any }) {
       {/* Course Content */}
       <div className="p-6">
         {/* Course Title */}
-        <h3 className="text-xl font-bold text-gray-900 mb-3">{course.name}</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-3">{course.title}</h3>
 
         {/* Course Description */}
-        <p className="text-brand-gray text-sm mb-4 line-clamp-3">
+        <p className="text-brand-gray text-sm mb-4 line-clamp-3 min-h-16">
           {course.description}
         </p>
 
@@ -45,15 +53,15 @@ export function CourseCard({ course }: { course: any }) {
             <div className="bg-brand-secondary rounded-full flex items-center justify-center">
               <CiDollar className="m-1 size-6 text-2xl text-brand-primary" />
             </div>
-            <span className="text-sm font-medium">{course.price}</span>
+            <span className="text-sm font-medium">
+              {course.price}
+              {course.currency}
+            </span>
           </div>
         </div>
 
-        <Button
-          onClick={() => navigate(`/courses/${course.id}`)}
-          className="w-full"
-        >
-          Details
+        <Button className="w-full">
+          <MyLink to={`/courses/${course.id}`}>Details</MyLink>
         </Button>
       </div>
     </div>

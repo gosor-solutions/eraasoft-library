@@ -1,5 +1,4 @@
 // components/ContentViewer/VideoPlayer.jsx
-import React from "react";
 
 const VideoPlayer = ({ videoData }) => {
   return (

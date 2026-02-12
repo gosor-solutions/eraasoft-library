@@ -1,5 +1,5 @@
 import { Button } from "@/components/shared/Button";
-import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
+import { MyLink } from "@/components/shared/MyLink";
 import { Lock } from "lucide-react";
 import { CiDollar } from "react-icons/ci";
 
@@ -9,7 +9,6 @@ import { PiVideo } from "react-icons/pi";
 import { TfiStatsUp } from "react-icons/tfi";
 
 export function CourseHeroSection() {
-  const navigate = useCustomNavigation();
   return (
     <section className="relative w-full px-48 overflow-hidden py-12 md:py-16 lg:py-20">
       <div className="flex justify-between items-center gap-24 lg:gap-12">
@@ -84,10 +83,10 @@ export function CourseHeroSection() {
 
           {/* CTA Button */}
           <Button
-            onClick={() => navigate("/course-details")}
+            // onClick={() => navigate("/course-details")}
             className="w-full text-lg px-8 py-6 md:w-auto"
           >
-            Start learn now
+            <MyLink to="/course-details">Start learn now</MyLink>
           </Button>
         </div>
 

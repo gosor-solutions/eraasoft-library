@@ -1,12 +1,11 @@
-import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
+"use client";
+
+import { Button } from "@/components/shared/Button";
 import { Clock } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const TestViewer = ({ testData }) => {
-  const navigate = useCustomNavigation();
-
-  const handleStart = () => {
-    navigate("/course-test", { state: { testData } });
-  };
+  const router = useRouter();
 
   return (
     <div className="w-full min-h-[600px] flex items-center justify-center bg-white">
@@ -21,12 +20,17 @@ const TestViewer = ({ testData }) => {
         <p className="text-gray-600 mb-8">
           {testData.questions.length} Questions
         </p>
-        <button
-          onClick={handleStart}
-          className="bg-blue-900 text-white px-16 py-3 rounded-lg hover:bg-blue-800 transition-colors font-medium"
+        <Button
+          onClick={() => {
+            sessionStorage.setItem(
+              "current_test_data",
+              JSON.stringify(testData),
+            );
+            router.push("/course-test");
+          }}
         >
           Start
-        </button>
+        </Button>
       </div>
     </div>
   );

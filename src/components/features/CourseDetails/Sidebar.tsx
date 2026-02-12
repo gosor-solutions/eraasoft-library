@@ -1,15 +1,17 @@
-import { useState } from "react";
+"use client";
+
 import {
+  CheckCircle,
   ChevronDown,
   ChevronRight,
-  PlayCircle,
   FileText,
   HelpCircle,
-  CheckCircle,
+  PlayCircle,
 } from "lucide-react";
+import { useState } from "react";
 
 const Sidebar = ({ onItemClick, activeItemId }) => {
-  const [expandedSections, setExpandedSections] = useState([]);
+  const [expandedSections, setExpandedSections] = useState<any>([]);
 
   const toggleSection = (sectionId) => {
     setExpandedSections((prev) =>
@@ -17,270 +19,6 @@ const Sidebar = ({ onItemClick, activeItemId }) => {
         ? prev.filter((id) => id !== sectionId)
         : [...prev, sectionId],
     );
-  };
-
-  const courseData = {
-    sections: [
-      {
-        id: "introduction",
-        title: "introduction",
-        progress: "2/0",
-        items: [
-          {
-            id: "intro-video-1",
-            type: "video",
-            title: "Introduction Video Title Video Title",
-            duration: "10 minutes",
-            completed: true,
-            videoUrl: "https://example.com/video1.mp4",
-          },
-          {
-            id: "intro-article-1",
-            type: "article",
-            title: "Introduction Article Title",
-            duration: "5 minutes",
-            completed: false,
-            content: "Article content here...",
-          },
-        ],
-      },
-      {
-        id: "course-overview",
-        title: "Course Overview",
-        progress: "10/0",
-        items: [
-          {
-            id: "overview-video-1",
-            type: "video",
-            title: "Title Video Title Video Title Video Title video title",
-            duration: "15 minutes",
-            completed: true,
-            videoUrl:
-              "https://www.youtube.com/embed/JQT8d2tHwk0?si=M1GTf-Zg_7lT16j1",
-          },
-          {
-            id: "overview-video-2",
-            type: "video",
-            title: "Title Video Title Video Title Video Title video title",
-            duration: "15 minutes",
-            completed: false,
-            videoUrl: "https://example.com/video3.mp4",
-          },
-          {
-            id: "overview-article-1",
-            type: "article",
-            title: "Title Video Title Video Title Video Title video title",
-            duration: "15 minutes",
-            completed: false,
-            content: "Article content...",
-          },
-          {
-            id: "overview-test-1",
-            type: "test",
-            title: "Grammar and Vocabulary Test",
-            duration: "30:00",
-            completed: false,
-            questions: [
-              {
-                id: "q1",
-                part: "Part 1 - Grammar and vocabulary",
-                question:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-                answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-                correctAnswer: 0,
-              },
-              {
-                id: "q2",
-                part: "Part 1 - Grammar and vocabulary",
-                question:
-                  "Choose the correct form of the verb in the following sentence: She ___ to the store yesterday.",
-                answers: ["go", "goes", "went", "going"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q3",
-                part: "Part 1 - Grammar and vocabulary",
-                question: "What is the synonym of 'beautiful'?",
-                answers: ["Ugly", "Pretty", "Sad", "Angry"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q4",
-                part: "Part 1 - Grammar and vocabulary",
-                question: "Which sentence is grammatically correct?",
-                answers: [
-                  "He don't like pizza",
-                  "He doesn't likes pizza",
-                  "He doesn't like pizza",
-                  "He not like pizza",
-                ],
-                correctAnswer: 2,
-              },
-              {
-                id: "q5",
-                part: "Part 1 - Grammar and vocabulary",
-                question: "What is the past tense of 'run'?",
-                answers: ["runned", "ran", "running", "runs"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q6",
-                part: "Part 2 - Reading comprehension",
-                question: "According to the passage, what is the main idea?",
-                answers: [
-                  "Technology is important",
-                  "Education matters",
-                  "Health is wealth",
-                  "Time is money",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q7",
-                part: "Part 2 - Reading comprehension",
-                question: "Which statement is true based on the text?",
-                answers: [
-                  "Statement A",
-                  "Statement B",
-                  "Statement C",
-                  "Statement D",
-                ],
-                correctAnswer: 0,
-              },
-              {
-                id: "q8",
-                part: "Part 2 - Reading comprehension",
-                question: "What can be inferred from the paragraph?",
-                answers: [
-                  "The author agrees",
-                  "The author disagrees",
-                  "The author is neutral",
-                  "The author is confused",
-                ],
-                correctAnswer: 2,
-              },
-              {
-                id: "q9",
-                part: "Part 3 - Vocabulary",
-                question: "What does 'ubiquitous' mean?",
-                answers: [
-                  "Rare",
-                  "Present everywhere",
-                  "Dangerous",
-                  "Beautiful",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q10",
-                part: "Part 3 - Vocabulary",
-                question: "Choose the antonym of 'difficult'.",
-                answers: ["Hard", "Challenging", "Easy", "Complex"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q11",
-                part: "Part 3 - Vocabulary",
-                question: "What is a synonym for 'quickly'?",
-                answers: ["Slowly", "Rapidly", "Carefully", "Loudly"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q12",
-                part: "Part 4 - Writing",
-                question: "Which punctuation mark is used to show possession?",
-                answers: [
-                  "Comma (,)",
-                  "Apostrophe (')",
-                  "Period (.)",
-                  "Question mark (?)",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q13",
-                part: "Part 4 - Writing",
-                question: "Identify the subject in: 'The cat sleeps.'",
-                answers: ["The", "cat", "sleeps", "The cat"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q14",
-                part: "Part 4 - Writing",
-                question: "Which is an example of a compound sentence?",
-                answers: [
-                  "I like tea.",
-                  "I like tea and she likes coffee.",
-                  "Because I like tea.",
-                  "Tea is good.",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q15",
-                part: "Part 5 - Listening comprehension",
-                question: "What did the speaker mention first?",
-                answers: [
-                  "The weather",
-                  "The time",
-                  "The location",
-                  "The date",
-                ],
-                correctAnswer: 0,
-              },
-              {
-                id: "q16",
-                part: "Part 5 - Listening comprehension",
-                question: "How many people were mentioned?",
-                answers: ["Two", "Three", "Four", "Five"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q17",
-                part: "Part 5 - Listening comprehension",
-                question: "What was the main topic discussed?",
-                answers: ["Sports", "Technology", "Education", "Travel"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q18",
-                part: "Part 6 - Final questions",
-                question: "Choose the correctly spelled word.",
-                answers: ["Recieve", "Receive", "Recive", "Receeve"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q19",
-                part: "Part 6 - Final questions",
-                question: "What type of word is 'happiness'?",
-                answers: ["Verb", "Adjective", "Noun", "Adverb"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q20",
-                part: "Part 6 - Final questions",
-                question: "Which sentence uses the word 'their' correctly?",
-                answers: [
-                  "Their going to the park",
-                  "They're going to the park",
-                  "Their house is beautiful",
-                  "There going to the park",
-                ],
-                correctAnswer: 2,
-              },
-            ],
-          },
-          {
-            id: "overview-audio-1",
-            type: "audio",
-            title: "Audio Lesson Title",
-            duration: "20 minutes",
-            completed: false,
-            audioUrl: "https://example.com/audio1.mp3",
-          },
-        ],
-      },
-    ],
   };
 
   const getIcon = (type, completed) => {
@@ -382,3 +120,257 @@ const Sidebar = ({ onItemClick, activeItemId }) => {
 };
 
 export default Sidebar;
+
+const courseData = {
+  sections: [
+    {
+      id: "introduction",
+      title: "introduction",
+      progress: "2/0",
+      items: [
+        {
+          id: "intro-video-1",
+          type: "video",
+          title: "Introduction Video Title Video Title",
+          duration: "10 minutes",
+          completed: true,
+          videoUrl: "https://example.com/video1.mp4",
+        },
+        {
+          id: "intro-article-1",
+          type: "article",
+          title: "Introduction Article Title",
+          duration: "5 minutes",
+          completed: false,
+          content: "Article content here...",
+        },
+      ],
+    },
+    {
+      id: "course-overview",
+      title: "Course Overview",
+      progress: "10/0",
+      items: [
+        {
+          id: "overview-video-1",
+          type: "video",
+          title: "Title Video Title Video Title Video Title video title",
+          duration: "15 minutes",
+          completed: true,
+          videoUrl:
+            "https://www.youtube.com/embed/JQT8d2tHwk0?si=M1GTf-Zg_7lT16j1",
+        },
+        {
+          id: "overview-video-2",
+          type: "video",
+          title: "Title Video Title Video Title Video Title video title",
+          duration: "15 minutes",
+          completed: false,
+          videoUrl: "https://example.com/video3.mp4",
+        },
+        {
+          id: "overview-article-1",
+          type: "article",
+          title: "Title Video Title Video Title Video Title video title",
+          duration: "15 minutes",
+          completed: false,
+          content: "Article content...",
+        },
+        {
+          id: "overview-test-1",
+          type: "test",
+          title: "Grammar and Vocabulary Test",
+          duration: "30:00",
+          completed: false,
+          questions: [
+            {
+              id: "q1",
+              part: "Part 1 - Grammar and vocabulary",
+              question:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+              answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+              correctAnswer: 0,
+            },
+            {
+              id: "q2",
+              part: "Part 1 - Grammar and vocabulary",
+              question:
+                "Choose the correct form of the verb in the following sentence: She ___ to the store yesterday.",
+              answers: ["go", "goes", "went", "going"],
+              correctAnswer: 2,
+            },
+            {
+              id: "q3",
+              part: "Part 1 - Grammar and vocabulary",
+              question: "What is the synonym of 'beautiful'?",
+              answers: ["Ugly", "Pretty", "Sad", "Angry"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q4",
+              part: "Part 1 - Grammar and vocabulary",
+              question: "Which sentence is grammatically correct?",
+              answers: [
+                "He don't like pizza",
+                "He doesn't likes pizza",
+                "He doesn't like pizza",
+                "He not like pizza",
+              ],
+              correctAnswer: 2,
+            },
+            {
+              id: "q5",
+              part: "Part 1 - Grammar and vocabulary",
+              question: "What is the past tense of 'run'?",
+              answers: ["runned", "ran", "running", "runs"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q6",
+              part: "Part 2 - Reading comprehension",
+              question: "According to the passage, what is the main idea?",
+              answers: [
+                "Technology is important",
+                "Education matters",
+                "Health is wealth",
+                "Time is money",
+              ],
+              correctAnswer: 1,
+            },
+            {
+              id: "q7",
+              part: "Part 2 - Reading comprehension",
+              question: "Which statement is true based on the text?",
+              answers: [
+                "Statement A",
+                "Statement B",
+                "Statement C",
+                "Statement D",
+              ],
+              correctAnswer: 0,
+            },
+            {
+              id: "q8",
+              part: "Part 2 - Reading comprehension",
+              question: "What can be inferred from the paragraph?",
+              answers: [
+                "The author agrees",
+                "The author disagrees",
+                "The author is neutral",
+                "The author is confused",
+              ],
+              correctAnswer: 2,
+            },
+            {
+              id: "q9",
+              part: "Part 3 - Vocabulary",
+              question: "What does 'ubiquitous' mean?",
+              answers: ["Rare", "Present everywhere", "Dangerous", "Beautiful"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q10",
+              part: "Part 3 - Vocabulary",
+              question: "Choose the antonym of 'difficult'.",
+              answers: ["Hard", "Challenging", "Easy", "Complex"],
+              correctAnswer: 2,
+            },
+            {
+              id: "q11",
+              part: "Part 3 - Vocabulary",
+              question: "What is a synonym for 'quickly'?",
+              answers: ["Slowly", "Rapidly", "Carefully", "Loudly"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q12",
+              part: "Part 4 - Writing",
+              question: "Which punctuation mark is used to show possession?",
+              answers: [
+                "Comma (,)",
+                "Apostrophe (')",
+                "Period (.)",
+                "Question mark (?)",
+              ],
+              correctAnswer: 1,
+            },
+            {
+              id: "q13",
+              part: "Part 4 - Writing",
+              question: "Identify the subject in: 'The cat sleeps.'",
+              answers: ["The", "cat", "sleeps", "The cat"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q14",
+              part: "Part 4 - Writing",
+              question: "Which is an example of a compound sentence?",
+              answers: [
+                "I like tea.",
+                "I like tea and she likes coffee.",
+                "Because I like tea.",
+                "Tea is good.",
+              ],
+              correctAnswer: 1,
+            },
+            {
+              id: "q15",
+              part: "Part 5 - Listening comprehension",
+              question: "What did the speaker mention first?",
+              answers: ["The weather", "The time", "The location", "The date"],
+              correctAnswer: 0,
+            },
+            {
+              id: "q16",
+              part: "Part 5 - Listening comprehension",
+              question: "How many people were mentioned?",
+              answers: ["Two", "Three", "Four", "Five"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q17",
+              part: "Part 5 - Listening comprehension",
+              question: "What was the main topic discussed?",
+              answers: ["Sports", "Technology", "Education", "Travel"],
+              correctAnswer: 2,
+            },
+            {
+              id: "q18",
+              part: "Part 6 - Final questions",
+              question: "Choose the correctly spelled word.",
+              answers: ["Recieve", "Receive", "Recive", "Receeve"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q19",
+              part: "Part 6 - Final questions",
+              question: "What type of word is 'happiness'?",
+              answers: ["Verb", "Adjective", "Noun", "Adverb"],
+              correctAnswer: 2,
+            },
+            {
+              id: "q20",
+              part: "Part 6 - Final questions",
+              question: "Which sentence uses the word 'their' correctly?",
+              answers: [
+                "Their going to the park",
+                "They're going to the park",
+                "Their house is beautiful",
+                "There going to the park",
+              ],
+              correctAnswer: 2,
+            },
+          ],
+        },
+        {
+          id: "overview-audio-1",
+          type: "audio",
+          title: "Audio Lesson Title",
+          duration: "20 minutes",
+          completed: false,
+          audioUrl: "https://example.com/audio1.mp3",
+        },
+      ],
+    },
+  ],
+};

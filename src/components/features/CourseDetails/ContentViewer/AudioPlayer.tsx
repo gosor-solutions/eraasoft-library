@@ -1,9 +1,11 @@
+"use client";
+
 // components/ContentViewer/AudioPlayer.jsx
-import React, { useRef, useState } from "react";
-import { Play, Pause } from "lucide-react";
+import { Pause, Play } from "lucide-react";
+import { ElementRef, useRef, useState } from "react";
 
 const AudioPlayer = ({ audioData }) => {
-  const audioRef = useRef(null);
+  const audioRef = useRef<ElementRef<"audio">>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);

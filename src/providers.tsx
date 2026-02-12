@@ -1,3 +1,5 @@
+import QueryProvider from "./providers/QueryProvider";
+
 export function GlobalProviders({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <QueryProvider>{children}</QueryProvider>;
 }

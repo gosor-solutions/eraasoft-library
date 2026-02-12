@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Tabs,
   TabsContent,
@@ -23,7 +25,7 @@ export function ProfileTabs() {
           <TabsTrigger
             value="personal-data"
             className="rounded-none border-b-2 border-transparent px-6 py-3 data-[state=active]:border-b-brand-primary data-[state=active]:bg-transparent data-[state=active]:text-brand-primary"
-            >
+          >
             Personal Data
           </TabsTrigger>
           <TabsTrigger
