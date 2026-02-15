@@ -5,10 +5,25 @@ import { ChevronLeft, Clock, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+// TODO: replace with real test data type
+type TestData = {
+  questions: Array<{
+    id: string;
+    correctAnswer: number;
+    question: string;
+    part: string;
+    answers: Array<string>;
+  }>;
+  title: string;
+};
+
 const CourseTest = () => {
   const router = useRouter();
 
-  const [testData, setTestData] = useState<any>({ questions: [], title: "" });
+  const [testData, setTestData] = useState<TestData>({
+    questions: [],
+    title: "",
+  });
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const [answers, setAnswers] = useState<Record<string, number>>({});
@@ -46,7 +61,7 @@ const CourseTest = () => {
     // and we can catch it, push it back, and show our modal.
     window.history.pushState(null, "", window.location.href);
 
-    const handlePopState = (e: PopStateEvent) => {
+    const handlePopState = () => {
       // If we are not submitted, block navigation
       if (!submitted) {
         window.history.pushState(null, "", window.location.href);

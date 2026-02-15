@@ -315,7 +315,7 @@ export default function OTPVerificationEnhanced({
 
         {/* Resend Link */}
         <div className="text-center text-sm text-gray-600">
-          Didn't receive a code?{" "}
+          Didn&apos;t receive a code?{" "}
           <button
             onClick={handleResend}
             disabled={!canResend || isLoading}

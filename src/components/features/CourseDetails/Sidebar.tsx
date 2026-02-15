@@ -11,32 +11,14 @@ import {
 import { useState } from "react";
 
 const Sidebar = ({ onItemClick, activeItemId }) => {
-  const [expandedSections, setExpandedSections] = useState<any>([]);
+  const [expandedSections, setExpandedSections] = useState<Array<string>>([]);
 
-  const toggleSection = (sectionId) => {
+  const toggleSection = (sectionId: string) => {
     setExpandedSections((prev) =>
       prev.includes(sectionId)
         ? prev.filter((id) => id !== sectionId)
         : [...prev, sectionId],
     );
-  };
-
-  const getIcon = (type, completed) => {
-    if (completed) {
-      return <CheckCircle className="w-5 h-5 text-green-500" />;
-    }
-    switch (type) {
-      case "video":
-        return <PlayCircle className="w-5 h-5 text-gray-600" />;
-      case "article":
-        return <FileText className="w-5 h-5 text-gray-600" />;
-      case "test":
-        return <HelpCircle className="w-5 h-5 text-gray-600" />;
-      case "audio":
-        return <PlayCircle className="w-5 h-5 text-gray-600" />;
-      default:
-        return <PlayCircle className="w-5 h-5 text-gray-600" />;
-    }
   };
 
   return (
@@ -120,6 +102,24 @@ const Sidebar = ({ onItemClick, activeItemId }) => {
 };
 
 export default Sidebar;
+
+const getIcon = (type: string, completed: boolean) => {
+  if (completed) {
+    return <CheckCircle className="w-5 h-5 text-green-500" />;
+  }
+  switch (type) {
+    case "video":
+      return <PlayCircle className="w-5 h-5 text-gray-600" />;
+    case "article":
+      return <FileText className="w-5 h-5 text-gray-600" />;
+    case "test":
+      return <HelpCircle className="w-5 h-5 text-gray-600" />;
+    case "audio":
+      return <PlayCircle className="w-5 h-5 text-gray-600" />;
+    default:
+      return <PlayCircle className="w-5 h-5 text-gray-600" />;
+  }
+};
 
 const courseData = {
   sections: [

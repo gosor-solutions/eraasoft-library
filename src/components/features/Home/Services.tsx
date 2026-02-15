@@ -1,4 +1,5 @@
-// Main Services Component
+import Image from "next/image";
+
 export function ServicesSection() {
   return (
     <section className="relative bg-linear-to-br from-blue-50 to-blue-100 py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -89,13 +90,23 @@ function ServicesGrid() {
   );
 }
 
+// TODO: change with a real service type later
+type Service = {
+  image: string;
+  title: string;
+  icon: string;
+  description: string;
+};
+
 // Service Card Component
-function ServiceCard({ service }: { service: any }) {
+function ServiceCard({ service }: { service: Service }) {
   return (
     <div className="group relative rounded-tl-3xl rounded-br-3xl rounded-tr-[78px] rounded-bl-[78px] overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
       {/* Background Image */}
       <div className="relative">
-        <img
+        <Image
+          width={400}
+          height={400}
           src={service.image}
           alt={service.title}
           className="w-full aspect-square object-cover"

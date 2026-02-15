@@ -3,6 +3,7 @@ import { MyLink } from "@/components/shared/MyLink";
 import { Lock } from "lucide-react";
 import { CiDollar } from "react-icons/ci";
 
+import Image from "next/image";
 import { FaListCheck } from "react-icons/fa6";
 import { LuCalendarClock } from "react-icons/lu";
 import { PiVideo } from "react-icons/pi";
@@ -94,10 +95,12 @@ export function CourseHeroSection() {
         <div className="relative flex items-center justify-center w-1/2">
           {/* Image Container */}
           <div className="aspect-square w-[450px] relative z-10 overflow-hidden rounded-2xl">
-            <img
+            <Image
               src="/course-hero.jpg"
               alt="English course illustration"
               className="h-full w-full object-cover"
+              width={450}
+              height={450}
             />
           </div>
           <div

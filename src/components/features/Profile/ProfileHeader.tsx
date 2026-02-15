@@ -1,4 +1,5 @@
 import { Circle } from "@/components/shared/Circle";
+import Image from "next/image"
 
 export function ProfileHeader() {
   return (
@@ -14,7 +15,9 @@ export function ProfileHeader() {
         {/* Avatar */}
         <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 md:left-12 md:translate-x-0">
           <div className="h-48 w-h-48 overflow-hidden rounded-full border-4 border-white bg-white shadow-lg">
-            <img
+            <Image
+              width={200}
+              height={200}
               src="/user-placeholder.png"
               alt="Profile"
               className="h-full w-full object-cover"

@@ -1,4 +1,6 @@
 import { Circle } from "@/components/shared/Circle";
+import Image from "next/image";
+
 // Main AboutUs Component
 export function AboutUs() {
   return (
@@ -41,10 +43,12 @@ function AboutImage() {
     <div className="relative">
       <Circle size={300} x={550} y={-150} color="#D2ECFF" />
       <div className="relative rounded-3xl overflow-hidden">
-        <img
+        <Image
           src="/about-us.jpg"
           alt="Workspace with laptop and notebook"
           className="w-full h-auto object-cover"
+          width={450}
+          height={450}
         />
       </div>
     </div>

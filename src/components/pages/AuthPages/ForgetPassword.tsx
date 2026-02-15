@@ -32,7 +32,7 @@ export default function ForgetPassword() {
           Forgot Password?
         </h1>
         <p className="text-gray-600 mb-6 text-center">
-          Enter your email and we'll send you a reset link
+          Enter your email and we&apos;ll send you a reset link
         </p>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

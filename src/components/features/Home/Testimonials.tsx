@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function TestimonialsSection() {
   return (
     <section className="bg-[#E9F2FB] to-gray-50 py-16">
@@ -56,7 +58,9 @@ function TestimonialCard({ testimonial }) {
     <div className="bg-white rounded-md rounded-br-[80px] shadow-lg p-6 sm:p-8 hover:shadow-xl transition-shadow duration-300">
       {/* Avatar and Name */}
       <div className="flex flex-col items-center mb-4">
-        <img
+        <Image
+          width={64}
+          height={64}
           src={testimonial.image}
           alt={testimonial.name}
           className="w-16 h-16 rounded-full object-cover mb-3"

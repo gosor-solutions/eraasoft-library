@@ -33,7 +33,7 @@ export function WhatWillYouLearn() {
       <div className="mx-auto max-w-7xl">
         {/* Section Title */}
         <h2 className="mb-8 text-3xl font-bold md:text-4xl lg:mb-12">
-          What you'll learn
+          What you will learn
         </h2>
 
         {/* Cards Grid */}

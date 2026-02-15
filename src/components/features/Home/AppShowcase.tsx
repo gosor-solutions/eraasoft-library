@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 
 export function AppShowcaseSection() {
@@ -64,7 +65,13 @@ function AppContent() {
 function AppScreenshots() {
   return (
     <div className="relative flex justify-center items-center gap-4 lg:gap-6 translate-x-40">
-      <img src="/app-showcase.png" alt="app-showcase" className="z-50" />
+      <Image
+        width={400}
+        height={400}
+        src="/app-showcase.png"
+        alt="app-showcase"
+        className="z-50"
+      />
       <div
         style={{
           top: 170,

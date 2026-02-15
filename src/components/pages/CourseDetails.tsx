@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const CoursePage = () => {
   // TODO: Add types for activeItem
-  const [activeItem, setActiveItem] = useState<any>();
+  const [activeItem, setActiveItem] = useState<{ id: string } & unknown>();
 
   const handleItemClick = (item) => {
     setActiveItem(item);

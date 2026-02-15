@@ -3,8 +3,8 @@
 import { Button } from "@/components/shared/Button";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -29,7 +29,7 @@ type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPassword() {
   const router = useRouter();
-  const searchParams = useSearchParams();``
+  const searchParams = useSearchParams();
   const token = searchParams?.get("token"); // Get token from URL
 
   const form = useForm<ResetPasswordFormData>({
@@ -74,7 +74,9 @@ export default function ResetPassword() {
         <div className="w-full max-w-md">
           {/* Logo */}
           <div className="mb-8">
-            <img
+            <Image
+              width={100}
+              height={100}
               src="/englivision-logo-color.png"
               alt="Enjoli Vision"
               className="h-12"

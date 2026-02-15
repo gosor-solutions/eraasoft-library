@@ -3,6 +3,7 @@
 import { Button } from "@/components/shared/Button";
 import { Field } from "@/components/shared/field";
 import { PhoneNumberUtil } from "google-libphonenumber";
+import Image from "next/image";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { PhoneInput } from "react-international-phone";
@@ -14,7 +15,7 @@ const phoneUtil = PhoneNumberUtil.getInstance();
 const isPhoneValid = (phone: string) => {
   try {
     return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
-  } catch (error) {
+  } catch {
     return false;
   }
 };
@@ -27,7 +28,13 @@ export default function Login() {
   return (
     <div className="relative min-h-screen">
       <div className="absolute logo-circle">
-        <img src="/englivision-logo-color.png" alt="Logo" />
+        <Image
+          width={100}
+          height={100}
+          src="/englivision-logo-color.png"
+          alt="Logo"
+          className="w-full h-full object-contain object-center"
+        />
       </div>
       <div className="bottom-left-circle"></div>
       <div className="small-circle"></div>

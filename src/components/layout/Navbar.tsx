@@ -1,12 +1,15 @@
 import { MyLink } from "@/components/shared/MyLink";
+import Image from "next/image";
 import { FiUser } from "react-icons/fi";
 
 export function NavBar() {
   return (
     <div className="flex justify-between items-center py-4 px-4 bg-brand-secondary h-16 fixed top-0 w-full z-1">
-      <img
+      <Image
         src="/englivision-logo-color.png"
         alt="logo"
+        width={100}
+        height={100}
         className="w-24 -mt-4"
       />
       <ul className="flex gap-8 font-medium  items-baseline">

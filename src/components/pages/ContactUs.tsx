@@ -1,5 +1,6 @@
 import { ContactUsForm } from "@/components/features/contactUs/ContactUsForm";
 import { Banner } from "@/components/shared/Banner";
+import Image from "next/image";
 
 export function ContactUs() {
   return (
@@ -8,9 +9,11 @@ export function ContactUs() {
       <Banner title="Contact Us" />
       <div className="grid grid-cols-2 px-6">
         <div className="px-12 w-[800px] h-[700px]">
-          <img
+          <Image
             src="/contact-us.png"
             alt="contact-us"
+            width={800}
+            height={700}
             className="w-full h-full object-contain object-center mt-24"
           />
         </div>

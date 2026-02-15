@@ -1,10 +1,13 @@
-// Main Hero Component
+import Image from "next/image";
+
 export function HeroSection() {
   return (
     <section className="h-[1000px] relative bg-gray-900 py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
-        <img
+        <Image
+          width={1500}
+          height={1000}
           src="/hero.png"
           alt="Student with books"
           className="w-full h-full object-cover object-top"
@@ -41,7 +44,13 @@ function Logo() {
     <div className="flex justify-center">
       <div className=" rounded-lg p-4 inline-block">
         <div className="text-2xl sm:text-3xl font-bold text-gray-900">
-          <img className="w-80" src="/englivision-logo.svg" alt="gosor-logo" />
+          <Image
+            width={320}
+            height={320}
+            className="w-80"
+            src="/englivision-logo.svg"
+            alt="gosor-logo"
+          />
           {/* <span className="block text-xs text-gray-600 mt-1">
             LEARNING HAS NO LIMITS
           </span> */}

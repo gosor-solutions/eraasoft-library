@@ -1,4 +1,5 @@
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 export function Testimonials() {
   const testimonials = [
@@ -56,10 +57,12 @@ export function Testimonials() {
             <div key={index} className="flex flex-col items-center text-center">
               {/* Avatar */}
               <div className="mb-4 h-24 w-24 overflow-hidden rounded-full bg-gray-200">
-                <img
+                <Image
                   src={testimonial.avatar}
                   alt={testimonial.name}
                   className="h-full w-full object-cover"
+                  width={96}
+                  height={96}
                 />
               </div>
 

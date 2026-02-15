@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   FaFacebookF,
   FaInstagram,
@@ -11,7 +12,9 @@ export function Footer() {
     <footer className="bg-brand-primary text-white py-20 px-16">
       <div className="grid grid-cols-4 gap-x-6 ">
         <div className="flex flex-col items-start">
-          <img
+          <Image
+            width={128}
+            height={128}
             src="/englivision-logo.svg"
             alt="gosor-logo"
             className="w-32"
