@@ -1,11 +1,11 @@
-import {
-  useState,
-  useRef,
-  useEffect,
-  KeyboardEvent,
-  ClipboardEvent,
-} from "react";
 import { Button } from "@/components/shared/Button";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ClipboardEvent,
+  type KeyboardEvent,
+} from "react";
 
 interface OTPVerificationEnhancedProps {
   length?: number;
@@ -201,6 +201,7 @@ export default function OTPVerificationEnhanced({
           {otp.map((digit, index) => (
             <input
               key={index}
+              // @ts-expect-error it is a ref function
               ref={(el) => (inputRefs.current[index] = el)}
               type="text"
               inputMode="numeric"

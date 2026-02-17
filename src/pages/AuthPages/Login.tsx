@@ -1,18 +1,18 @@
-import { PhoneInput } from "react-international-phone";
-import { PhoneNumberUtil } from "google-libphonenumber";
-import "react-international-phone/style.css";
 import { Button } from "@/components/shared/Button";
 import { Field } from "@/components/shared/field";
-import { FcGoogle } from "react-icons/fc";
-import { BiLogoFacebookCircle } from "react-icons/bi";
+import { MyLink } from "@/components/shared/MyLink";
+import { PhoneNumberUtil } from "google-libphonenumber";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 import "./Register.css";
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 const isPhoneValid = (phone: string) => {
   try {
     return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
-  } catch (error) {
+  } catch {
     return false;
   }
 };
@@ -36,7 +36,9 @@ export default function Login() {
               id="contact-us-form"
               className="flex flex-col gap-4 w-full max-w-md"
             >
-              <h2 className="text-2xl font-medium text-center">Welcome Back!</h2>
+              <h2 className="text-2xl font-medium text-center">
+                Welcome Back!
+              </h2>
               <p className="text-[14px] text-[#12121280] text-center">
                 Enter your email and password to access your account.
               </p>
@@ -60,9 +62,23 @@ export default function Login() {
                   className="text-xl py-5 w-full"
                   disabled={!isValid}
                 >
-                  Sign Up
+                  Login
                 </Button>
               </Field>
+              <div className="flex justify-between items-center text-sm">
+                <MyLink
+                  to="/forget-password"
+                  className="text-brand-primary hover:underline"
+                >
+                  Forgot Password?
+                </MyLink>
+                <MyLink
+                  to="/register"
+                  className="text-brand-primary hover:underline"
+                >
+                  Don't have an account? Register
+                </MyLink>
+              </div>
               <div className="flex gap-2 items-center">
                 <div className="flex-1 h-[1px] bg-[#0000001A]"></div>
                 <p className="text-[#12121280]">OR</p>
@@ -74,7 +90,7 @@ export default function Login() {
                   className="text-base font-medium py-6 cursor-pointer w-full bg-white border border-[#0000000D] text-black hover:bg-gray-50"
                 >
                   <FcGoogle className="text-xl" />
-                  Sign Up with Google
+                  Login with Google
                 </Button>
               </Field>
             </form>

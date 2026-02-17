@@ -1,6 +1,3 @@
-// components/ContentViewer/VideoPlayer.jsx
-import React from "react";
-
 const VideoPlayer = ({ videoData }) => {
   return (
     <div className="w-full max-w-5xl mx-auto">

@@ -1,18 +1,19 @@
-import { useState } from "react";
-import { PhoneInput } from "react-international-phone";
-import { PhoneNumberUtil } from "google-libphonenumber";
 import { Button } from "@/components/shared/Button";
 import { Field } from "@/components/shared/field";
-import { FcGoogle } from "react-icons/fc";
+import { PhoneNumberUtil } from "google-libphonenumber";
+import { useState } from "react";
 import { BiLogoFacebookCircle } from "react-icons/bi";
+import { FcGoogle } from "react-icons/fc";
+import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import "./Register.css";
+import { MyLink } from "@/components/shared/MyLink";
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 const isPhoneValid = (phone: string) => {
   try {
     return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
-  } catch (error) {
+  } catch {
     return false;
   }
 };
@@ -64,6 +65,11 @@ export default function Register() {
                   Sign Up
                 </Button>
               </Field>
+              <div className="flex justify-center text-sm">
+                <MyLink to="/login" className="text-brand-primary hover:underline">
+                  Already have an account? Login
+                </MyLink>
+              </div>
 
               <div className="flex gap-2 items-center">
                 <div className="flex-1 h-[1px] bg-[#0000001A]"></div>

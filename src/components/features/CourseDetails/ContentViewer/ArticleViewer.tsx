@@ -1,6 +1,3 @@
-// components/ContentViewer/ArticleViewer.jsx
-import React from "react";
-
 const ArticleViewer = ({ articleData }) => {
   return (
     <div className="max-w-4xl">

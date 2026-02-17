@@ -51,7 +51,7 @@ export function CourseCard({ course }: { course: any }) {
           onClick={() => navigate(`/courses/${course.id}`)}
           className="w-full"
         >
-          Details
+          View Course
         </Button>
       </div>
     </div>
