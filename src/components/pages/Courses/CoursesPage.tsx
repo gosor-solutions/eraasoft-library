@@ -1,7 +1,10 @@
+import { courseServer } from "@/api/server/courses";
 import { CoursePageHeader } from "@/components/features/Courses/CoursePageHeader";
 import { CoursesGrid } from "@/components/features/Courses/CoursesGrid";
 
-export function CoursesPage() {
+export async function CoursesPage() {
+  const courses = await courseServer.getAll();
+
   return (
     <>
       <section className="w-full px-4 py-8 md:py-12">
@@ -12,7 +15,7 @@ export function CoursesPage() {
           {/* Search and Filter Bar */}
           <CoursePageHeader />
 
-          <CoursesGrid courses={[]} />
+          <CoursesGrid courses={courses.data} />
         </div>
       </section>
     </>

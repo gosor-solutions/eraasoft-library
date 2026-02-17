@@ -4,4 +4,6 @@
 
 - have join button in the hero section that redirect to the register page if not logged in and to the dashboard page if logged in
 
-- explore all courses button in the hero section that redirect to the courses page 
+- explore all courses button in the hero section that redirect to the courses page
+
+- add some error handling to failed fetches at the ui level

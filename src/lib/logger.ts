@@ -56,6 +56,13 @@ export const logger = {
     console.log("Data:", data);
     console.groupEnd();
   },
+  logData: (key: string, data: unknown) => {
+    if (!ENV.ENABLE_API_LOGGING) return;
+
+    console.group(`Data: [${key}]`);
+    console.log(data);
+    console.groupEnd();
+  },
 
   logError: (url: string, error: unknown, duration?: number) => {
     if (!ENV.ENABLE_API_LOGGING) return;
