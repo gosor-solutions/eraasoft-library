@@ -1,8 +1,9 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { Button } from "@/components/shared/Button";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
-import { Button } from "@/components/shared/button";
+import { MyLink } from "@/components/shared/MyLink";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 // Validation Schema
 const forgetPasswordSchema = z.object({
@@ -49,6 +50,11 @@ export default function ForgetPassword() {
           >
             {form.formState.isSubmitting ? "Sending..." : "Send Reset Link"}
           </Button>
+          <div className="flex justify-center text-sm">
+            <MyLink to="/login" className="text-brand-primary hover:underline">
+              Back to Login
+            </MyLink>
+          </div>
         </form>
       </div>
     </div>
