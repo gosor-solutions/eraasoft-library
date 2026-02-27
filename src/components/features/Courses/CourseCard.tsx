@@ -1,10 +1,11 @@
 import { Button } from "@/components/shared/Button";
 import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
+import type { Course } from "@/types/course";
 import { CiDollar } from "react-icons/ci";
 import { TfiStatsUp } from "react-icons/tfi";
 
 // Course Card Component
-export function CourseCard({ course }: { course: any }) {
+export function CourseCard({ course }: { course: Course }) {
   const navigate = useCustomNavigation();
 
   return (
@@ -13,7 +14,7 @@ export function CourseCard({ course }: { course: any }) {
       <div className="relative">
         <img
           src={course.image}
-          alt={course.name}
+          alt={course.title}
           className="w-full aspect-4/3 object-cover"
         />
       </div>
@@ -21,7 +22,7 @@ export function CourseCard({ course }: { course: any }) {
       {/* Course Content */}
       <div className="p-6">
         {/* Course Title */}
-        <h3 className="text-xl font-bold text-gray-900 mb-3">{course.name}</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-3">{course.title}</h3>
 
         {/* Course Description */}
         <p className="text-brand-gray text-sm mb-4 line-clamp-3">

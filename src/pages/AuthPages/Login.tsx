@@ -1,12 +1,15 @@
 import { Button } from "@/components/shared/Button";
 import { Field } from "@/components/shared/field";
 import { MyLink } from "@/components/shared/MyLink";
+import { useLoginWithPhone } from "@/hooks/mutations/useAuthMutations";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { useNavigate } from "react-router";
 import "./Register.css";
+
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 const isPhoneValid = (phone: string) => {
@@ -21,6 +24,21 @@ export default function Login() {
   const [phone, setPhone] = useState("");
   const isValid = isPhoneValid(phone);
 
+  const navigate = useNavigate();
+
+  const loginMutation = useLoginWithPhone();
+
+  function handleLogin() {
+    loginMutation.mutate(
+      { phone },
+      {
+        onSuccess: () => {
+          navigate("/otp", { state: { phone } });
+        },
+      },
+    );
+  }
+
   return (
     <div className="relative min-h-screen">
       <div className="absolute logo-circle">
@@ -33,6 +51,10 @@ export default function Login() {
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
           <div className="flex items-center justify-center p-8 lg:p-40">
             <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleLogin();
+              }}
               id="contact-us-form"
               className="flex flex-col gap-4 w-full max-w-md"
             >
@@ -60,7 +82,8 @@ export default function Login() {
                 <Button
                   type="submit"
                   className="text-xl py-5 w-full"
-                  disabled={!isValid}
+                  disabled={!isValid || loginMutation.isPending}
+                  isLoading={loginMutation.isPending}
                 >
                   Login
                 </Button>
@@ -80,9 +103,9 @@ export default function Login() {
                 </MyLink>
               </div>
               <div className="flex gap-2 items-center">
-                <div className="flex-1 h-[1px] bg-[#0000001A]"></div>
+                <div className="flex-1 h-px bg-[#0000001A]"></div>
                 <p className="text-[#12121280]">OR</p>
-                <div className="flex-1 h-[1px] bg-[#0000001A]"></div>
+                <div className="flex-1 h-px bg-[#0000001A]"></div>
               </div>
               <Field orientation="horizontal" className="w-full shadow-lg">
                 <Button

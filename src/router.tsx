@@ -1,18 +1,22 @@
 import { createBrowserRouter } from "react-router";
+import CreateNewPassword from "./pages/AuthPages/CreateNewPassword";
+import ForgetPassword from "./pages/AuthPages/ForgetPassword";
+import Login from "./pages/AuthPages/Login";
+import OTP from "./pages/AuthPages/OTP";
+import SignupForm from "./pages/AuthPages/Register";
+import { CheckoutOrderSummary } from "./pages/Checkout/CheckoutOrderSummary";
 import { ContactUs } from "./pages/ContactUs";
 import CourseDetails from "./pages/CourseDetails";
 import CourseTest from "./pages/CourseTest";
 import { CoursesPage } from "./pages/Courses/CoursesPage";
 import { SingleCoursePage } from "./pages/Courses/SingleCoursePage";
+import { FreeMaterialDetailsPage } from "./pages/FreeMaterials/FreeMaterialDetailsPage";
+import { FreeMaterialsPage } from "./pages/FreeMaterials/FreeMaterialsPage";
 import { Home } from "./pages/Home";
 import { MainLayout } from "./pages/Layouts/MainLayout";
 import { ProfilePage } from "./pages/Profile";
-import Login from "./pages/AuthPages/Login";
-import OTP from "./pages/AuthPages/OTP";
-import ForgetPassword from "./pages/AuthPages/ForgetPassword";
-import CreateNewPassword from "./pages/AuthPages/CreateNewPassword";
-import SignupForm from "./pages/AuthPages/Register";
-
+import { TopicCoursesPage } from "./pages/Topics/TopicCoursesPage";
+import { TopicsPage } from "./pages/Topics/TopicsPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -38,6 +42,36 @@ export const router = createBrowserRouter([
             element: <SingleCoursePage />,
           },
         ],
+      },
+      {
+        path: "topics",
+        children: [
+          {
+            index: true,
+            element: <TopicsPage />,
+          },
+          {
+            path: ":id",
+            element: <TopicCoursesPage />,
+          },
+        ],
+      },
+      {
+        path: "free-materials",
+        children: [
+          {
+            index: true,
+            element: <FreeMaterialsPage />,
+          },
+          {
+            path: ":id",
+            element: <FreeMaterialDetailsPage />,
+          },
+        ],
+      },
+      {
+        path: "checkout",
+        element: <CheckoutOrderSummary />,
       },
       {
         path: "profile",
