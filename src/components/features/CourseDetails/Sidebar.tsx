@@ -6,373 +6,306 @@ import {
   FileText,
   HelpCircle,
   CheckCircle,
+  BookOpen,
+  Music,
 } from "lucide-react";
+
+const courseData = {
+  title: "English Course — Adults",
+  sections: [
+    {
+      id: "introduction",
+      title: "Introduction",
+      progress: 2,
+      total: 5,
+      items: [
+        {
+          id: "intro-video-1",
+          type: "video",
+          title: "Introduction Video Title",
+          duration: "10 min",
+          completed: true,
+          videoUrl: "https://example.com/video1.mp4",
+        },
+        {
+          id: "intro-article-1",
+          type: "article",
+          title: "Introduction Article Title",
+          duration: "5 min",
+          completed: false,
+          content: "Article content here...",
+        },
+      ],
+    },
+    {
+      id: "course-overview",
+      title: "Course Overview",
+      progress: 3,
+      total: 10,
+      items: [
+        {
+          id: "overview-video-1",
+          type: "video",
+          title: "Video Title — Lesson One",
+          duration: "15 min",
+          completed: true,
+          videoUrl:
+            "https://www.youtube.com/embed/JQT8d2tHwk0?si=M1GTf-Zg_7lT16j1",
+        },
+        {
+          id: "overview-video-2",
+          type: "video",
+          title: "Video Title — Lesson Two",
+          duration: "15 min",
+          completed: false,
+          videoUrl: "https://example.com/video3.mp4",
+        },
+        {
+          id: "overview-article-1",
+          type: "article",
+          title: "Reading Comprehension Guide",
+          duration: "15 min",
+          completed: false,
+          content: "Article content...",
+        },
+        {
+          id: "overview-test-1",
+          type: "test",
+          title: "Grammar and Vocabulary Test",
+          duration: "30 min",
+          completed: false,
+          questions: [
+            {
+              id: "q1",
+              part: "Part 1 - Grammar and vocabulary",
+              question:
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+              answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+              correctAnswer: 0,
+            },
+            {
+              id: "q2",
+              part: "Part 1 - Grammar and vocabulary",
+              question:
+                "Choose the correct form: She ___ to the store yesterday.",
+              answers: ["go", "goes", "went", "going"],
+              correctAnswer: 2,
+            },
+            {
+              id: "q3",
+              part: "Part 1 - Grammar and vocabulary",
+              question: "What is the synonym of 'beautiful'?",
+              answers: ["Ugly", "Pretty", "Sad", "Angry"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q4",
+              part: "Part 1 - Grammar and vocabulary",
+              question: "Which sentence is grammatically correct?",
+              answers: [
+                "He don't like pizza",
+                "He doesn't likes pizza",
+                "He doesn't like pizza",
+                "He not like pizza",
+              ],
+              correctAnswer: 2,
+            },
+            {
+              id: "q5",
+              part: "Part 2 - Reading comprehension",
+              question: "According to the passage, what is the main idea?",
+              answers: [
+                "Technology is important",
+                "Education matters",
+                "Health is wealth",
+                "Time is money",
+              ],
+              correctAnswer: 1,
+            },
+            {
+              id: "q6",
+              part: "Part 2 - Reading comprehension",
+              question: "Which statement is true based on the text?",
+              answers: [
+                "Statement A",
+                "Statement B",
+                "Statement C",
+                "Statement D",
+              ],
+              correctAnswer: 0,
+            },
+            {
+              id: "q7",
+              part: "Part 3 - Vocabulary",
+              question: "What does 'ubiquitous' mean?",
+              answers: ["Rare", "Present everywhere", "Dangerous", "Beautiful"],
+              correctAnswer: 1,
+            },
+            {
+              id: "q8",
+              part: "Part 3 - Vocabulary",
+              question: "Choose the antonym of 'difficult'.",
+              answers: ["Hard", "Challenging", "Easy", "Complex"],
+              correctAnswer: 2,
+            },
+          ],
+        },
+        {
+          id: "overview-audio-1",
+          type: "audio",
+          title: "Audio Lesson — Pronunciation",
+          duration: "20 min",
+          completed: false,
+          audioUrl: "https://example.com/audio1.mp3",
+        },
+      ],
+    },
+  ],
+};
+
+const typeConfig = {
+  video: {
+    icon: PlayCircle,
+    color: "text-blue-500",
+    bg: "bg-blue-50",
+    label: "Video",
+  },
+  article: {
+    icon: FileText,
+    color: "text-emerald-500",
+    bg: "bg-emerald-50",
+    label: "Article",
+  },
+  test: {
+    icon: HelpCircle,
+    color: "text-amber-500",
+    bg: "bg-amber-50",
+    label: "Test",
+  },
+  audio: {
+    icon: Music,
+    color: "text-purple-500",
+    bg: "bg-purple-50",
+    label: "Audio",
+  },
+};
 
 const Sidebar = ({ onItemClick, activeItemId }) => {
   const [expandedSections, setExpandedSections] = useState([]);
 
-  const toggleSection = (sectionId) => {
+  const toggleSection = (id) =>
     setExpandedSections((prev) =>
-      prev.includes(sectionId)
-        ? prev.filter((id) => id !== sectionId)
-        : [...prev, sectionId],
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id],
     );
-  };
-
-  const courseData = {
-    sections: [
-      {
-        id: "introduction",
-        title: "introduction",
-        progress: "2/0",
-        items: [
-          {
-            id: "intro-video-1",
-            type: "video",
-            title: "Introduction Video Title Video Title",
-            duration: "10 minutes",
-            completed: true,
-            videoUrl: "https://example.com/video1.mp4",
-          },
-          {
-            id: "intro-article-1",
-            type: "article",
-            title: "Introduction Article Title",
-            duration: "5 minutes",
-            completed: false,
-            content: "Article content here...",
-          },
-        ],
-      },
-      {
-        id: "course-overview",
-        title: "Course Overview",
-        progress: "10/0",
-        items: [
-          {
-            id: "overview-video-1",
-            type: "video",
-            title: "Title Video Title Video Title Video Title video title",
-            duration: "15 minutes",
-            completed: true,
-            videoUrl:
-              "https://www.youtube.com/embed/JQT8d2tHwk0?si=M1GTf-Zg_7lT16j1",
-          },
-          {
-            id: "overview-video-2",
-            type: "video",
-            title: "Title Video Title Video Title Video Title video title",
-            duration: "15 minutes",
-            completed: false,
-            videoUrl: "https://example.com/video3.mp4",
-          },
-          {
-            id: "overview-article-1",
-            type: "article",
-            title: "Title Video Title Video Title Video Title video title",
-            duration: "15 minutes",
-            completed: false,
-            content: "Article content...",
-          },
-          {
-            id: "overview-test-1",
-            type: "test",
-            title: "Grammar and Vocabulary Test",
-            duration: "30:00",
-            completed: false,
-            questions: [
-              {
-                id: "q1",
-                part: "Part 1 - Grammar and vocabulary",
-                question:
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-                answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-                correctAnswer: 0,
-              },
-              {
-                id: "q2",
-                part: "Part 1 - Grammar and vocabulary",
-                question:
-                  "Choose the correct form of the verb in the following sentence: She ___ to the store yesterday.",
-                answers: ["go", "goes", "went", "going"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q3",
-                part: "Part 1 - Grammar and vocabulary",
-                question: "What is the synonym of 'beautiful'?",
-                answers: ["Ugly", "Pretty", "Sad", "Angry"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q4",
-                part: "Part 1 - Grammar and vocabulary",
-                question: "Which sentence is grammatically correct?",
-                answers: [
-                  "He don't like pizza",
-                  "He doesn't likes pizza",
-                  "He doesn't like pizza",
-                  "He not like pizza",
-                ],
-                correctAnswer: 2,
-              },
-              {
-                id: "q5",
-                part: "Part 1 - Grammar and vocabulary",
-                question: "What is the past tense of 'run'?",
-                answers: ["runned", "ran", "running", "runs"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q6",
-                part: "Part 2 - Reading comprehension",
-                question: "According to the passage, what is the main idea?",
-                answers: [
-                  "Technology is important",
-                  "Education matters",
-                  "Health is wealth",
-                  "Time is money",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q7",
-                part: "Part 2 - Reading comprehension",
-                question: "Which statement is true based on the text?",
-                answers: [
-                  "Statement A",
-                  "Statement B",
-                  "Statement C",
-                  "Statement D",
-                ],
-                correctAnswer: 0,
-              },
-              {
-                id: "q8",
-                part: "Part 2 - Reading comprehension",
-                question: "What can be inferred from the paragraph?",
-                answers: [
-                  "The author agrees",
-                  "The author disagrees",
-                  "The author is neutral",
-                  "The author is confused",
-                ],
-                correctAnswer: 2,
-              },
-              {
-                id: "q9",
-                part: "Part 3 - Vocabulary",
-                question: "What does 'ubiquitous' mean?",
-                answers: [
-                  "Rare",
-                  "Present everywhere",
-                  "Dangerous",
-                  "Beautiful",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q10",
-                part: "Part 3 - Vocabulary",
-                question: "Choose the antonym of 'difficult'.",
-                answers: ["Hard", "Challenging", "Easy", "Complex"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q11",
-                part: "Part 3 - Vocabulary",
-                question: "What is a synonym for 'quickly'?",
-                answers: ["Slowly", "Rapidly", "Carefully", "Loudly"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q12",
-                part: "Part 4 - Writing",
-                question: "Which punctuation mark is used to show possession?",
-                answers: [
-                  "Comma (,)",
-                  "Apostrophe (')",
-                  "Period (.)",
-                  "Question mark (?)",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q13",
-                part: "Part 4 - Writing",
-                question: "Identify the subject in: 'The cat sleeps.'",
-                answers: ["The", "cat", "sleeps", "The cat"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q14",
-                part: "Part 4 - Writing",
-                question: "Which is an example of a compound sentence?",
-                answers: [
-                  "I like tea.",
-                  "I like tea and she likes coffee.",
-                  "Because I like tea.",
-                  "Tea is good.",
-                ],
-                correctAnswer: 1,
-              },
-              {
-                id: "q15",
-                part: "Part 5 - Listening comprehension",
-                question: "What did the speaker mention first?",
-                answers: [
-                  "The weather",
-                  "The time",
-                  "The location",
-                  "The date",
-                ],
-                correctAnswer: 0,
-              },
-              {
-                id: "q16",
-                part: "Part 5 - Listening comprehension",
-                question: "How many people were mentioned?",
-                answers: ["Two", "Three", "Four", "Five"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q17",
-                part: "Part 5 - Listening comprehension",
-                question: "What was the main topic discussed?",
-                answers: ["Sports", "Technology", "Education", "Travel"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q18",
-                part: "Part 6 - Final questions",
-                question: "Choose the correctly spelled word.",
-                answers: ["Recieve", "Receive", "Recive", "Receeve"],
-                correctAnswer: 1,
-              },
-              {
-                id: "q19",
-                part: "Part 6 - Final questions",
-                question: "What type of word is 'happiness'?",
-                answers: ["Verb", "Adjective", "Noun", "Adverb"],
-                correctAnswer: 2,
-              },
-              {
-                id: "q20",
-                part: "Part 6 - Final questions",
-                question: "Which sentence uses the word 'their' correctly?",
-                answers: [
-                  "Their going to the park",
-                  "They're going to the park",
-                  "Their house is beautiful",
-                  "There going to the park",
-                ],
-                correctAnswer: 2,
-              },
-            ],
-          },
-          {
-            id: "overview-audio-1",
-            type: "audio",
-            title: "Audio Lesson Title",
-            duration: "20 minutes",
-            completed: false,
-            audioUrl: "https://example.com/audio1.mp3",
-          },
-        ],
-      },
-    ],
-  };
-
-  const getIcon = (type, completed) => {
-    if (completed) {
-      return <CheckCircle className="w-5 h-5 text-green-500" />;
-    }
-    switch (type) {
-      case "video":
-        return <PlayCircle className="w-5 h-5 text-gray-600" />;
-      case "article":
-        return <FileText className="w-5 h-5 text-gray-600" />;
-      case "test":
-        return <HelpCircle className="w-5 h-5 text-gray-600" />;
-      case "audio":
-        return <PlayCircle className="w-5 h-5 text-gray-600" />;
-      default:
-        return <PlayCircle className="w-5 h-5 text-gray-600" />;
-    }
-  };
 
   return (
-    <aside className="w-[30%]">
-      <div
-        className="sticky bg-white text-white p-4 overflow-y-auto font-sans"
-        style={{
-          top: "80px",
-          height: `calc(100vh - 80px)`,
-        }}
-      >
+    <aside className="w-full h-full flex flex-col bg-white overflow-hidden">
+      {/* Course title */}
+      <div className="px-5 py-4 border-b border-gray-100">
+        <div className="flex items-center gap-2 mb-1">
+          <BookOpen className="w-4 h-4 text-blue-600" />
+          <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">
+            Course
+          </span>
+        </div>
+        <h2 className="text-sm font-bold text-gray-900 leading-snug">
+          {courseData.title}
+        </h2>
+      </div>
+
+      {/* Sections */}
+      <div className="flex-1 overflow-y-auto">
         {courseData.sections.map((section) => {
           const isExpanded = expandedSections.includes(section.id);
+          const pct = Math.round((section.progress / section.total) * 100);
 
           return (
-            <div key={section.id} className="border-b border-gray-200">
+            <div key={section.id}>
+              {/* Section header */}
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between px-6 py-4 bg-gray-100 hover:bg-gray-150 transition-colors"
+                className="w-full flex items-center justify-between px-5 py-3.5 hover:bg-gray-50 transition-colors group"
               >
-                <span className="text-sm font-medium text-gray-800">
-                  {section.title}
-                </span>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-600">
-                    {section.progress}
+                <div className="flex-1 min-w-0 text-left">
+                  <span className="text-sm font-semibold text-gray-800 block truncate">
+                    {section.title}
                   </span>
-                  <div
-                    className={`transform transition-transform duration-300 ${isExpanded ? "rotate-0" : "rotate-0"}`}
-                  >
-                    {isExpanded ? (
-                      <ChevronDown className="w-4 h-4 text-gray-600" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-gray-600" />
-                    )}
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-blue-500 rounded-full transition-all"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                    <span className="text-xs text-gray-400 shrink-0">
+                      {section.progress}/{section.total}
+                    </span>
                   </div>
+                </div>
+                <div className="ml-3 shrink-0">
+                  {isExpanded ? (
+                    <ChevronDown className="w-4 h-4 text-gray-400" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 text-gray-400" />
+                  )}
                 </div>
               </button>
 
-              {/* Animated Dropdown */}
+              {/* Items */}
               <div
-                className={`bg-gray-50 overflow-hidden transition-all duration-300 ease-in-out ${
-                  isExpanded
-                    ? "max-h-[2000px] opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[1000px]" : "max-h-0"}`}
               >
-                {section.items.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => onItemClick(item)}
-                    className={`flex items-start gap-3 px-6 py-4 hover:bg-gray-100 cursor-pointer transition-colors ${
-                      activeItemId === item.id ? "bg-blue-50" : ""
-                    }`}
-                  >
-                    <div className="mt-0.5">
-                      {getIcon(item.type, item.completed)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start gap-1">
-                        <span className="text-sm font-medium text-gray-800 capitalize">
-                          {item.type}:
-                        </span>
-                        <span className="text-sm text-gray-600 leading-relaxed">
-                          {item.title}
-                        </span>
+                {section.items.map((item) => {
+                  const cfg = typeConfig[item.type] || typeConfig.video;
+                  const Icon = cfg.icon;
+                  const isActive = activeItemId === item.id;
+
+                  return (
+                    <div
+                      key={item.id}
+                      onClick={() => onItemClick(item)}
+                      className={`flex items-start gap-3 px-5 py-3 cursor-pointer transition-all border-l-2 ${
+                        isActive
+                          ? "bg-blue-50 border-l-blue-500"
+                          : "border-l-transparent hover:bg-gray-50"
+                      }`}
+                    >
+                      {/* Icon */}
+                      <div
+                        className={`shrink-0 w-8 h-8 rounded-lg ${isActive ? cfg.bg : "bg-gray-100"} flex items-center justify-center mt-0.5 transition-colors`}
+                      >
+                        {item.completed ? (
+                          <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        ) : (
+                          <Icon
+                            className={`w-4 h-4 ${isActive ? cfg.color : "text-gray-400"}`}
+                          />
+                        )}
                       </div>
-                      <p className="text-xs text-gray-500 mt-2">
-                        {item.duration}
-                      </p>
+
+                      {/* Text */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span
+                            className={`text-xs font-semibold uppercase tracking-wide ${isActive ? cfg.color : "text-gray-400"}`}
+                          >
+                            {cfg.label}
+                          </span>
+                        </div>
+                        <p
+                          className={`text-sm leading-snug truncate ${isActive ? "text-gray-900 font-medium" : "text-gray-600"}`}
+                        >
+                          {item.title}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-0.5">
+                          {item.duration}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
+              <div className="border-b border-gray-100" />
             </div>
           );
         })}
