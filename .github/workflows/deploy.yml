@@ -25,7 +25,7 @@ jobs:
 
       - name: Build project
         run: |
-          npm run build
+          npm run build:production
           mv ./dist/index.html ./dist/index.php
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
