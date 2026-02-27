@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
 import { MyLink } from "@/components/shared/MyLink";
 import { zodResolver } from "@hookform/resolvers/zod";

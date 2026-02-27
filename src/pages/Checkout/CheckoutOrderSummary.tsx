@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { Checkbox } from "@/components/shared/checkbox";
 import { Input } from "@/components/shared/input";
 import {

@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { useSearchParams } from "react-router";
-import { Button } from "./Button";
+import { Button } from "./button";
 
 interface PaginationProps {
   meta: {

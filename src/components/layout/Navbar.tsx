@@ -3,7 +3,7 @@ import { authHelper } from "@/helpers/authHelper";
 import { useLogout } from "@/hooks/mutations/useAuthMutations";
 import { FiUser } from "react-icons/fi";
 import { useNavigate } from "react-router";
-import { Button } from "../shared/Button";
+import { Button } from "../shared/button";
 
 export function NavBar() {
   const navigate = useNavigate();

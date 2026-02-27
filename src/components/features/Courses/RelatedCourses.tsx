@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { Loading } from "@/components/shared/Loading";
 import { NoData } from "@/components/shared/NoData";
 import { useGetCourses } from "@/hooks/queries/useCourseQueries";

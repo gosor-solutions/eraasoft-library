@@ -1,7 +1,7 @@
 import { Circle } from "@/components/shared/Circle";
 import { TextArea } from "@/components/shared/Inputs/TextArea";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

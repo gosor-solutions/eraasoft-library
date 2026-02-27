@@ -1,5 +1,5 @@
 import { TextInput } from "@/components/shared/Inputs/TextInput";
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { Label } from "@/components/shared/label";
 import {
   Select,
@@ -83,9 +83,7 @@ export function PersonalDataTab() {
 
         {/* Save Button */}
         <div className="flex justify-end pt-4">
-          <Button size="lg">
-            Save Changes
-          </Button>
+          <Button size="lg">Save Changes</Button>
         </div>
       </form>
     </div>

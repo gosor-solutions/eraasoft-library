@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
 import { MyLink } from "@/components/shared/MyLink";
@@ -39,7 +39,6 @@ export default function Register() {
   const registerMutation = useRegister();
 
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors, isValid },

@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { extractYoutubeVideoId } from "@/helpers/videoHelpers";
 import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
 import type { Course } from "@/types/course";
@@ -151,4 +151,3 @@ export function CourseHeroSection({ course }: { course: Course }) {
     </section>
   );
 }
-

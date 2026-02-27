@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router";
+import * as z from "zod";
 
 // Validation Schema
 const resetPasswordSchema = z

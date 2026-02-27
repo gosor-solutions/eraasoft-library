@@ -1,4 +1,3 @@
-import { CoursePageHeader } from "@/components/features/Courses/CoursePageHeader";
 import { CoursesGrid } from "@/components/features/Courses/CoursesGrid";
 import { Loading } from "@/components/shared/Loading";
 import { NoData } from "@/components/shared/NoData";

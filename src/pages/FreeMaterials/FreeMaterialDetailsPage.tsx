@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { extractYoutubeVideoId } from "@/helpers/videoHelpers";
 import type { FreeMaterial } from "@/types/topic";
 import { FiArrowLeft } from "react-icons/fi";

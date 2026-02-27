@@ -1,4 +1,4 @@
-import { Button } from "@/components/shared/Button";
+import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
 import { MyLink } from "@/components/shared/MyLink";
 import { useLoginWithPhone } from "@/hooks/mutations/useAuthMutations";
