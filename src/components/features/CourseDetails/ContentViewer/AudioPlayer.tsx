@@ -64,7 +64,7 @@ const AudioPlayer = ({ audioData }) => {
                 key={i}
                 className="w-1 bg-blue-900 rounded-full transition-all"
                 style={{
-                  height: `${Math.random() * 100}%`,
+                  height: `${getBarHeight()}%`,
                   opacity: (currentTime / duration) * 50 > i ? 1 : 0.3,
                 }}
               ></div>
@@ -126,5 +126,9 @@ const AudioPlayer = ({ audioData }) => {
     </div>
   );
 };
+
+function getBarHeight() {
+  return Math.random() * 100;
+}
 
 export default AudioPlayer;

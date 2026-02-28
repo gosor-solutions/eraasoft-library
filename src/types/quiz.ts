@@ -13,8 +13,10 @@ export type Quiz = {
 
 export type QuizQuestion = {
   id: number;
-  question: string;
-  options: { id: number; text: string; is_correct: boolean }[];
+  lecture_id: number;
+  question_content: string;
+  question_type: number;
+  options: { id: number; option_content: string; is_correct: number }[];
 };
 
 export type SubmitQuizBody = {

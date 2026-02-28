@@ -1,5 +1,5 @@
 import { Button } from "@/components/shared/button";
-import { extractYoutubeVideoId } from "@/helpers/videoHelpers";
+import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
 import type { FreeMaterial } from "@/types/topic";
 import { FiArrowLeft } from "react-icons/fi";
 import { Navigate, useLocation, useNavigate } from "react-router";
@@ -11,12 +11,6 @@ export function FreeMaterialDetailsPage() {
 
   if (!material) {
     return <Navigate to="/free-materials" replace />;
-  }
-
-  // Extract youtube ID for embed
-  let embedUrl = material.link;
-  if (material.type === "video") {
-    embedUrl = `https://www.youtube.com/embed/${extractYoutubeVideoId(material.link)}`;
   }
 
   return (
@@ -47,13 +41,7 @@ export function FreeMaterialDetailsPage() {
       <div className="container mx-auto px-4 py-6 h-[calc(100vh-80px)]">
         {material.type === "video" ? (
           <div className="w-full h-full max-w-5xl mx-auto bg-black rounded-xl overflow-hidden shadow-lg flex items-center justify-center">
-            <iframe
-              src={embedUrl}
-              title={material.title}
-              className="w-full h-full aspect-video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            <YoutubeEmbed url={material.link} title={material.title} />
           </div>
         ) : (
           <div className="w-full h-full bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">

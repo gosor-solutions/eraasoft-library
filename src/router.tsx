@@ -17,6 +17,7 @@ import { MainLayout } from "./pages/Layouts/MainLayout";
 import { ProfilePage } from "./pages/Profile";
 import { TopicCoursesPage } from "./pages/Topics/TopicCoursesPage";
 import { TopicsPage } from "./pages/Topics/TopicsPage";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -78,12 +79,11 @@ export const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
-        // path: "courses/:courseId",
-        path: "course-details",
+        path: "course-details/:id",
         element: <CourseDetails />,
       },
       {
-        path: "course-test",
+        path: "course-details/:id/quiz/:quizId",
         element: <CourseTest />,
       },
       {

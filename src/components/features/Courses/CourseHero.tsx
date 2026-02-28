@@ -1,5 +1,5 @@
 import { Button } from "@/components/shared/button";
-import { extractYoutubeVideoId } from "@/helpers/videoHelpers";
+import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
 import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
 import type { Course } from "@/types/course";
 import { Lock } from "lucide-react";
@@ -117,20 +117,7 @@ export function CourseHeroSection({ course }: { course: Course }) {
           {/* TODO: this is preview video */}
           <div className="aspect-square w-[450px] relative overflow-hidden rounded-2xl">
             {playVideo ? (
-              <>
-                <iframe
-                  width="560"
-                  height="315"
-                  src={`https://www.youtube.com/embed/${extractYoutubeVideoId(
-                    course?.preview_video,
-                  )}`}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                ></iframe>
-              </>
+              <YoutubeEmbed url={course?.preview_video} title={course?.title} />
             ) : (
               <>
                 <img

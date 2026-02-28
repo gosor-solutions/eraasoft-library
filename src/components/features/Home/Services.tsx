@@ -53,33 +53,6 @@ function SectionHeader() {
 
 // Services Grid Component
 function ServicesGrid() {
-  const services = [
-    {
-      id: 1,
-      title: "Nasr CityAcademy",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
-      image: "/adult-course.jpg",
-      icon: "🎓",
-    },
-    {
-      id: 2,
-      title: "Kids Courses",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
-      image: "/kids-course.jpg",
-      icon: "👦",
-    },
-    {
-      id: 3,
-      title: "Adult Courses",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
-      image: "/adult-course.jpg",
-      icon: "👨",
-    },
-  ];
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
       {services.map((service) => (
@@ -90,7 +63,7 @@ function ServicesGrid() {
 }
 
 // Service Card Component
-function ServiceCard({ service }: { service: any }) {
+function ServiceCard({ service }: { service: (typeof services)[number] }) {
   return (
     <div className="group relative rounded-tl-3xl rounded-br-3xl rounded-tr-[78px] rounded-bl-[78px] overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
       {/* Background Image */}
@@ -123,3 +96,30 @@ function ServiceCard({ service }: { service: any }) {
     </div>
   );
 }
+
+const services = [
+  {
+    id: 1,
+    title: "Nasr CityAcademy",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
+    image: "/adult-course.jpg",
+    icon: "🎓",
+  },
+  {
+    id: 2,
+    title: "Kids Courses",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
+    image: "/kids-course.jpg",
+    icon: "👦",
+  },
+  {
+    id: 3,
+    title: "Adult Courses",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
+    image: "/adult-course.jpg",
+    icon: "👨",
+  },
+];

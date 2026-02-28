@@ -1,8 +1,8 @@
+import type { ApiResponse } from "@/types/api";
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../../constants/queryKeys";
 import { apiService } from "../../services/apiService";
 import type {
-  GetEnrolledCourseResponse,
   GetEnrolledRoundResponse,
   GetLearningResponse,
 } from "../../types/learning";
@@ -10,7 +10,8 @@ import type {
 export const useGetLearning = () => {
   return useQuery({
     queryKey: QUERY_KEYS.learning.all(),
-    queryFn: () => apiService.get<GetLearningResponse>("/learning"),
+    queryFn: () =>
+      apiService.get<ApiResponse<GetLearningResponse>>("/learning"),
   });
 };
 
@@ -18,18 +19,18 @@ export const useGetEnrolledRound = (roundId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.learning.enrolledRound(roundId),
     queryFn: () =>
-      apiService.get<GetEnrolledRoundResponse>(
+      apiService.get<ApiResponse<GetEnrolledRoundResponse>>(
         `/learning/enrolled-rounds/${roundId}`,
       ),
   });
 };
 
-export const useGetEnrolledCourse = (courseId: number) => {
-  return useQuery({
-    queryKey: QUERY_KEYS.learning.enrolledCourse(courseId),
-    queryFn: () =>
-      apiService.get<GetEnrolledCourseResponse>(
-        `/learning/enrolled-courses/${courseId}`,
-      ),
-  });
-};
+// export const useGetEnrolledCourse = (courseId: number) => {
+//   return useQuery({
+//     queryKey: QUERY_KEYS.learning.enrolledCourse(courseId),
+//     queryFn: () =>
+//       apiService.get<GetEnrolledCourseResponse>(
+//         `/learning/enrolled-courses/${courseId}`,
+//       ),
+//   });
+// };

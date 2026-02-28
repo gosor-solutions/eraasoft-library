@@ -1,7 +1,6 @@
-import VideoPlayer from "./VideoPlayer";
+import PdfViewer from "./PdfViewer";
 import TestViewer from "./TestViewer";
-import ArticleViewer from "./ArticleViewer";
-import AudioPlayer from "./AudioPlayer";
+import VideoPlayer from "./VideoPlayer";
 
 const ContentViewer = ({ activeItem }) => {
   if (!activeItem) {
@@ -17,10 +16,10 @@ const ContentViewer = ({ activeItem }) => {
       return <VideoPlayer videoData={activeItem} />;
     case "test":
       return <TestViewer testData={activeItem} />;
-    case "article":
-      return <ArticleViewer articleData={activeItem} />;
-    case "audio":
-      return <AudioPlayer audioData={activeItem} />;
+    // case "audio":
+    //   return <AudioPlayer audioData={activeItem} />;
+    case "pdf":
+      return <PdfViewer pdfData={activeItem} />;
     default:
       return <p>Unsupported content type</p>;
   }

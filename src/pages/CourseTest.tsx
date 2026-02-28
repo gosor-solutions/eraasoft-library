@@ -1,17 +1,24 @@
 import ConfirmExitModal from "@/components/features/CourseDetails/ConfirmExitModal";
+import { useSubmitQuiz } from "@/hooks/mutations/useQuizMutations";
+import { useGetQuiz } from "@/hooks/queries/useQuizQueries";
 import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
-import { ChevronLeft, Clock, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
-import { useBlocker, useLocation } from "react-router";
+import { ChevronLeft, Loader2, X } from "lucide-react";
+import { useCallback, useState } from "react";
+import { useBlocker, useParams } from "react-router";
 
 const CourseTest = () => {
-  const location = useLocation();
   const navigate = useCustomNavigation();
-  const testData = location.state?.testData;
+  const { quizId } = useParams();
+
+  const quizQuery = useGetQuiz(Number(quizId));
+  const submitQuizMutation = useSubmitQuiz(Number(quizId));
+
+  const quizData = quizQuery.data?.data;
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [timeLeft, setTimeLeft] = useState(1800);
+  const [answers, setAnswers] = useState<
+    Array<{ question_id: number; option_id: number }>
+  >([]);
   const [submitted, setSubmitted] = useState(false);
   const [showExitModal, setShowExitModal] = useState(false);
 
@@ -21,11 +28,9 @@ const CourseTest = () => {
     return currentLocation.pathname !== nextLocation.pathname;
   });
 
-  useEffect(() => {
-    if (blocker.state === "blocked") {
-      setShowExitModal(true);
-    }
-  }, [blocker.state]);
+  if (blocker.state === "blocked" && !showExitModal) {
+    setShowExitModal(true);
+  }
 
   const handleConfirmExit = () => {
     setShowExitModal(false);
@@ -41,15 +46,18 @@ const CourseTest = () => {
     navigate(-1);
   };
 
-  const handleAnswerSelect = (questionId, answerIndex) => {
-    setAnswers({
-      ...answers,
-      [questionId]: answerIndex,
-    });
+  const handleAnswerSelect = (questionId: number, optionId: number) => {
+    setAnswers((prev) => [
+      ...prev,
+      { question_id: questionId, option_id: optionId },
+    ]);
   };
 
   const handleNext = () => {
-    if (currentQuestion < testData.questions.length - 1) {
+    if (
+      quizData?.questions &&
+      currentQuestion < quizData.questions.length - 1
+    ) {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
@@ -61,56 +69,55 @@ const CourseTest = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    setSubmitted(true);
-    let score = 0;
-    testData.questions.forEach((q) => {
-      if (answers[q.id] === q.correctAnswer) {
-        score++;
-      }
-    });
-    console.log(`Score: ${score}/${testData.questions.length}`);
-  }, [answers, testData.questions]);
+    const formattedAnswers = answers.map((answer) => ({
+      question_id: answer.question_id,
+      option_id: answer.option_id,
+    }));
 
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, "0")}`;
-  };
+    submitQuizMutation.mutate(
+      { answers: formattedAnswers },
+      {
+        onSuccess: () => {
+          setSubmitted(true);
+        },
+      },
+    );
+  }, [answers, submitQuizMutation]);
 
-  // Redirect if no test data
-  useEffect(() => {
-    if (!testData) {
-      navigate(-1);
-    }
-  }, [testData, navigate]);
-
-  // Timer
-  useEffect(() => {
-    if (submitted || !testData) return;
-
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          handleSubmit();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [submitted, testData, handleSubmit]);
-
-  if (!testData) {
-    return null;
+  if (quizQuery.isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-blue-900" />
+      </div>
+    );
   }
+
+  if (quizQuery.isError || !quizData) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+          Error loading test
+        </h2>
+        <p className="text-gray-600 mb-6">
+          We couldn't load the test data. Please try again.
+        </p>
+        <button
+          onClick={() => navigate(-1)}
+          className="bg-blue-900 text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition-colors"
+        >
+          Go Back
+        </button>
+      </div>
+    );
+  }
+
   // Results Screen
-  if (submitted) {
-    const score = testData.questions.reduce((acc, q) => {
-      return acc + (answers[q.id] === q.correctAnswer ? 1 : 0);
-    }, 0);
-    const percentage = ((score / testData.questions.length) * 100).toFixed(0);
+  if (submitted && submitQuizMutation.isSuccess) {
+    const submission = submitQuizMutation.data?.data;
+    const score = submission.correct_answers_count || 0;
+    const total =
+      submission?.total_questions || quizData.questions?.length || 0;
+    const percentage = submission?.score.toFixed(0);
 
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -125,8 +132,7 @@ const CourseTest = () => {
               Test Completed!
             </h2>
             <p className="text-gray-600 text-lg">
-              You got {score} out of {testData.questions.length} questions
-              correct
+              You got {score} out of {total} questions correct
             </p>
           </div>
           <div className="flex gap-3 justify-center">
@@ -134,8 +140,8 @@ const CourseTest = () => {
               onClick={() => {
                 setSubmitted(false);
                 setCurrentQuestion(0);
-                setAnswers({});
-                setTimeLeft(1800);
+                setAnswers([]);
+                submitQuizMutation.reset();
               }}
               className="bg-blue-900 text-white px-8 py-3 rounded-lg hover:bg-blue-800 transition-colors font-medium"
             >
@@ -154,9 +160,11 @@ const CourseTest = () => {
   }
 
   // Test Screen
-  const question = testData.questions[currentQuestion];
-  const progress = ((currentQuestion + 1) / testData.questions.length) * 100;
-  const isLastQuestion = currentQuestion === testData.questions.length - 1;
+  const question = quizData.questions?.[currentQuestion];
+  const progress =
+    ((currentQuestion + 1) / (quizData.questions?.length || 1)) * 100;
+  const isLastQuestion =
+    currentQuestion === (quizData.questions?.length || 1) - 1;
 
   return (
     <>
@@ -167,21 +175,15 @@ const CourseTest = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <h2 className="text-lg font-semibold text-gray-800">
-                  {testData.title}
+                  {quizData.title}
                 </h2>
                 <span className="text-sm text-gray-500">
-                  Question {currentQuestion + 1} of {testData.questions.length}
+                  Question {currentQuestion + 1} of{" "}
+                  {quizData.questions?.length || 0}
                 </span>
               </div>
 
               <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg">
-                  <Clock className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-800 font-medium tabular-nums">
-                    {formatTime(timeLeft)}
-                  </span>
-                </div>
-
                 <button
                   onClick={handleExitClick}
                   className="text-gray-500 hover:text-gray-700 transition-colors"
@@ -206,26 +208,21 @@ const CourseTest = () => {
 
         {/* Main Content */}
         <div className="max-w-4xl mx-auto px-6 py-12">
-          {/* Part Title */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold text-gray-800">
-              {question.part || "Part 1 - Grammar and vocabulary"}
-            </h3>
-          </div>
-
           {/* Question */}
           <div className="mb-10">
             <p className="text-gray-800 leading-relaxed text-lg mb-8">
-              {question.question}
+              {question?.question_content}
             </p>
 
             {/* Answer Options */}
             <div className="space-y-4">
-              {question.answers.map((answer, index) => {
-                const isSelected = answers[question.id] === index;
+              {question?.options?.map((option) => {
+                const isSelected =
+                  answers.find((answer) => answer.question_id === question.id)
+                    ?.option_id === option.id;
                 return (
                   <label
-                    key={index}
+                    key={option.id}
                     className={`flex items-center gap-4 p-5 border-2 rounded-xl cursor-pointer transition-all ${
                       isSelected
                         ? "bg-blue-50 border-blue-900 shadow-md"
@@ -236,11 +233,13 @@ const CourseTest = () => {
                       type="radio"
                       name={`question-${question.id}`}
                       checked={isSelected}
-                      onChange={() => handleAnswerSelect(question.id, index)}
+                      onChange={() =>
+                        handleAnswerSelect(question.id, option.id)
+                      }
                       className="w-5 h-5 text-blue-900 focus:ring-blue-900 focus:ring-2"
                     />
                     <span className="text-gray-800 text-base flex-1">
-                      {answer}
+                      {option.option_content}
                     </span>
                   </label>
                 );
@@ -274,9 +273,17 @@ const CourseTest = () => {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  className="bg-green-600 text-white px-10 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors"
+                  disabled={submitQuizMutation.isPending}
+                  className="flex items-center justify-center bg-green-600 text-white px-10 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
                 >
-                  Submit Test
+                  {submitQuizMutation.isPending ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Test"
+                  )}
                 </button>
               )}
             </div>
@@ -288,7 +295,7 @@ const CourseTest = () => {
               Question Navigator:
             </p>
             <div className="flex flex-wrap gap-2">
-              {testData.questions.map((q, index) => (
+              {quizData.questions?.map((q, index) => (
                 <button
                   key={q.id}
                   onClick={() => setCurrentQuestion(index)}
@@ -299,7 +306,9 @@ const CourseTest = () => {
                         ? "bg-green-100 text-green-800 hover:bg-green-200"
                         : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                   }`}
-                  title={`Question ${index + 1}${answers[q.id] !== undefined ? " (Answered)" : ""}`}
+                  title={`Question ${index + 1}${
+                    answers[q.id] !== undefined ? " (Answered)" : ""
+                  }`}
                 >
                   {index + 1}
                 </button>

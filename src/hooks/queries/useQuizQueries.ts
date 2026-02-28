@@ -6,6 +6,7 @@ import type {
   GetQuizResultsResponse,
   GetQuizzesResponse,
 } from "../../types/quiz";
+import type { ApiResponse } from "@/types/api";
 
 export const useGetQuizzes = (params?: Record<string, unknown>) => {
   return useQuery({
@@ -25,7 +26,7 @@ export const useGetLectureQuizzes = (lectureId: number) => {
 export const useGetQuiz = (quizId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.quizzes.detail(quizId),
-    queryFn: () => apiService.get<GetQuizResponse>(`/quizzes/${quizId}`),
+    queryFn: () => apiService.get<ApiResponse<GetQuizResponse>>(`/quizzes/${quizId}`),
   });
 };
 

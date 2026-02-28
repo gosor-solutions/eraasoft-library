@@ -1,5 +1,7 @@
+import { AuthedNavbar } from "@/components/layout/AuthedNavbar";
 import { Footer } from "@/components/layout/Footer";
 import { NavBar } from "@/components/layout/Navbar";
+import { authHelper } from "@/helpers/authHelper";
 import { Outlet, useLocation } from "react-router";
 
 export function MainLayout() {
@@ -24,8 +26,8 @@ export function MainLayout() {
 
   return (
     <>
-      <NavBar />
-      <div className="mt-16">
+      {authHelper.isAuthenticated() ? <AuthedNavbar /> : <NavBar />}
+      <div className="mt-16 min-h-[90dvh]">
         <Outlet />
       </div>
       <Footer />
