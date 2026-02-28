@@ -1,34 +1,31 @@
+import { Button } from "@/components/shared/button";
 import { Loading } from "@/components/shared/Loading";
 import { NoData } from "@/components/shared/NoData";
 import { useGetCourses } from "@/hooks/queries/useCourseQueries";
-import { useSearchParams } from "react-router";
 import { CoursesGrid } from "../Courses/CoursesGrid";
 
+// Main Courses Component
 export function CoursesSection() {
-  const [params] = useSearchParams();
-  const coursesQuery = useGetCourses({
-    page: params.get("page") || "1",
-  });
-
-  let content = null;
+  const coursesQuery = useGetCourses();
 
   if (coursesQuery.isPending) {
-    content = <Loading size={40} color="#000000" />;
-  } else if (!coursesQuery.data?.data?.length) {
-    content = <NoData data="Courses" />;
-  } else {
-    content = (
-      <>
-        <CoursesGrid courses={coursesQuery.data?.data} />
-      </>
-    );
+    return <Loading size={40} color="#000000" />;
+  }
+
+  if (!coursesQuery.data?.data?.length) {
+    return <NoData data="Courses" />;
   }
 
   return (
     <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <SectionHeader />
-        {content}
+        <CoursesGrid courses={coursesQuery.data.data} />
+        <div className="flex justify-center">
+          <Button className="text-lg px-4 py-6 rounded-xl font-normal">
+            Explore all Courses
+          </Button>
+        </div>
       </div>
     </section>
   );

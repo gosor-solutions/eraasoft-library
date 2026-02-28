@@ -8,19 +8,21 @@ import { useGetCourse } from "@/hooks/queries/useCourseQueries";
 import { useParams } from "react-router";
 
 export function SingleCoursePage() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const courseQuery = useGetCourse(Number(id));
 
-  if (courseQuery.isLoading) {
-    return <Loading size={40} />;
-  } else if (!courseQuery.data?.data) {
-    return <NoData data={"Data"} />;
+  if (courseQuery.isPending) {
+    return <Loading size={40} color="#000000" />;
+  }
+
+  if (!courseQuery.data?.data) {
+    return <NoData data="Courses" />;
   }
 
   return (
     <div>
-      <CourseHeroSection course={courseQuery.data?.data} />
-      <WhatWillYouLearn learn={courseQuery.data?.data?.what_you_will_learn} />
+      <CourseHeroSection course={courseQuery.data.data} />
+      <WhatWillYouLearn learn={courseQuery.data.data.what_you_will_learn} />
       <Testimonials />
       <RelatedCourses />
     </div>

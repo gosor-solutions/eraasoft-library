@@ -3,9 +3,11 @@ import { ProfileTabs } from "@/components/features/Profile/ProfileTabs/ProfileTa
 
 export function ProfilePage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-16">
       <ProfileHeader />
-      <ProfileTabs />
+      <div className="pt-20 md:pt-28">
+        <ProfileTabs />
+      </div>
     </div>
   );
 }

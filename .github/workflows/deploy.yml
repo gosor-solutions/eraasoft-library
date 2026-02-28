@@ -24,9 +24,7 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: |
-          npm run build:production
-          mv ./dist/index.html ./dist/index.php
+        run: npm run build
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 

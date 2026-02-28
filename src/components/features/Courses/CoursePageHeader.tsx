@@ -1,9 +1,17 @@
 import { Button } from "@/components/shared/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/shared/dialog";
 import { Input } from "@/components/shared/input";
-import { Search } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
+import { CourseFiltersModal } from "./CourseFiltersModal";
 
 export function CoursePageHeader() {
-  // const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -24,23 +32,23 @@ export function CoursePageHeader() {
         </div>
 
         {/* Filter Button */}
-        {/* <Button
+        <Button
           onClick={() => setOpen(true)}
           variant="outline"
           className="flex items-center gap-2 px-6 py-6"
         >
           <span>Filter</span>
           <SlidersHorizontal className="h-4 w-4" />
-        </Button> */}
+        </Button>
       </div>
-      {/* <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">Filters</DialogTitle>
           </DialogHeader>
           <CourseFiltersModal onOpenChange={setOpen} />
         </DialogContent>
-      </Dialog> */}
+      </Dialog>
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import { AboutUs } from "./components/features/Home/AboutUs";
 import CreateNewPassword from "./pages/AuthPages/CreateNewPassword";
 import ForgetPassword from "./pages/AuthPages/ForgetPassword";
 import Login from "./pages/AuthPages/Login";
@@ -28,8 +29,26 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/about",
+        element: <AboutUs />,
+      },
+      {
         path: "contact-us",
         element: <ContactUs />,
+      },
+      {},
+      {
+        path: "free-materials",
+        children: [
+          {
+            index: true,
+            element: <FreeMaterialsPage />,
+          },
+          {
+            path: ":id",
+            element: <FreeMaterialDetailsPage />,
+          },
+        ],
       },
       {
         path: "courses",
@@ -57,23 +76,12 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "free-materials",
-        children: [
-          {
-            index: true,
-            element: <FreeMaterialsPage />,
-          },
-          {
-            path: ":id",
-            element: <FreeMaterialDetailsPage />,
-          },
-        ],
-      },
+
       {
         path: "checkout",
         element: <CheckoutOrderSummary />,
       },
+
       {
         path: "profile",
         element: <ProfilePage />,

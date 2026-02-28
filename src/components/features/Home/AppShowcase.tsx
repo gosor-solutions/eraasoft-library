@@ -18,12 +18,12 @@ export function AppShowcaseSection() {
 
 function AppContent() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-center lg:text-left">
       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">
         Englivision App
       </h2>
 
-      <p className="text-brand-gray text-lg leading-relaxed">
+      <p className="text-brand-gray text-base sm:text-lg leading-relaxed">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
         libero cursus, suscipit risus eget, pretium nulla. Quisqu Lorem ipsum
         dolor sit amet, consectetur adipiscing elit. Nullam vitae libero cursus,
@@ -34,7 +34,7 @@ function AppContent() {
       </p>
 
       {/* Download Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
         <a
           href="#"
           className="inline-flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
@@ -63,24 +63,30 @@ function AppContent() {
 
 function AppScreenshots() {
   return (
-    <div className="relative flex justify-center items-center gap-4 lg:gap-6 translate-x-40">
-      <img src="/app-showcase.png" alt="app-showcase" className="z-50" />
+    <div className="relative flex justify-center items-center">
+      {/* Decorative blobs — hidden on mobile to avoid overflow */}
       <div
+        className="hidden sm:block absolute w-36 h-16 bg-[#66BEFF] rounded-[50%] z-0"
         style={{
           top: 170,
-          left: 300,
-          transform: `rotate(${-14}deg) scale(${6})`,
+          left: "50%",
+          transform: `translateX(-50%) rotate(-14deg) scale(6)`,
         }}
-        className="absolute w-36 h-16 bg-[#66BEFF] rounded-[50%] z-n1"
-      ></div>
+      />
       <div
+        className="hidden sm:block absolute w-36 h-16 bg-gradient-to-t from-[#90d1ff] via-[#C6E7FF] to-white rounded-[50%] z-0"
         style={{
           top: 170,
-          left: 300,
-          transform: `rotate(${30}deg) scale(${6})`,
+          left: "50%",
+          transform: `translateX(-50%) rotate(30deg) scale(6)`,
         }}
-        className="absolute w-36 h-16 bg-linear-to-t from-[#90d1ff] via-[#C6E7FF] to-white rounded-[50%] z-n1"
-      ></div>
+      />
+
+      <img
+        src="/app-showcase.png"
+        alt="app-showcase"
+        className="relative z-10 w-48 sm:w-64 md:w-72 lg:w-auto max-w-xs lg:max-w-sm xl:max-w-md"
+      />
     </div>
   );
 }

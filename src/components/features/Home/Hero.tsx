@@ -1,19 +1,19 @@
 // Main Hero Component
 export function HeroSection() {
   return (
-    <section className="h-[1000px] relative bg-gray-900 py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+    <section className="min-h-[80vh] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img
           src="/hero.png"
           alt="Student with books"
-          className="w-full h-full object-cover object-top"
+          className="w-full h-full object-cover object-top sm:object-[center_-80px] lg:object-[0px_-130px]"
         />
-        <div className="absolute inset-0 bg-gray-900/50 bg-opacity-60"></div>
+        <div className="absolute inset-0 bg-gray-900/60"></div>
       </div>
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto text-center">
+      <div className="relative w-full max-w-4xl mx-auto text-center">
         <HeroContent />
       </div>
     </section>
@@ -23,12 +23,17 @@ export function HeroSection() {
 // Hero Content Component
 function HeroContent() {
   return (
-    <div className="space-y-8 py-12 sm:py-16 lg:py-20">
+    <div className="space-y-6 sm:space-y-8 py-10 sm:py-14 lg:py-20">
       <Logo />
 
-      <h1 className="font-inter text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white">
+      <h1 className="font-inter text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight px-2">
         Welcome to Englivision
       </h1>
+
+      <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-4">
+        Your journey to mastering English starts here. Learn smarter, not
+        harder.
+      </p>
 
       <CTAButtons />
     </div>
@@ -39,26 +44,22 @@ function HeroContent() {
 function Logo() {
   return (
     <div className="flex justify-center">
-      <div className=" rounded-lg p-4 inline-block">
-        <div className="text-2xl sm:text-3xl font-bold text-gray-900">
-          <img className="w-80" src="/englivision-logo.svg" alt="gosor-logo" />
-          {/* <span className="block text-xs text-gray-600 mt-1">
-            LEARNING HAS NO LIMITS
-          </span> */}
-        </div>
-      </div>
+      <img
+        className="w-48 sm:w-64 md:w-72 lg:w-80"
+        src="/englivision-logo.svg"
+        alt="englivision-logo"
+      />
     </div>
   );
 }
 
-// CTA Buttons Component
 function CTAButtons() {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <button className="w-full sm:w-auto px-8 py-3 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 shadow-lg">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-6 sm:px-0">
+      <button className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 shadow-lg text-sm sm:text-base">
         Start learn now
       </button>
-      <button className="w-full sm:w-auto px-8 py-3 bg-brand-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg">
+      <button className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-brand-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg text-sm sm:text-base">
         Join with us
       </button>
     </div>
