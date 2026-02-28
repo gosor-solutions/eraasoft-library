@@ -1,9 +1,4 @@
-import { Button } from "@/components/shared/button";
-import { authHelper } from "@/helpers/authHelper";
-import {
-  useLoginWithPhone,
-  useVerifyOtp,
-} from "@/hooks/mutations/useAuthMutations";
+import { Button } from "@/components/shared/Button";
 import {
   useEffect,
   useRef,
@@ -11,16 +6,19 @@ import {
   type ClipboardEvent,
   type KeyboardEvent,
 } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router";
 
 interface OTPVerificationEnhancedProps {
   length?: number;
+  onComplete?: (otp: string) => Promise<boolean>;
+  onResend?: () => Promise<void>;
   autoSubmit?: boolean;
   resendTimer?: number;
 }
 
 export default function OTPVerificationEnhanced({
   length = 4,
+  onComplete,
+  onResend,
   autoSubmit = true,
   resendTimer = 60,
 }: OTPVerificationEnhancedProps) {
@@ -30,9 +28,6 @@ export default function OTPVerificationEnhanced({
   const [timeLeft, setTimeLeft] = useState(resendTimer);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
-  const navigate = useNavigate();
-  const phone = useLocation().state?.phone;
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -47,47 +42,11 @@ export default function OTPVerificationEnhanced({
     return () => clearInterval(timer);
   }, [timeLeft]);
 
-  const verifyOtpMutation = useVerifyOtp();
-  const loginMutation = useLoginWithPhone();
-
-  async function onComplete(otp: string) {
-    await verifyOtpMutation.mutateAsync(
-      {
-        otp,
-        phone,
-        device_token: "token",
-      },
-      {
-        onSuccess: (data) => {
-          console.log(data);
-          authHelper.setAuth(data.data.token);
-          navigate("/");
-        },
-        onError: () => {
-          setError("Invalid OTP. Please try again.");
-          setOtp(new Array(length).fill(""));
-          inputRefs.current[0]?.focus();
-        },
-        onSettled: (data, error) => {
-          console.log(data, error);
-        },
-      },
-    );
-  }
-
-  function onResend() {
-    loginMutation.mutate(
-      { phone },
-      {
-        onSuccess: () => {
-          setTimeLeft(resendTimer);
-          setCanResend(false);
-          setOtp(new Array(length).fill(""));
-          inputRefs.current[0]?.focus();
-        },
-      },
-    );
-  }
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
@@ -178,7 +137,13 @@ export default function OTPVerificationEnhanced({
     setError("");
 
     try {
-      await onComplete(otpValue);
+      const isValid = await onComplete?.(otpValue);
+
+      if (!isValid) {
+        setError("Invalid OTP. Please try again.");
+        setOtp(new Array(length).fill(""));
+        inputRefs.current[0]?.focus();
+      }
     } catch (error) {
       setError("Verification failed. Please try again.");
       console.error("Verification error:", error);
@@ -217,10 +182,6 @@ export default function OTPVerificationEnhanced({
       setIsLoading(false);
     }
   };
-
-  if (!phone) {
-    return <Navigate to="/register" />;
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 ">
@@ -368,9 +329,3 @@ export default function OTPVerificationEnhanced({
     </div>
   );
 }
-
-const formatTime = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${mins}:${secs.toString().padStart(2, "0")}`;
-};
