@@ -98,30 +98,30 @@ function MyLearning() {
   );
 }
 
-function PlacementTestBanner() {
-  const navigate = useNavigate();
-  return (
-    <section className="bg-brand-primary rounded-2xl p-8 md:p-12 mb-12 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-      {/* Decorative circles */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white/10 "></div>
-      <div className="absolute bottom-0 left-1/2 w-40 h-40 rounded-full bg-white/10 "></div>
+// function PlacementTestBanner() {
+//   const navigate = useNavigate();
+//   return (
+//     <section className="bg-brand-primary rounded-2xl p-8 md:p-12 mb-12 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+//       {/* Decorative circles */}
+//       <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white/10 "></div>
+//       <div className="absolute bottom-0 left-1/2 w-40 h-40 rounded-full bg-white/10 "></div>
 
-      <div className="relative z-10 max-w-2xl">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
-          Not sure where to start?
-        </h1>
-        <p className="text-white/80 text-lg mb-0">
-          Take our quick placement test to find the perfect level and courses
-          tailored just for you.
-        </p>
-      </div>
-      <Button
-        onClick={() => navigate("#")}
-        variant="secondary"
-        className="text-lg px-4 py-6 relative z-10"
-      >
-        Take Placement Test
-      </Button>
-    </section>
-  );
-}
+//       <div className="relative z-10 max-w-2xl">
+//         <h1 className="text-3xl md:text-4xl font-bold mb-4">
+//           Not sure where to start?
+//         </h1>
+//         <p className="text-white/80 text-lg mb-0">
+//           Take our quick placement test to find the perfect level and courses
+//           tailored just for you.
+//         </p>
+//       </div>
+//       <Button
+//         onClick={() => navigate("#")}
+//         variant="secondary"
+//         className="text-lg px-4 py-6 relative z-10"
+//       >
+//         Take Placement Test
+//       </Button>
+//     </section>
+//   );
+// }
