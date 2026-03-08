@@ -48,7 +48,11 @@ export default function Login() {
   return (
     <div className="relative min-h-screen">
       <div className="absolute logo-circle">
-        <img src="/englivision-logo-color.png" alt="Logo" />
+        <img
+          src="/englivision-logo-color.png"
+          alt="Logo"
+          onClick={() => navigate("/")}
+        />
       </div>
       <div className="bottom-left-circle"></div>
       <div className="small-circle"></div>

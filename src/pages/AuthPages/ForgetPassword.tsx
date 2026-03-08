@@ -20,8 +20,8 @@ export default function ForgetPassword() {
     },
   });
 
-  const onSubmit = async (data: ForgetPasswordFormData) => {
-    console.log("Form data:", data);
+  const onSubmit = async (/*data: ForgetPasswordFormData*/) => {
+    //console.log("Form data:", data);
   };
 
   return (
