@@ -44,7 +44,7 @@ function FreeMaterialBanner() {
 function MyLearning() {
   const learningQuery = useGetLearning();
 
-  console.log(learningQuery.data?.data);
+  //console.log(learningQuery.data?.data);
 
   const groups = learningQuery.data?.data?.groups || [];
 

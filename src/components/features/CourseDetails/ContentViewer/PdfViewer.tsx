@@ -20,8 +20,6 @@ const PdfViewer = ({ pdfData }: PdfViewerProps) => {
         {pdfData.title || "Document"}
       </h3>
 
-      <p>{JSON.stringify(pdfData)}</p>
-
       <div className="flex-1 w-full bg-gray-100">
         <iframe
           src={pdfData.fileUrl}
