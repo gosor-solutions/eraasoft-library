@@ -1,13 +1,16 @@
 import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
 import { MyLink } from "@/components/shared/MyLink";
+import { useRegister } from "@/hooks/mutations/useAuthMutations";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import { useState } from "react";
-import { BiLogoFacebookCircle } from "react-icons/bi";
-import { FcGoogle } from "react-icons/fc";
+// import { BiLogoFacebookCircle } from "react-icons/bi";
+// import { FcGoogle } from "react-icons/fc";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { useNavigate } from "react-router";
 import "./Register.css";
+
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 const isPhoneValid = (phone: string) => {
@@ -20,7 +23,32 @@ const isPhoneValid = (phone: string) => {
 
 export default function Register() {
   const [phone, setPhone] = useState("");
-  const isValid = isPhoneValid(phone);
+  const [name, setName] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const { mutate: register, isPending } = useRegister();
+
+  const phoneValid = isPhoneValid(phone);
+  const nameValid = name.trim().length > 0;
+  const canSubmit = phoneValid && nameValid;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSubmit) return;
+    setError(null);
+
+    register(
+      { phone, name },
+      {
+        onSuccess: () => {
+          navigate("/otp", { state: { phone } });
+        },
+        onError: () => {
+          setError("Registration failed. Please try again.");
+        },
+      },
+    );
+  };
 
   return (
     <div className="relative min-h-screen ">
@@ -36,6 +64,7 @@ export default function Register() {
             <form
               id="contact-us-form"
               className="flex flex-col gap-4 w-full max-w-md"
+              onSubmit={handleSubmit}
             >
               <h2 className="text-2xl font-medium text-center">
                 Create Account
@@ -43,6 +72,22 @@ export default function Register() {
               <p className="text-[14px] text-[#12121280] text-center">
                 Fill in the fields below to create your account.
               </p>
+
+              <label htmlFor="name" className="font-bold">
+                Full Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+                className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+              />
+              {!nameValid && name && (
+                <div className="text-red-500 text-sm">Name is required</div>
+              )}
+
               <label htmlFor="phone" className="font-bold">
                 Mobile number
               </label>
@@ -52,15 +97,18 @@ export default function Register() {
                 onChange={(phone) => setPhone(phone)}
               />
 
-              {!isValid && phone && (
+              {!phoneValid && phone && (
                 <div className="text-red-500 text-sm">Phone is not valid</div>
               )}
+
+              {error && <div className="text-red-500 text-sm">{error}</div>}
 
               <Field orientation="horizontal" className="w-full">
                 <Button
                   type="submit"
                   className="text-xl py-5 w-full"
-                  disabled={!isValid}
+                  disabled={!canSubmit || isPending}
+                  isLoading={isPending}
                 >
                   Sign Up
                 </Button>
@@ -74,7 +122,7 @@ export default function Register() {
                 </MyLink>
               </div>
 
-              <div className="flex gap-2 items-center">
+              {/* <div className="flex gap-2 items-center">
                 <div className="flex-1 h-[1px] bg-[#0000001A]"></div>
                 <p className="text-[#12121280]">OR</p>
                 <div className="flex-1 h-[1px] bg-[#0000001A]"></div>
@@ -98,7 +146,7 @@ export default function Register() {
                   <BiLogoFacebookCircle className="text-xl text-blue-600" />
                   Sign Up with Facebook
                 </Button>
-              </Field>
+              </Field> */}
             </form>
           </div>
 

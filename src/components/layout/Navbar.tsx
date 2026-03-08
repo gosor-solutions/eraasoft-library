@@ -1,6 +1,7 @@
 import { MyLink } from "@/components/shared/MyLink";
 import { authHelper } from "@/helpers/authHelper";
 import { useLogout } from "@/hooks/mutations/useAuthMutations";
+import { LogOut } from "lucide-react";
 import { useState } from "react";
 import { FiMenu, FiUser, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
@@ -166,10 +167,10 @@ export function NavBar() {
                   </div>
                 </MyLink>
                 <div
-                  className="px-4 py-2 rounded-lg hover:bg-white/50 transition-colors duration-200"
+                  className="bg-white rounded-lg hover:bg-white/50 transition-colors duration-200"
                   onClick={handleLogout}
                 >
-                  Logout
+                  <LogOut className="m-2 p-1 size-8" />
                 </div>
               </>
             ) : (
@@ -203,7 +204,7 @@ export function NavBar() {
                   className="px-4 py-2 rounded-lg hover:bg-white/50 transition-colors duration-200"
                   onClick={handleLogout}
                 >
-                  Logout
+                  <LogOut />
                 </div>
               </>
             )}

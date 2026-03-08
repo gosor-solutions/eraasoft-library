@@ -34,7 +34,7 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: (data: AuthWithPhoneAndNameRequest) =>
       apiService.post<ApiResponse<{ phone: string }>>(
-        "/api/v1/auth/register",
+        "/auth/register",
         data,
       ),
   });

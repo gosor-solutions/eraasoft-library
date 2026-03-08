@@ -1,12 +1,15 @@
 import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
 import { MyLink } from "@/components/shared/MyLink";
+import { useLoginWithPhone } from "@/hooks/mutations/useAuthMutations";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { useNavigate } from "react-router";
 import "./Register.css";
+
 const phoneUtil = PhoneNumberUtil.getInstance();
 
 const isPhoneValid = (phone: string) => {
@@ -19,7 +22,28 @@ const isPhoneValid = (phone: string) => {
 
 export default function Login() {
   const [phone, setPhone] = useState("");
+  const [error, setError] = useState<string | null>(null);
   const isValid = isPhoneValid(phone);
+  const navigate = useNavigate();
+  const { mutate: loginWithPhone, isPending } = useLoginWithPhone();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isValid) return;
+
+    setError(null);
+    loginWithPhone(
+      { phone },
+      {
+        onSuccess: () => {
+          navigate("/otp", { state: { phone } });
+        },
+        onError: () => {
+          setError("Failed to send OTP. Please try again.");
+        },
+      },
+    );
+  };
 
   return (
     <div className="relative min-h-screen">
@@ -35,6 +59,7 @@ export default function Login() {
             <form
               id="contact-us-form"
               className="flex flex-col gap-4 w-full max-w-md"
+              onSubmit={handleSubmit}
             >
               <h2 className="text-2xl font-medium text-center">
                 Welcome Back!
@@ -56,11 +81,14 @@ export default function Login() {
                 <div className="text-red-500 text-sm">Phone is not valid</div>
               )}
 
+              {error && <div className="text-red-500 text-sm">{error}</div>}
+
               <Field orientation="horizontal" className="w-full">
                 <Button
                   type="submit"
                   className="text-xl py-5 w-full"
-                  disabled={!isValid}
+                  disabled={!isValid || isPending}
+                  isLoading={isPending}
                 >
                   Login
                 </Button>
@@ -79,10 +107,10 @@ export default function Login() {
                   Don't have an account? Register
                 </MyLink>
               </div>
-              <div className="flex gap-2 items-center">
-                <div className="flex-1 h-[1px] bg-[#0000001A]"></div>
+              {/* <div className="flex gap-2 items-center">
+                <div className="flex-1 h-px bg-[#0000001A]"></div>
                 <p className="text-[#12121280]">OR</p>
-                <div className="flex-1 h-[1px] bg-[#0000001A]"></div>
+                <div className="flex-1 h-px bg-[#0000001A]"></div>
               </div>
               <Field orientation="horizontal" className="w-full shadow-lg">
                 <Button
@@ -92,7 +120,7 @@ export default function Login() {
                   <FcGoogle className="text-xl" />
                   Login with Google
                 </Button>
-              </Field>
+              </Field> */}
             </form>
           </div>
 

@@ -1,4 +1,9 @@
 import { Button } from "@/components/shared/button";
+import { authHelper } from "@/helpers/authHelper";
+import {
+  useLoginWithPhone,
+  useVerifyOtp,
+} from "@/hooks/mutations/useAuthMutations";
 import {
   useEffect,
   useRef,
@@ -6,41 +11,42 @@ import {
   type ClipboardEvent,
   type KeyboardEvent,
 } from "react";
+import { useLocation, useNavigate } from "react-router";
 
-interface OTPVerificationEnhancedProps {
-  length?: number;
-  onComplete?: (otp: string) => Promise<boolean>;
-  onResend?: () => Promise<void>;
-  autoSubmit?: boolean;
-  resendTimer?: number;
-}
+const OTP_LENGTH = 4;
 
-export default function OTPVerificationEnhanced({
-  length = 4,
-  onComplete,
-  onResend,
-  autoSubmit = true,
-  resendTimer = 60,
-}: OTPVerificationEnhancedProps) {
-  const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
+export default function OTPVerificationEnhanced() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const phone = (location.state as { phone?: string } | null)?.phone;
+
+  // Guard: no phone in state → back to login
+  useEffect(() => {
+    if (!phone) {
+      navigate("/login", { replace: true });
+    }
+  }, [phone, navigate]);
+
+  const [otp, setOtp] = useState<string[]>(new Array(OTP_LENGTH).fill(""));
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [timeLeft, setTimeLeft] = useState(resendTimer);
+  const [timeLeft, setTimeLeft] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
+  const { mutate: verifyOtp } = useVerifyOtp();
+  const { mutate: loginWithPhone } = useLoginWithPhone();
+
   useEffect(() => {
-    if (timeLeft === 0) {
+    if (timeLeft === 0 && !canResend) {
       setCanResend(true);
       return;
     }
-
     const timer = setInterval(() => {
       setTimeLeft((prev) => prev - 1);
     }, 1000);
-
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, [timeLeft, canResend]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -50,22 +56,19 @@ export default function OTPVerificationEnhanced({
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
-
-    setError(""); // Clear error on input
+    setError("");
 
     const newOtp = [...otp];
 
     if (value.length > 1) {
-      const pastedData = value.slice(0, length).split("");
-      for (let i = 0; i < length; i++) {
+      const pastedData = value.slice(0, OTP_LENGTH).split("");
+      for (let i = 0; i < OTP_LENGTH; i++) {
         newOtp[i] = pastedData[i] || "";
       }
       setOtp(newOtp);
-
-      const lastFilledIndex = Math.min(pastedData.length, length) - 1;
+      const lastFilledIndex = Math.min(pastedData.length, OTP_LENGTH) - 1;
       inputRefs.current[lastFilledIndex]?.focus();
-
-      if (pastedData.length === length && autoSubmit) {
+      if (pastedData.length === OTP_LENGTH) {
         handleSubmit(newOtp.join(""));
       }
       return;
@@ -74,12 +77,11 @@ export default function OTPVerificationEnhanced({
     newOtp[index] = value;
     setOtp(newOtp);
 
-    if (value && index < length - 1) {
+    if (value && index < OTP_LENGTH - 1) {
       inputRefs.current[index + 1]?.focus();
     }
 
-    // Auto submit when complete
-    if (newOtp.every((digit) => digit !== "") && autoSubmit) {
+    if (newOtp.every((digit) => digit !== "")) {
       handleSubmit(newOtp.join(""));
     }
   };
@@ -88,7 +90,6 @@ export default function OTPVerificationEnhanced({
     if (e.key === "Backspace") {
       e.preventDefault();
       const newOtp = [...otp];
-
       if (otp[index]) {
         newOtp[index] = "";
         setOtp(newOtp);
@@ -99,7 +100,7 @@ export default function OTPVerificationEnhanced({
       }
     } else if (e.key === "ArrowLeft" && index > 0) {
       inputRefs.current[index - 1]?.focus();
-    } else if (e.key === "ArrowRight" && index < length - 1) {
+    } else if (e.key === "ArrowRight" && index < OTP_LENGTH - 1) {
       inputRefs.current[index + 1]?.focus();
     } else if (e.key === "Enter") {
       handleVerify();
@@ -109,79 +110,83 @@ export default function OTPVerificationEnhanced({
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData("text").replace(/\D/g, "");
-
     if (pastedData) {
       const newOtp = [...otp];
-      const pastedArray = pastedData.slice(0, length).split("");
-
+      const pastedArray = pastedData.slice(0, OTP_LENGTH).split("");
       pastedArray.forEach((digit, index) => {
         newOtp[index] = digit;
       });
-
       setOtp(newOtp);
-
       const nextEmptyIndex = newOtp.findIndex((digit) => digit === "");
-      const focusIndex = nextEmptyIndex !== -1 ? nextEmptyIndex : length - 1;
+      const focusIndex =
+        nextEmptyIndex !== -1 ? nextEmptyIndex : OTP_LENGTH - 1;
       inputRefs.current[focusIndex]?.focus();
-
-      if (newOtp.every((digit) => digit !== "") && autoSubmit) {
+      if (newOtp.every((digit) => digit !== "")) {
         handleSubmit(newOtp.join(""));
       }
     }
   };
 
   const handleSubmit = async (otpValue: string) => {
-    if (otpValue.length !== length) return;
-
+    if (otpValue.length !== OTP_LENGTH || !phone) return;
     setIsLoading(true);
     setError("");
 
-    try {
-      const isValid = await onComplete?.(otpValue);
-
-      if (!isValid) {
-        setError("Invalid OTP. Please try again.");
-        setOtp(new Array(length).fill(""));
-        inputRefs.current[0]?.focus();
-      }
-    } catch (error) {
-      setError("Verification failed. Please try again.");
-      console.error("Verification error:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    verifyOtp(
+      { phone, otp: otpValue, device_token: "web" },
+      {
+        onSuccess: (res) => {
+          if (res?.data?.token) {
+            authHelper.setAuth(res.data.token); 
+            navigate("/", { replace: true });
+          } else {
+            setError("Invalid OTP. Please try again.");
+            setOtp(new Array(OTP_LENGTH).fill(""));
+            inputRefs.current[0]?.focus();
+          }
+          setIsLoading(false);
+        },
+        onError: () => {
+          setError("Verification failed. Please try again.");
+          setIsLoading(false);
+        },
+      },
+    );
   };
 
   const handleVerify = () => {
     const otpValue = otp.join("");
-
-    if (otpValue.length !== length) {
+    if (otpValue.length !== OTP_LENGTH) {
       setError("Please enter complete OTP");
       return;
     }
-
     handleSubmit(otpValue);
   };
 
-  const handleResend = async () => {
-    if (!canResend) return;
-
+  const handleResend = () => {
+    if (!canResend || !phone) return;
     setIsLoading(true);
     setError("");
 
-    try {
-      await onResend?.();
-      setOtp(new Array(length).fill(""));
-      setTimeLeft(resendTimer);
-      setCanResend(false);
-      inputRefs.current[0]?.focus();
-    } catch (error) {
-      setError("Failed to resend code. Please try again.");
-      console.error("Resend error:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    loginWithPhone(
+      { phone },
+      {
+        onSuccess: () => {
+          setOtp(new Array(OTP_LENGTH).fill(""));
+          setTimeLeft(60);
+          setCanResend(false);
+          inputRefs.current[0]?.focus();
+          setIsLoading(false);
+        },
+        onError: () => {
+          setError("Failed to resend code. Please try again.");
+          setIsLoading(false);
+        },
+      },
+    );
   };
+
+  if (!phone) return null;
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 ">
@@ -192,7 +197,8 @@ export default function OTPVerificationEnhanced({
             Verification Code
           </h1>
           <p className="text-sm text-gray-500">
-            Check your email for the OTP and input it here to continue.
+            We sent a code to <span className="font-semibold">{phone}</span>.
+            Enter it below.
           </p>
         </div>
 
@@ -246,45 +252,8 @@ export default function OTPVerificationEnhanced({
           </div>
         )}
 
-        {/* Verify Button (shown only if auto-submit is off) */}
-        {!autoSubmit && (
-          <Button
-            onClick={handleVerify}
-            disabled={otp.some((digit) => digit === "") || isLoading}
-            className="w-full bg-[#003E6D] hover:bg-[#003E6D] text-white font-semibold py-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed mb-4 shadow-lg"
-          >
-            {isLoading ? (
-              <div className="flex items-center justify-center gap-2">
-                <svg
-                  className="animate-spin h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Verifying...
-              </div>
-            ) : (
-              "Verify"
-            )}
-          </Button>
-        )}
-
         {/* Loading Indicator for auto-submit */}
-        {autoSubmit && isLoading && (
+        {isLoading && (
           <div className="flex items-center justify-center gap-2 mb-4 text-blue-900">
             <svg
               className="animate-spin h-5 w-5"
@@ -309,6 +278,15 @@ export default function OTPVerificationEnhanced({
             <span className="text-sm font-medium">Verifying...</span>
           </div>
         )}
+
+        {/* Verify Button */}
+        <Button
+          onClick={handleVerify}
+          disabled={otp.some((digit) => digit === "") || isLoading}
+          className="w-full py-3 mb-4"
+        >
+          Verify
+        </Button>
 
         {/* Resend Link */}
         <div className="text-center text-sm text-gray-600">
