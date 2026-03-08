@@ -11,7 +11,7 @@ export function TopicsPage() {
   if (topicsQuery.isPending) {
     content = <Loading size={40} color="#000000" />;
   } else if (!topicsQuery.data?.data?.length) {
-    content = <NoData data="Topics" />;
+    content = <NoData data="Categories" />;
   } else {
     content = (
       <div className="flex flex-col gap-4 mb-12">
@@ -25,7 +25,7 @@ export function TopicsPage() {
   return (
     <section className="w-full px-4 py-8 md:py-12">
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-6 text-3xl font-bold md:text-4xl">Topics</h1>
+        <h1 className="mb-6 text-3xl font-bold md:text-4xl">Categories</h1>
         {content}
       </div>
     </section>

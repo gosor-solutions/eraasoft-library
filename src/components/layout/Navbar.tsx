@@ -17,7 +17,7 @@ const authNavLinks = [
   { to: "/", label: "Home" },
   { to: "/free-materials", label: "Free Materials" },
   { to: "/courses", label: "Courses" },
-  { to: "/topics", label: "Topics" },
+  { to: "/topics", label: "Categories" },
   { to: "/contact-us", label: "Contact Us" },
 ];
 

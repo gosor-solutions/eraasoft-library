@@ -8,7 +8,7 @@ export function TopicCoursesPage() {
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
   const rawName = searchParams.get("name") || "";
-  const topicName = rawName ? `${rawName} Courses` : "Topic Courses";
+  const topicName = rawName ? `${rawName} Courses` : "Category Courses";
 
   const coursesQuery = useGetTopicCourses(Number(id));
 

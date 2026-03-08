@@ -1,7 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { NavBar } from "@/components/layout/Navbar";
 import { ScrollToTop } from "@/components/shared/ScrollTop";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, ScrollRestoration, useLocation } from "react-router";
 
 export function MainLayout() {
   const location = useLocation();
@@ -31,6 +31,7 @@ export function MainLayout() {
         <Outlet />
       </div>
       <Footer />
+      <ScrollRestoration />
     </>
   );
 }

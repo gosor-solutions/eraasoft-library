@@ -28,7 +28,7 @@ export function AuthedNavbar() {
         <MyLink to="/">Home</MyLink>
         <MyLink to="free-materials">Free Materials</MyLink>
         <MyLink to="courses">Courses</MyLink>
-        <MyLink to="topics">Topics</MyLink>
+        <MyLink to="topics">Categories</MyLink>
         <MyLink to="contact-us">Contact Us</MyLink>
       </ul>
       <div className="flex items-center gap-4">

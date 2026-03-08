@@ -1,5 +1,5 @@
-import { GlobalProviders } from "./providers";
 import "./App.css";
+import { GlobalProviders } from "./providers";
 function App() {
   return <GlobalProviders />;
 }

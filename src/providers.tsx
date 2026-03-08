@@ -1,7 +1,7 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { IconContext } from "react-icons";
 import { RouterProvider } from "react-router";
 import { router } from "./router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 export function GlobalProviders() {
   const queryClient = new QueryClient();
   return (
