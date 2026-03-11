@@ -1,11 +1,10 @@
+import { Logo } from "@/components/shared/Logo";
 import { MyLink } from "@/components/shared/MyLink";
 import { authHelper } from "@/helpers/authHelper";
-import { useLogout } from "@/hooks/mutations/useAuthMutations";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
 import { FiMenu, FiUser, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
-import { Logo } from "@/components/shared/Logo";
 
 const guestNavLinks = [
   { to: "/", label: "Home" },
@@ -26,10 +25,10 @@ export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const logoutMutation = useLogout();
+  // const logoutMutation = useLogout();
 
   function handleLogout() {
-    logoutMutation.mutate();
+    // logoutMutation.mutate();
     authHelper.revokeAuth();
     navigate("/");
   }

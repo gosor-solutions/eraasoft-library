@@ -17,6 +17,7 @@ export const authHelper = {
 
   revokeAuth: () => {
     Cookies.remove(AUTH_KEY);
+    window.location.href = "/";
   },
 
   isAuthenticated: (): boolean => {
