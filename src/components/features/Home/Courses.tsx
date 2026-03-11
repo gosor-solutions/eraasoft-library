@@ -39,8 +39,8 @@ function SectionHeader() {
         Courses
       </h2>
       <p className="text-brand-gray text-lg max-w-2xl mx-auto">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-        libero cursus, suscipit risus eget, pretium nulla. Quisqu
+        Elevate your language skills with our expert-led programs, designed to
+        take you from foundational understanding to professional mastery.
       </p>
     </div>
   );

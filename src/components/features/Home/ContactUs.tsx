@@ -3,8 +3,10 @@ import { TextArea } from "@/components/shared/Inputs/TextArea";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
 import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
+import { useSubmitContactUs } from "@/hooks/mutations/useContactMutations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
 
 export function ContactSection() {
@@ -50,6 +52,7 @@ const formSchema = z.object({
   email: z.email("Invalid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 characters long"),
   message: z.string().min(10, "Message must be at least 10 characters long"),
+  subject: z.string().min(2, "Subject must be at least 2 characters long"),
 });
 
 function ContactForm() {
@@ -62,11 +65,29 @@ function ContactForm() {
       message: "",
     },
   });
+  const { mutate, isPending } = useSubmitContactUs();
+
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    mutate(data, {
+      onSuccess: () => {
+        toast.success("Message sent successfully", {
+          position: "bottom-right",
+        });
+        form.reset();
+      },
+      onError: () => {
+        toast.error("Failed to send message", {
+          position: "bottom-right",
+        });
+      },
+    });
+  }
+
   return (
     <form
       id="contact-us-form"
       className="flex flex-col gap-4 justify-center"
-      onSubmit={form.handleSubmit(() => {})}
+      onSubmit={form.handleSubmit(onSubmit)}
     >
       <TextInput
         control={form.control}
@@ -81,6 +102,18 @@ function ContactForm() {
         placeholder="email@example.com"
         inputClassNames="bg-white"
       />
+      <TextInput
+        control={form.control}
+        name="phone"
+        placeholder="Enter your phone number"
+        inputClassNames="bg-white"
+      />
+      <TextInput
+        control={form.control}
+        name="subject"
+        placeholder="Enter subject"
+        inputClassNames="bg-white"
+      />
       <TextArea
         control={form.control}
         name="message"
@@ -93,6 +126,7 @@ function ContactForm() {
           variant={"secondary"}
           type="submit"
           className="w-full text-xl py-6 mt-4"
+          disabled={isPending}
         >
           Send Message
         </Button>

@@ -23,20 +23,23 @@ function AppContent() {
         Englivision App
       </h2>
 
-      <p className="text-brand-gray text-base sm:text-lg leading-relaxed">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-        libero cursus, suscipit risus eget, pretium nulla. Quisqu Lorem ipsum
-        dolor sit amet, consectetur adipiscing elit. Nullam vitae libero cursus,
-        suscipit risus eget, pretium nulla. Quisqu Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Nullam vitae libero cursus, suscipit risus
-        eget, pretium nulla. Quisqu Lorem ipsum dolor sit amet, consectetur
-        adipiscing elit adipiscing elit. Nullam vitae
+      <p className="text-brand-gray text-base sm:text-lg leading-relaxed relative z-10">
+        Take the full Englivision experience with you by downloading our
+        official app, now available on both Android and iOS. You can access
+        every feature of our desktop platform, from initial placement tests to
+        our extensive library of premium courses and free study materials.
+        Manage your progress seamlessly with high-quality video lessons,
+        downloadable PDFs, and interactive quizzes designed for learning on the
+        go. It’s our complete educational ecosystem, re-engineered for the palm
+        of your hand.
       </p>
 
       {/* Download Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
         <a
-          href="#"
+          href="https://play.google.com/store/apps/details?id=com.englivision.smart&hl=en_IE"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
         >
           <FaGooglePlay color="white" />
@@ -47,7 +50,9 @@ function AppContent() {
         </a>
 
         <a
-          href="#"
+          href="https://apps.apple.com/eg/app/engli-vision/id6749810307"
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-3 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors duration-200"
         >
           <FaApple color="white" size={30} />
@@ -74,7 +79,7 @@ function AppScreenshots() {
         }}
       />
       <div
-        className="hidden sm:block absolute w-36 h-16 bg-gradient-to-t from-[#90d1ff] via-[#C6E7FF] to-white rounded-[50%] z-0"
+        className="hidden sm:block absolute w-36 h-16 bg-linear-to-t from-[#90d1ff] via-[#C6E7FF] to-white rounded-[50%] z-0"
         style={{
           top: 170,
           left: "50%",

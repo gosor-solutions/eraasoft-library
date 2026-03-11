@@ -2,6 +2,7 @@ import { TextArea } from "@/components/shared/Inputs/TextArea";
 import { TextInput } from "@/components/shared/Inputs/TextInput";
 import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
+import { useSubmitContactUs } from "@/hooks/mutations/useContactMutations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -12,6 +13,7 @@ const formSchema = z.object({
   email: z.email("Invalid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 characters long"),
   message: z.string().min(10, "Message must be at least 10 characters long"),
+  subject: z.string().min(2, "Subject must be at least 2 characters long"),
 });
 
 export function ContactUsForm() {
@@ -25,27 +27,22 @@ export function ContactUsForm() {
     },
   });
 
-  // TODO: change this
-  function onSubmit(/*data: z.infer<typeof formSchema>*/) {
-    toast.success("Message sent successfully", {
-      position: "bottom-right",
-    });
+  const { mutate, isPending } = useSubmitContactUs();
 
-    // TODO: make this a utility function
-    // toast("You submitted the following values:", {
-    //   description: (
-    //     <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-    //       <code>{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    //   position: "bottom-right",
-    //   classNames: {
-    //     content: "flex flex-col gap-2",
-    //   },
-    //   style: {
-    //     "--border-radius": "calc(var(--radius)  + 4px)",
-    //   } as React.CSSProperties,
-    // });
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    mutate(data, {
+      onSuccess: () => {
+        toast.success("Message sent successfully", {
+          position: "bottom-right",
+        });
+        form.reset();
+      },
+      onError: () => {
+        toast.error("Failed to send message", {
+          position: "bottom-right",
+        });
+      },
+    });
   }
 
   return (
@@ -73,6 +70,12 @@ export function ContactUsForm() {
         title="Phone"
         placeholder="Enter your phone number"
       />
+      <TextInput
+        control={form.control}
+        name="subject"
+        title="Subject"
+        placeholder="Enter subject"
+      />
       <TextArea
         control={form.control}
         name="message"
@@ -81,7 +84,11 @@ export function ContactUsForm() {
         cols={20}
       />
       <Field orientation="horizontal" className="justify-end">
-        <Button type="submit" className="w-1/2 text-xl py-6 mt-4">
+        <Button
+          type="submit"
+          className="w-1/2 text-xl py-6 mt-4"
+          disabled={isPending}
+        >
           Send Message
         </Button>
       </Field>

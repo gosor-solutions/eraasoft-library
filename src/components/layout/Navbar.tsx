@@ -5,6 +5,7 @@ import { LogOut } from "lucide-react";
 import { useState } from "react";
 import { FiMenu, FiUser, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
+import { Logo } from "@/components/shared/Logo";
 
 const guestNavLinks = [
   { to: "/", label: "Home" },
@@ -140,11 +141,7 @@ export function NavBar() {
       <div className="bg-brand-secondary fixed top-0 w-full z-50 shadow-sm">
         <div className="flex justify-between items-center h-16 py-4 px-6 md:px-12">
           {/* Logo */}
-          <img
-            src="/englivision-logo-color.png"
-            alt="logo"
-            className="w-24 -mt-4"
-          />
+          <Logo className="w-24 -mt-4" />
 
           {/* Desktop Nav Links */}
           <ul className="hidden md:flex gap-8 font-medium items-baseline">

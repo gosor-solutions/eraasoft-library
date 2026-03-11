@@ -44,8 +44,8 @@ function SectionHeader() {
         Our Services.
       </h2>
       <p className="text-brand-gray font-base text-lg max-w-2xl mx-auto">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-        libero cursus, suscipit risus eget, pretium nulla. Quisqu
+        Expert-led English programs and premium recorded resources designed to
+        bridge the gap between local talent and global opportunities.
       </p>
     </div>
   );
@@ -100,25 +100,22 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
 const services = [
   {
     id: 1,
-    title: "Nasr CityAcademy",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
+    title: "Nasr City Academy",
+    description: "Premium, in-person learning at our flagship Cairo hub.",
     image: "/adult-course.jpg",
     icon: "🎓",
   },
   {
     id: 2,
     title: "Kids Courses",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
+    description: "Engaging, foundational programs built for young learners.",
     image: "/kids-course.jpg",
     icon: "👦",
   },
   {
     id: 3,
     title: "Adult Courses",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae",
+    description: "Professional-grade curriculum designed for career growth.",
     image: "/adult-course.jpg",
     icon: "👨",
   },
