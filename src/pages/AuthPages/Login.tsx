@@ -8,6 +8,7 @@ import { useState } from "react";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { useNavigate } from "react-router";
+import { Logo } from "@/components/shared/Logo";
 import "./Register.css";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -47,12 +48,8 @@ export default function Login() {
 
   return (
     <div className="relative min-h-screen">
-      <div className="absolute logo-circle">
-        <img
-          src="/englivision-logo-color.png"
-          alt="Logo"
-          onClick={() => navigate("/")}
-        />
+      <div className="absolute logo-circle cursor-pointer" onClick={() => navigate("/")}>
+        <Logo />
       </div>
       <div className="bottom-left-circle"></div>
       <div className="small-circle"></div>

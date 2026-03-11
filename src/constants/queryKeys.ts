@@ -39,4 +39,10 @@ export const QUERY_KEYS = {
   freeMaterials: {
     all: () => ["free-materials"] as const,
   },
+  userProfile: {
+    all: () => ["user-profile"] as const,
+  },
+  settings: {
+    all: () => ["settings"] as const,
+  },
 } as const;

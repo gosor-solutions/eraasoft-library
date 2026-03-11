@@ -1,59 +1,73 @@
 import type { Course } from "./course";
 
-export type GetPlacementTestResponse = {
+export interface CategoryResource {
+  id: number;
+  name: string;
+  order: number;
+  questions?: QuestionResource[];
+  question_count?: number;
+}
+
+export interface BankOptionResource {
+  id: number;
+  option_content: string;
+  is_correct: boolean | number;
+}
+
+export interface QuestionResource {
+  id: number;
+  question_type: number;
+  question_content: string;
+  listening_content: string | null;
+  answer_writing: string | null;
+  category: CategoryResource;
+  tag?: unknown; // Inferred relation
+  options?: BankOptionResource[];
+  case: unknown; // Inferred relation
+}
+
+export interface PlacementTestSettingsResponse {
   listening: string;
   reading: string;
   case: string;
   time_of_exam: string;
   questions_count: number;
-  questions: Question[];
-};
+  questions: QuestionResource[];
+}
 
-export type Question = {
-  id: number;
-  text: string;
-  question_type: "listening" | "reading" | "case";
-  category: { id: number; name: string };
-  tag: { id: number; name: string } | null;
-  options: { id: number; text: string }[];
-};
-
-export type PostPlacementTestBody = Array<{
+export interface CheckAnswersRequestCategory {
   category_id: number;
   category_name: string;
   total_questions: number;
   checked_option: number[];
-}>;
+}
 
-export type PostPlacementTestResponse = {
+export type CheckAnswersRequest = CheckAnswersRequestCategory[];
+
+export interface LevelResultItem {
+  level_id: number;
+  level: string;
+  category_order: number;
+  correct_answer_count: number;
+  total_questions: number;
+}
+
+export interface LevelResults {
   percentage: number;
   total_questions: number;
   total_correct_answers: number;
-  max_level: {
-    id: number;
-    level: string;
-    correct_answer_count: number;
-    total_questions: number;
-  } | null;
+  max_level: LevelResultItem;
   avaleble_courses: Course[];
-  levels: Array<{
-    level_id: number;
-    level: string;
-    category_order: number;
-    correct_answer_count: number;
-    total_questions: number;
-  }>;
-};
+  levels: LevelResultItem[];
+}
 
-export type GetPlacementTestResultsResponse = PlacementTestResult[];
-
-export type PlacementTestResult = {
+export interface PlacementTestResultResource {
   id: number;
-  user_id: number;
-  total_correct_answers: number;
+  user?: unknown; // Could be UserResource but simplified here
   total_questions: number;
+  total_correct_answers: number;
+  max_level?: CategoryResource; 
   percentage: number;
-  max_level_id: number;
-  levels: object;
-  created_at: string;
-};
+  levels: unknown[];
+}
+

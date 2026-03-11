@@ -13,23 +13,35 @@ export function AboutUs() {
   );
 }
 
+import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
+
 // Content Component
 function AboutContent() {
+  const { data: settings } = useGetSettings();
+
+  console.log(settings);
+
+  const defaultText = `Englivision is Egypt’s premier gateway to English mastery, blending
+world-class pedagogical standards with a deep understanding of the
+local learner's journey. We provide a sophisticated learning ecosystem
+that combines high-fidelity recorded materials with structured,
+results-oriented coursework. By focusing on measurable fluency and
+professional confidence, we empower our students to excel in global
+academic and corporate environments.
+
+Our methodology is built on years of collective expertise in language
+acquisition and digital education. We bridge the gap between basic
+understanding and native-level proficiency through a rigorous,
+technology-driven curriculum designed for the modern professional. At
+Englivision, we don't just teach a language; we provide the linguistic
+precision necessary to unlock a lifetime of international
+opportunities.`;
+
   return (
     <div className="space-y-6">
       <h1 className="text-4xl font-semibold text-gray-900">About Us</h1>
-      <div className="space-y-4 text-gray-600 text-lg leading-relaxed">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-          libero cursus, suscipit risus eget, pretium nulla. Quisqu Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Nullam vitae libero
-          cursus, suscipit risus eget, pretium nulla. Quisqu
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-          libero cursus, suscipit risus eget, pretium nulla. Quisqu Lorem ipsum
-          dolor sit amet, consectetur adipiscing elit. Nullam vitae
-        </p>
+      <div className="space-y-4 text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">
+        {formatText(settings?.about || defaultText)}
       </div>
     </div>
   );
@@ -49,4 +61,8 @@ function AboutImage() {
       </div>
     </div>
   );
+}
+
+function formatText(text: string) {
+  return text.split("\r\n\r\n").map((line, i) => <p key={i}>{line}</p>);
 }

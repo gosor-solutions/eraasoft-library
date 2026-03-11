@@ -1,3 +1,6 @@
+import { Button } from "@/components/shared/button";
+import { MyLink } from "@/components/shared/MyLink";
+
 // Main Hero Component
 export function HeroSection() {
   return (
@@ -56,12 +59,19 @@ function Logo() {
 function CTAButtons() {
   return (
     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-6 sm:px-0">
-      <button className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200 shadow-lg text-sm sm:text-base">
-        Start learn now
-      </button>
-      <button className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-brand-primary text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg text-sm sm:text-base">
-        Join with us
-      </button>
+      <Button
+        variant="secondary"
+        className="w-full sm:w-auto px-8 sm:px-12 py-6 shadow-lg text-sm sm:text-base cursor-pointer"
+        size="lg"
+      >
+        <MyLink to="/courses">Start learn now</MyLink>
+      </Button>
+      <Button
+        className="w-full sm:w-auto px-8 sm:px-12 py-6 shadow-lg text-sm sm:text-base cursor-pointer"
+        size="lg"
+      >
+        <MyLink to="/register">Join with us</MyLink>
+      </Button>
     </div>
   );
 }
