@@ -1,6 +1,8 @@
-"use client";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+const url = import.meta.env.VITE_API_BASE_URL;
+
+console.log("url", url);
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -443,18 +445,15 @@ export default function PlacementTest() {
       ?.split("=")[1];
 
     try {
-      const res = await fetch(
-        "https://devknowledgeapi.gosorsolutions.com/api/v1/placement-test",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-          body: JSON.stringify(payload),
+      const res = await fetch(`${url}/placement-test`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-      );
+        body: JSON.stringify(payload),
+      });
       const data = await res.json();
       console.log("Response:", data);
       if (data?.status && data?.data) {
@@ -623,17 +622,14 @@ export default function PlacementTest() {
                     .split("; ")
                     .find((row) => row.startsWith("auth_token="))
                     ?.split("=")[1];
-                  const res = await fetch(
-                    "https://devknowledgeapi.gosorsolutions.com/api/v1/placement-test",
-                    {
-                      method: "GET",
-                      headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                      },
+                  const res = await fetch(`${url}/placement-test`, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Accept: "application/json",
+                      ...(token ? { Authorization: `Bearer ${token}` } : {}),
                     },
-                  );
+                  });
                   const json = await res.json();
                   if (json?.status && json?.data) {
                     setApiData(json.data);
