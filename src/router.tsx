@@ -18,6 +18,7 @@ import { MainLayout } from "./pages/Layouts/MainLayout";
 import { ProfilePage } from "./pages/Profile";
 import { TopicCoursesPage } from "./pages/Topics/TopicCoursesPage";
 import { TopicsPage } from "./pages/Topics/TopicsPage";
+import PlacementTest from "./pages/PlacmentTest/PlacmentTest";
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +37,10 @@ export const router = createBrowserRouter([
         path: "contact-us",
         element: <ContactUs />,
       },
-      {},
+      {
+        path: "placemetn-test",
+        element: <PlacementTest />,
+      },
       {
         path: "free-materials",
         children: [
