@@ -1,10 +1,6 @@
 import { apiService } from "@/services/apiService";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const url = import.meta.env.VITE_API_BASE_URL;
-
-console.log("url", url);
-
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 interface Option {
