@@ -40,8 +40,6 @@ export default function ResetPassword() {
 
   const onSubmit = async (data: ResetPasswordFormData) => {
     try {
-      //console.log("Form data:", data);
-
       // API call to reset password
       const response = await fetch("/api/reset-password", {
         method: "POST",

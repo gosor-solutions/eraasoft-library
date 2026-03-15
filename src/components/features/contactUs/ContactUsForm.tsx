@@ -22,6 +22,7 @@ export function ContactUsForm() {
     defaultValues: {
       name: "",
       email: "",
+      subject: "",
       phone: "",
       message: "",
     },

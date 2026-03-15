@@ -3,7 +3,7 @@ import { MyLink } from "@/components/shared/MyLink";
 import { authHelper } from "@/helpers/authHelper";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
-import { FiMenu, FiUser, FiX } from "react-icons/fi";
+import { FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
 
 const guestNavLinks = [
@@ -18,6 +18,7 @@ const authNavLinks = [
   { to: "/free-materials", label: "Free Materials" },
   { to: "/courses", label: "Courses" },
   { to: "/topics", label: "Categories" },
+  { to: "/about", label: "About" },
   { to: "/contact-us", label: "Contact Us" },
 ];
 
@@ -173,15 +174,15 @@ export function NavBar() {
               <>
                 <MyLink
                   to="login"
-                  className="px-4 py-2 rounded-lg hover:bg-white/50 transition-colors duration-200"
+                  className="px-4 py-2 rounded-lg hover:bg-white/50 transition-colors duration-200 flex items-center gap-2"
                 >
-                  Login
+                  <FiLogIn /> Login
                 </MyLink>
                 <MyLink
                   to="register"
-                  className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-all duration-200 hover:scale-105 hover:shadow-md"
+                  className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-all duration-200 hover:scale-105 hover:shadow-md flex items-center gap-2"
                 >
-                  Register
+                  <FiUserPlus color="white" /> Register
                 </MyLink>
               </>
             )}
@@ -246,17 +247,17 @@ export function NavBar() {
               >
                 <MyLink
                   to="login"
-                  className="px-4 py-2 rounded-lg text-center hover:bg-white/50 transition-colors duration-200"
+                  className="px-4 py-2 rounded-lg hover:bg-white/50 transition-colors duration-200 flex justify-center items-center gap-2"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Login
+                  <FiLogIn /> Login
                 </MyLink>
                 <MyLink
                   to="register"
-                  className="px-4 py-2 bg-brand-primary text-white rounded-lg text-center hover:bg-brand-primary/90 transition-colors duration-200"
+                  className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-colors duration-200 flex justify-center items-center gap-2"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Register
+                  <FiUserPlus color="white" /> Register
                 </MyLink>
               </div>
             )}

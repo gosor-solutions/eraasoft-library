@@ -3,7 +3,6 @@ import { AppShowcaseSection } from "@/components/features/Home/AppShowcase";
 import { CoursesSection } from "@/components/features/Home/Courses";
 import { HeroSection } from "@/components/features/Home/Hero";
 import { ServicesSection } from "@/components/features/Home/Services";
-import { TestimonialsSection } from "@/components/features/Home/Testimonials";
 import { authHelper } from "@/helpers/authHelper";
 import { AuthedHome } from "./AuthedHome";
 
@@ -18,7 +17,7 @@ export function Home() {
       <AboutUs />
       <ServicesSection />
       <CoursesSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <AppShowcaseSection />
       {/* <ContactSection /> */}
     </div>
