@@ -1,3 +1,4 @@
+import { apiService } from "@/services/apiService";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const url = import.meta.env.VITE_API_BASE_URL;
@@ -439,25 +440,14 @@ export default function PlacementTest() {
     setIsSubmitting(true);
     const payload = buildSubmitPayload(questions, answers);
 
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("auth_token="))
-      ?.split("=")[1];
-
     try {
-      const res = await fetch(`${url}/placement-test`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
-      console.log("Response:", data);
-      if (data?.status && data?.data) {
-        setResult(data.data);
+      const res = await apiService.post<{ data: any; status: boolean }>(
+        "/placement-test",
+        payload,
+      );
+      console.log("Response:", res);
+      if (res?.status && res?.data) {
+        setResult(res.data);
       }
     } catch (err) {
       console.error("Submit error:", err);
@@ -618,22 +608,13 @@ export default function PlacementTest() {
               onClick={async () => {
                 setLoading(true);
                 try {
-                  const token = document.cookie
-                    .split("; ")
-                    .find((row) => row.startsWith("auth_token="))
-                    ?.split("=")[1];
-                  const res = await fetch(`${url}/placement-test`, {
-                    method: "GET",
-                    headers: {
-                      "Content-Type": "application/json",
-                      Accept: "application/json",
-                      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                    },
-                  });
-                  const json = await res.json();
-                  if (json?.status && json?.data) {
-                    setApiData(json.data);
-                    setTimeLeft(parseInt(json.data.time_of_exam) * 60);
+                  const res = await apiService.get<{ data: ApiData }>(
+                    "/placement-test",
+                  );
+
+                  if (res) {
+                    setApiData(res.data);
+                    setTimeLeft(parseInt(res.data.time_of_exam) * 60);
                     setScreen("exam");
                   } else {
                     alert("Failed to load questions. Please try again.");
