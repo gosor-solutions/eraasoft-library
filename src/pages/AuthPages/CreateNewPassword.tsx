@@ -71,7 +71,7 @@ export default function ResetPassword() {
           <div className="mb-8">
             <img
               src="/englivision-logo-color.png"
-              alt="Enjoli Vision"
+              alt="Engli-Vision"
               className="h-12"
             />
           </div>

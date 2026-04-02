@@ -30,7 +30,7 @@ function HeroContent() {
       <Logo />
 
       <h1 className="font-inter text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight px-2">
-        Welcome to Englivision
+        Welcome to Engli-Vision
       </h1>
 
       <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-4">
@@ -50,7 +50,7 @@ function Logo() {
       <img
         className="w-48 sm:w-64 md:w-72 lg:w-80"
         src="/englivision-logo.svg"
-        alt="englivision-logo"
+        alt="Engli-Vision-logo"
       />
     </div>
   );

@@ -5,10 +5,10 @@ import { useLoginWithPhone } from "@/hooks/mutations/useAuthMutations";
 import { PhoneNumberUtil } from "google-libphonenumber";
 import { useState } from "react";
 // import { FcGoogle } from "react-icons/fc";
+import { Logo } from "@/components/shared/Logo";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { useNavigate } from "react-router";
-import { Logo } from "@/components/shared/Logo";
 import "./Register.css";
 
 const phoneUtil = PhoneNumberUtil.getInstance();
@@ -138,7 +138,7 @@ export default function Login() {
             <div className="relative z-10 flex items-end justify-start h-full p-12">
               <div className="text-white">
                 <h2 className="text-3xl font-bold mb-2">
-                  Welcome to Enjoli Vision
+                  Welcome to Engli-Vision
                 </h2>
                 <p className="text-gray-200">
                   Start your journey with us today

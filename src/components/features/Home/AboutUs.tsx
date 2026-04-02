@@ -32,7 +32,7 @@ export function AboutUs() {
 function AboutContent() {
   const { data: settings } = useGetSettings();
 
-  const defaultText = `Englivision is Egypt’s premier gateway to English mastery, blending
+  const defaultText = `Engli-Vision is Egypt’s premier gateway to English mastery, blending
 world-class pedagogical standards with a deep understanding of the
 local learner's journey. We provide a sophisticated learning ecosystem
 that combines high-fidelity recorded materials with structured,
@@ -44,7 +44,7 @@ Our methodology is built on years of collective expertise in language
 acquisition and digital education. We bridge the gap between basic
 understanding and native-level proficiency through a rigorous,
 technology-driven curriculum designed for the modern professional. At
-Englivision, we don't just teach a language; we provide the linguistic
+Engli-Vision, we don't just teach a language; we provide the linguistic
 precision necessary to unlock a lifetime of international
 opportunities.`;
 
@@ -147,7 +147,7 @@ const feedbacksData = [
 const videoData = {
   title: "Student Success Story",
   description:
-    "Watch how learning English at Englivision helped Kareem travel abroad and achieve his career goals.",
+    "Watch how learning English at Engli-Vision helped Kareem travel abroad and achieve his career goals.",
   poster:
     "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=600&fit=crop",
   src: "https://youtu.be/_pJfpJmLugI?si=L6-EPzwFw-mfnwsl",

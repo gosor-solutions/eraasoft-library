@@ -20,11 +20,11 @@ function AppContent() {
   return (
     <div className="space-y-6 text-center lg:text-left">
       <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900">
-        Englivision App
+        Engli-Vision App
       </h2>
 
       <p className="text-brand-gray text-base sm:text-lg leading-relaxed relative z-10">
-        Take the full Englivision experience with you by downloading our
+        Take the full Engli-Vision experience with you by downloading our
         official app, now available on both Android and iOS. You can access
         every feature of our desktop platform, from initial placement tests to
         our extensive library of premium courses and free study materials.

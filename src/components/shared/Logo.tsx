@@ -12,6 +12,6 @@ export function Logo({ className = "" }: LogoProps) {
   };
 
   return (
-    <img src={getLogoPath()} alt="Englivision Logo" className={className} />
+    <img src={getLogoPath()} alt="Engli-Vision Logo" className={className} />
   );
 }
