@@ -45,4 +45,8 @@ export const QUERY_KEYS = {
   settings: {
     all: () => ["settings"] as const,
   },
+  aboutUs: {
+    images: () => ["company-images"] as const,
+    reviews: () => ["company-reviews"] as const,
+  },
 } as const;

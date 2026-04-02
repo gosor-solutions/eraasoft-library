@@ -1,7 +1,8 @@
 import { Circle } from "@/components/shared/Circle";
 import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
+import { useGetCompanyImages, useGetCompanyReviews } from "@/hooks/queries/useAboutUsQueries";
 import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
-import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 
@@ -117,84 +118,7 @@ const partnershipsData = {
   ],
 };
 
-const feedbacksData = [
-  {
-    id: 1,
-    name: "Ahmed Hassan",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
-    rating: 5,
-    text: "الكورس ده غير طريقتي في التفكير بجد، مستوايا في الإنجليزي بقى في حتة تانية خالص بفضل المتابعة من المدرسين!",
-  },
-  {
-    id: 2,
-    name: "Sarah Mahmoud",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
-    rating: 5,
-    text: "تجربة ممتازة، المدرسين فاهمين بيعملوا إيه وتقييمهم دايماً في الجون وبيساعدك تطور نقاط الضعف.",
-  },
-  {
-    id: 3,
-    name: "Omar Ali",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
-    rating: 5,
-    text: "أحسن مكان تتعلم فيه إنجليزي في مصر من غير مبالغة، المتابعة مستمرة والماتيريال تحفة ومفيدة جداً للشغل.",
-  },
-];
 
-const videoData = {
-  title: "Student Success Story",
-  description:
-    "Watch how learning English at Engli-Vision helped Kareem travel abroad and achieve his career goals.",
-  poster:
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=600&fit=crop",
-  src: "https://youtu.be/_pJfpJmLugI?si=L6-EPzwFw-mfnwsl",
-};
-
-const galleryImages = [
-  {
-    id: 1,
-    src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&fit=crop",
-    alt: "Event photo 1",
-  },
-  {
-    id: 2,
-    src: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=500&fit=crop",
-    alt: "Event photo 2",
-  },
-  {
-    id: 3,
-    src: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?w=500&fit=crop",
-    alt: "Event photo 3",
-  },
-  {
-    id: 4,
-    src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&fit=crop",
-    alt: "Event photo 4",
-  },
-  {
-    id: 5,
-    src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500&fit=crop",
-    alt: "Event photo 5",
-  },
-  {
-    id: 6,
-    src: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&fit=crop",
-    alt: "Event photo 6",
-  },
-  {
-    id: 7,
-    src: "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=500&fit=crop",
-    alt: "Event photo 7",
-  },
-  {
-    id: 8,
-    src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&fit=crop",
-    alt: "Event photo 8",
-  },
-];
 
 function Partnerships() {
   // Triplicate the logos array to create a seamless loop
@@ -246,6 +170,10 @@ function Partnerships() {
 }
 
 function Feedbacks() {
+  const { data: reviews = [] } = useGetCompanyReviews();
+
+  if (reviews.length === 0) return null;
+
   return (
     <section className="py-20 bg-[#E9F2FB] to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
@@ -256,19 +184,17 @@ function Feedbacks() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 rtl"
           dir="rtl"
         >
-          {feedbacksData.map((fb) => (
+          {reviews.map((fb) => (
             <div
               key={fb.id}
               className="bg-white rounded-md rounded-br-[80px] shadow-lg p-6 sm:p-8 hover:shadow-xl transition-shadow duration-300"
             >
               <div className="flex flex-col items-center mb-4">
-                <img
-                  src={fb.image}
-                  alt={fb.name}
-                  className="w-16 h-16 rounded-full object-cover mb-3"
-                />
+                <div className="w-16 h-16 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold mb-3">
+                  {fb.reviewer_name.charAt(0)}
+                </div>
                 <h3 className="text-lg font-semibold text-gray-900">
-                  {fb.name}
+                  {fb.reviewer_name}
                 </h3>
               </div>
               <div className="flex justify-center gap-1 mb-4">
@@ -284,7 +210,7 @@ function Feedbacks() {
                 ))}
               </div>
               <p className="text-gray-600 text-sm text-center leading-relaxed font-medium">
-                "{fb.text}"
+                "{fb.content}"
               </p>
             </div>
           ))}
@@ -295,36 +221,17 @@ function Feedbacks() {
 }
 
 function VideoSection() {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { data: settings } = useGetSettings();
+
+  const videoUrl = settings?.student_video;
+
+  if (!videoUrl) return null;
 
   return (
     <section className="py-20 bg-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-8 lg:px-16 text-center">
-        <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4">
-          {videoData.title}
-        </h2>
-        <p className="text-gray-600 mb-10 text-lg max-w-2xl mx-auto">
-          {videoData.description}
-        </p>
-
         <div className="relative rounded-3xl overflow-hidden shadow-2xl group bg-black aspect-video flex items-center justify-center">
-          {!isPlaying ? (
-            <>
-              <img
-                src={videoData.poster}
-                alt="Video thumbnail"
-                className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"
-              />
-              <button
-                onClick={() => setIsPlaying(true)}
-                className="relative z-10 w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300"
-              >
-                <Play className="w-8 h-8 text-blue-600 ml-1" />
-              </button>
-            </>
-          ) : (
-            <YoutubeEmbed url={videoData.src} />
-          )}
+          <YoutubeEmbed url={videoUrl} />
         </div>
       </div>
     </section>
@@ -332,8 +239,11 @@ function VideoSection() {
 }
 
 function Gallery() {
+  const { data: images = [] } = useGetCompanyImages();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  
 
   useEffect(() => {
     if (lightboxOpen) {
@@ -345,6 +255,8 @@ function Gallery() {
       document.body.style.overflow = "auto";
     };
   }, [lightboxOpen]);
+
+  if (images.length === 0) return null;
 
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
@@ -358,15 +270,22 @@ function Gallery() {
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prev) =>
-      prev === galleryImages.length - 1 ? 0 : prev + 1,
+      prev === images.length - 1 ? 0 : prev + 1,
     );
   };
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prev) =>
-      prev === 0 ? galleryImages.length - 1 : prev - 1,
+      prev === 0 ? images.length - 1 : prev - 1,
     );
+  };
+
+  const fullUrl = (path: string) => {
+    if (!path) return "";
+    if (path.startsWith("http")) return path;
+    const baseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/?$/, '') || "";
+    return `${baseUrl}/storage/${path.replace(/^\/+/, '')}`;
   };
 
   return (
@@ -378,15 +297,15 @@ function Gallery() {
 
         {/* Masonry Grid */}
         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-          {galleryImages.map((img, idx) => (
+          {images.map((img, idx) => (
             <div
               key={img.id}
               className="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl"
               onClick={() => openLightbox(idx)}
             >
               <img
-                src={img.src}
-                alt={img.alt}
+                src={fullUrl(img.image_path)}
+                alt={img.name || `Gallery image ${idx}`}
                 className="w-full h-auto rounded-xl group-hover:scale-110 transition-transform duration-500 ease-in-out"
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
@@ -422,8 +341,8 @@ function Gallery() {
             </button>
 
             <img
-              src={galleryImages[currentIndex].src}
-              alt={galleryImages[currentIndex].alt}
+              src={fullUrl(images[currentIndex].image_path)}
+              alt={images[currentIndex].name || `Gallery image ${currentIndex}`}
               className="max-h-[85vh] max-w-[85vw] object-contain select-none"
               onClick={(e) => e.stopPropagation()}
             />

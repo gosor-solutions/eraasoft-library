@@ -441,7 +441,6 @@ export default function PlacementTest() {
         "/placement-test",
         payload,
       );
-      console.log("Response:", res);
       if (res?.status && res?.data) {
         setResult(res.data);
       }

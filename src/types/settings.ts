@@ -38,5 +38,6 @@ export interface AppSettings {
   logo_student?: string;
   logo_instructor?: string;
   message?: string;
+  student_video?: string;
   [key: string]: string | undefined;
 }
