@@ -14,3 +14,12 @@ export interface CompanyReview {
   is_active: boolean;
   order: number;
 }
+
+export interface PartnerCompanyImage {
+  id: number;
+  name: string;
+  image_path: string;
+  is_active: boolean;
+  order: number;
+  created_at: string;
+}

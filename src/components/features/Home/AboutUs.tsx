@@ -1,9 +1,9 @@
 import { Circle } from "@/components/shared/Circle";
 import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
-import { useGetCompanyImages, useGetCompanyReviews } from "@/hooks/queries/useAboutUsQueries";
+import { useGetCompanyImages, useGetCompanyReviews, useGetPartnerCompanyImages } from "@/hooks/queries/useAboutUsQueries";
 import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
 
 // Main AboutUs Component
@@ -79,54 +79,40 @@ function formatText(text: string) {
   return text.split("\r\n\r\n").map((line, i) => <p key={i}>{line}</p>);
 }
 
-// Data Variables
-const partnershipsData = {
-  title: "Our Trusted Partners",
-  subtitle:
-    "Collaborating with industry leaders to provide the best opportunities",
-  logos: [
-    {
-      id: 1,
-      name: "Partner 1",
-      src: "https://cdn.brandfetch.io/ido5G85nya/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1724650640813",
-    },
-    {
-      id: 2,
-      name: "Partner 2",
-      src: "https://cdn.brandfetch.io/idTqV2BNgX/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1741065942287",
-    },
-    {
-      id: 3,
-      name: "Partner 3",
-      src: "https://cdn.brandfetch.io/idTHfL51P-/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1667591275475",
-    },
-    {
-      id: 4,
-      name: "Partner 4",
-      src: "https://cdn.brandfetch.io/id0b4FXsG4/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1721707423570",
-    },
-    {
-      id: 5,
-      name: "Partner 5",
-      src: "https://cdn.brandfetch.io/idBYj5frff/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1673861443459",
-    },
-    {
-      id: 6,
-      name: "Partner 6",
-      src: "https://cdn.brandfetch.io/idMO17yGRl/theme/dark/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1667859596899",
-    },
-  ],
-};
-
-
-
 function Partnerships() {
-  // Triplicate the logos array to create a seamless loop
-  const logos = [
-    ...partnershipsData.logos,
-    ...partnershipsData.logos,
-    ...partnershipsData.logos,
-  ];
+  const { data: partnerImages = [] } = useGetPartnerCompanyImages();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const measureRef = useRef<HTMLDivElement>(null);
+  const [repeatCount, setRepeatCount] = useState(4);
+
+  const calculateRepeat = useCallback(() => {
+    if (!containerRef.current || !measureRef.current || partnerImages.length === 0) return;
+
+    const containerWidth = containerRef.current.offsetWidth;
+    const singleSetWidth = measureRef.current.scrollWidth;
+
+    if (singleSetWidth > 0) {
+      const needed = Math.ceil((containerWidth * 2) / singleSetWidth);
+      setRepeatCount(Math.max(2, needed));
+    }
+  }, [partnerImages.length]);
+
+  useEffect(() => {
+    calculateRepeat();
+
+    const observer = new ResizeObserver(calculateRepeat);
+    if (containerRef.current) observer.observe(containerRef.current);
+
+    window.addEventListener("resize", calculateRepeat);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", calculateRepeat);
+    };
+  }, [calculateRepeat]);
+
+  if (partnerImages.length === 0) return null;
+
+  const logos = Array.from({ length: repeatCount }, () => partnerImages).flat();
 
   return (
     <section className="py-16 bg-gray-50/50 overflow-hidden">
@@ -136,7 +122,7 @@ function Partnerships() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-100% / 3));
+            transform: translateX(calc(-100% / 2));
           }
         }
         .animate-infinite-slide {
@@ -148,21 +134,41 @@ function Partnerships() {
       `}</style>
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-3xl font-semibold text-gray-900 mb-2">
-          {partnershipsData.title}
+          Our Trusted Partners
         </h2>
-        <p className="text-gray-600 mb-10">{partnershipsData.subtitle}</p>
+        <p className="text-gray-600 mb-10">
+          Collaborating with industry leaders to provide the best opportunities
+        </p>
 
-        <div className="relative w-full overflow-hidden flex">
+        <div
+          ref={containerRef}
+          className="relative w-full overflow-hidden flex"
+        >
           <div className="animate-infinite-slide flex gap-16 sm:gap-24 items-center whitespace-nowrap w-max pr-16 sm:pr-24">
             {logos.map((logo, idx) => (
               <img
-                key={idx}
-                src={logo.src}
+                key={`${logo.id}-${idx}`}
+                src={logo.image_path}
                 alt={logo.name}
                 className="h-12 sm:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
               />
             ))}
           </div>
+        </div>
+
+        <div
+          ref={measureRef}
+          className="absolute -left-[9999px] -top-[9999px] flex gap-16 sm:gap-24 items-center whitespace-nowrap"
+          aria-hidden="true"
+        >
+          {partnerImages.map((logo) => (
+            <img
+              key={`measure-${logo.id}`}
+              src={logo.image_path}
+              alt=""
+              className="h-12 sm:h-16 w-auto object-contain"
+            />
+          ))}
         </div>
       </div>
     </section>

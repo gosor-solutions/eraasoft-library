@@ -48,5 +48,6 @@ export const QUERY_KEYS = {
   aboutUs: {
     images: () => ["company-images"] as const,
     reviews: () => ["company-reviews"] as const,
+    partnerImages: () => ["partner-company-images"] as const,
   },
 } as const;
