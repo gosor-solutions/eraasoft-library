@@ -100,9 +100,9 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
 const services = [
   {
     id: 1,
-    title: "Nasr City Academy",
-    description: "Premium, in-person learning at our flagship Cairo hub.",
-    image: "/adult-course.jpg",
+    title: "Training Programs",
+    description: "Premium, in-person training programs with our top trainers.",
+    image: "/training.png",
     icon: "🎓",
   },
   {

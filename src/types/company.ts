@@ -23,3 +23,11 @@ export interface PartnerCompanyImage {
   order: number;
   created_at: string;
 }
+
+export interface Credit {
+  id: number;
+  name?: string;
+  image_path: string;
+  is_active: boolean;
+  order: number;
+}

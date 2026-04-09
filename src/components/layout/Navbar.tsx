@@ -3,20 +3,44 @@ import { MyLink } from "@/components/shared/MyLink";
 import { authHelper } from "@/helpers/authHelper";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
-import { FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
+import { FiChevronDown, FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
 
-const guestNavLinks = [
+type NavLink = {
+  to?: string;
+  label: string;
+  children?: { to: string; label: string }[];
+};
+
+const guestNavLinks: NavLink[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "courses", label: "Courses" },
-  { to: "contact-us", label: "Contact Us" },
+  { to: "/blogs", label: "Blog" },
+  {
+    label: "Courses",
+    to: "/courses",
+    children: [
+      { to: "/courses?type=0", label: "Adult Courses" },
+      { to: "/courses?type=1", label: "Kids Courses" },
+      { to: "/training", label: "Training" },
+    ],
+  },
+  { to: "/contact-us", label: "Contact Us" },
 ];
 
-const authNavLinks = [
+const authNavLinks: NavLink[] = [
   { to: "/", label: "Home" },
+  { to: "/blogs", label: "Blog" },
   { to: "/free-materials", label: "Free Materials" },
-  { to: "/courses", label: "Courses" },
+  {
+    label: "Courses",
+    to: "/courses",
+    children: [
+      { to: "/courses?type=0", label: "Adult Courses" },
+      { to: "/courses?type=1", label: "Kids Courses" },
+      { to: "/training", label: "Training" },
+    ],
+  },
   { to: "/topics", label: "Categories" },
   { to: "/about", label: "About" },
   { to: "/contact-us", label: "Contact Us" },
@@ -145,11 +169,28 @@ export function NavBar() {
 
           {/* Desktop Nav Links */}
           <ul className="hidden md:flex gap-8 font-medium items-baseline">
-            {navLinks.map(({ to, label }) => (
-              <li key={to}>
-                <MyLink to={to} className="nav-link-desktop">
-                  {label}
-                </MyLink>
+            {navLinks.map(({ to, label, children }) => (
+              <li key={label} className="relative group">
+                {children ? (
+                  <>
+                    <MyLink to={to} className="nav-link-desktop cursor-pointer flex items-center gap-1 py-2">
+                      {label} <FiChevronDown />
+                    </MyLink>
+                    <div className="absolute top-[100%] left-0 pt-2 hidden group-hover:block z-50">
+                      <div className="flex flex-col bg-white text-gray-800 shadow-lg rounded-lg border border-gray-100 min-w-[160px] py-2">
+                        {children.map(child => (
+                          <MyLink key={child.label} to={child.to} className="px-4 py-2 hover:bg-gray-100 transition-colors">
+                            {child.label}
+                          </MyLink>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <MyLink to={to!} className="nav-link-desktop">
+                    {label}
+                  </MyLink>
+                )}
               </li>
             ))}
           </ul>
@@ -223,19 +264,39 @@ export function NavBar() {
         {menuOpen && (
           <div className="md:hidden mobile-menu-open bg-brand-secondary border-t border-white/20 px-6 py-4 flex flex-col gap-4 shadow-lg">
             <ul className="flex flex-col gap-1 font-medium">
-              {navLinks.map(({ to, label }, i) => (
+              {navLinks.map(({ to, label, children }, i) => (
                 <li
-                  key={to}
+                  key={label}
                   className="mobile-link-item"
                   style={{ animationDelay: `${0.05 + i * 0.05}s` }}
                 >
-                  <MyLink
-                    to={to}
-                    className="mobile-nav-link"
-                    onClick={() => setMenuOpen(false)}
-                  >
-                    {label}
-                  </MyLink>
+                  {children ? (
+                    <div className="flex flex-col">
+                      <MyLink to={to} className="mobile-nav-link font-bold opacity-70 flex items-center gap-1">
+                        {label} <FiChevronDown />
+                      </MyLink>
+                      <div className="flex flex-col pl-4 border-l border-white/20 ml-2 mt-1 gap-1">
+                        {children.map(child => (
+                          <MyLink
+                            key={child.label}
+                            to={child.to}
+                            className="mobile-nav-link text-sm"
+                            onClick={() => setMenuOpen(false)}
+                          >
+                            {child.label}
+                          </MyLink>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <MyLink
+                      to={to!}
+                      className="mobile-nav-link"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {label}
+                    </MyLink>
+                  )}
                 </li>
               ))}
             </ul>

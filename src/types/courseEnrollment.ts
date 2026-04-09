@@ -2,6 +2,7 @@ export type EnrollBody = {
   course_id: number;
   terms_and_conditions: boolean;
   coupon_code?: string;
+  // payment_method: "visa" | "wallet" | "apple_pay";
 };
 
 export type EnrollResponse = {

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../../constants/queryKeys";
 import { apiService } from "../../services/apiService";
-import type { CompanyImage, CompanyReview, PartnerCompanyImage } from "../../types/company";
+import type { CompanyImage, CompanyReview, PartnerCompanyImage, Credit } from "../../types/company";
 
 export const useGetCompanyImages = () => {
   return useQuery({
@@ -23,6 +23,14 @@ export const useGetPartnerCompanyImages = () => {
   return useQuery({
     queryKey: QUERY_KEYS.aboutUs.partnerImages(),
     queryFn: () => apiService.get<{ data: PartnerCompanyImage[] }>("/partner-company-images"),
+    select: (data) => data?.data || [],
+  });
+};
+
+export const useGetCredits = () => {
+  return useQuery({
+    queryKey: QUERY_KEYS.aboutUs.credits(),
+    queryFn: () => apiService.get<{ data: Credit[] }>("/credits"),
     select: (data) => data?.data || [],
   });
 };

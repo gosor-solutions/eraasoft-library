@@ -5,6 +5,7 @@ import { HeroSection } from "@/components/features/Home/Hero";
 import { ServicesSection } from "@/components/features/Home/Services";
 import { authHelper } from "@/helpers/authHelper";
 import { AuthedHome } from "./AuthedHome";
+import { Credits } from "@/components/features/Home/Credits";
 
 export function Home() {
   if (authHelper.isAuthenticated()) {
@@ -17,7 +18,7 @@ export function Home() {
       <AboutUs />
       <ServicesSection />
       <CoursesSection />
-      {/* <TestimonialsSection /> */}
+      <Credits />
       <AppShowcaseSection />
       {/* <ContactSection /> */}
     </div>

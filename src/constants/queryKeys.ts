@@ -10,6 +10,9 @@ export const QUERY_KEYS = {
   home: {
     all: () => ["home"] as const,
   },
+  heroSlides: {
+    all: () => ["hero-slides"] as const,
+  },
   learning: {
     all: () => ["learning"] as const,
     enrolledRound: (id: number) =>
@@ -49,5 +52,11 @@ export const QUERY_KEYS = {
     images: () => ["company-images"] as const,
     reviews: () => ["company-reviews"] as const,
     partnerImages: () => ["partner-company-images"] as const,
+    credits: () => ["credits"] as const,
+  },
+  blogs: {
+    all: () => ["blogs"] as const,
+    list: (page?: number) => [...QUERY_KEYS.blogs.all(), "per page", page] as const,
+    detail: (id: number) => [...QUERY_KEYS.blogs.all(),"by id", id] as const,
   },
 } as const;

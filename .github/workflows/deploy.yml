@@ -28,6 +28,9 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
+      - name: Rename index.html to index.php
+        run: mv ./dist/index.html ./dist/index.php
+
       - name: Deploy via SSH
         uses: easingthemes/ssh-deploy@main
         env:

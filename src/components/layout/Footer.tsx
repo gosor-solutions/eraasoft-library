@@ -67,8 +67,11 @@ export function Footer() {
             links={[
               { to: "/", label: "Home" },
               { to: "/about", label: "About Us" },
+              { to: "/blogs", label: "Blog" },
               { to: "/courses", label: "Courses" },
               { to: "/contact-us", label: "Contact Us" },
+              { to: "/terms-and-conditions", label: "Terms & Conditions" },
+              { to: "/privacy-policy", label: "Privacy Policy" },
             ]}
           />
 

@@ -9,6 +9,8 @@ import { CheckoutOrderSummary } from "./pages/Checkout/CheckoutOrderSummary";
 import { ContactUs } from "./pages/ContactUs";
 import CourseDetails from "./pages/CourseDetails";
 import CourseTest from "./pages/CourseTest";
+import { TermsAndConditions } from "./pages/TermsAndConditions";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { CoursesPage } from "./pages/Courses/CoursesPage";
 import { SingleCoursePage } from "./pages/Courses/SingleCoursePage";
 import { FreeMaterialDetailsPage } from "./pages/FreeMaterials/FreeMaterialDetailsPage";
@@ -18,7 +20,10 @@ import { MainLayout } from "./pages/Layouts/MainLayout";
 import { ProfilePage } from "./pages/Profile";
 import { TopicCoursesPage } from "./pages/Topics/TopicCoursesPage";
 import { TopicsPage } from "./pages/Topics/TopicsPage";
+import { TrainingPage } from "./pages/Training/TrainingPage";
 import PlacementTest from "./pages/PlacmentTest/PlacmentTest";
+import { BlogsPage } from "./pages/Blogs/BlogsPage";
+import { BlogDetailsPage } from "./pages/Blogs/BlogDetailsPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +45,18 @@ export const router = createBrowserRouter([
       {
         path: "placemetn-test",
         element: <PlacementTest />,
+      },
+      {
+        path: "training",
+        element: <TrainingPage />,
+      },
+      {
+        path: "terms-and-conditions",
+        element: <TermsAndConditions />,
+      },
+      {
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "free-materials",
@@ -77,6 +94,19 @@ export const router = createBrowserRouter([
           {
             path: ":id",
             element: <TopicCoursesPage />,
+          },
+        ],
+      },
+      {
+        path: "blogs",
+        children: [
+          {
+            index: true,
+            element: <BlogsPage />,
+          },
+          {
+            path: ":id",
+            element: <BlogDetailsPage />,
           },
         ],
       },

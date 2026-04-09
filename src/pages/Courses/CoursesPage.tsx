@@ -7,8 +7,12 @@ import { useSearchParams } from "react-router";
 
 export function CoursesPage() {
   const [params] = useSearchParams();
+
+  const type = params.get("type")
+
   const coursesQuery = useGetCourses({
     page: params.get("page") || 1,
+    ...(type ? { type } : {}),
   });
 
   if (coursesQuery.isPending) {
@@ -24,7 +28,7 @@ export function CoursesPage() {
       <section className="w-full px-4 py-8 md:py-12">
         <div className="mx-auto max-w-7xl">
           {/* Header */}
-          <h1 className="mb-6 text-3xl font-bold md:text-4xl">Courses</h1>
+          <h1 className="mb-6 text-3xl font-bold md:text-4xl">{getCourseType(type)} </h1>
 
           {/* Search and Filter Bar */}
           {/* <CoursePageHeader /> */}
@@ -35,4 +39,14 @@ export function CoursesPage() {
       </section>
     </>
   );
+}
+
+function getCourseType(type?: string) {
+  if(!type) return "All Courses";
+  return TYPE_MAP[type];
+}
+
+const TYPE_MAP = {
+  0: "Adult Courses",
+  1: "Kids Courses",
 }
