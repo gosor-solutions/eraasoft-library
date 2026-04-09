@@ -9,7 +9,7 @@ export function Logo({ className = "" }: LogoProps) {
 
   const getLogoPath = () => {
     return settings?.logo || "/englivision-logo-color.png";
-  };
+  };  
 
   return (
     <img src={getLogoPath()} alt="Engli-Vision Logo" className={className} />
