@@ -10,12 +10,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       if (settings.primary_color) {
         root.style.setProperty("--color-brand-primary", settings.primary_color);
       }
-      if (settings.secondary_color) {
-        root.style.setProperty(
-          "--color-brand-secondary",
-          settings.secondary_color,
-        );
-      }
+      // if (settings.secondary_color) {
+      //   root.style.setProperty(
+      //     "--color-brand-secondary",
+      //     settings.secondary_color,
+      //   );
+      // }
     }
   }, [settings]);
 
