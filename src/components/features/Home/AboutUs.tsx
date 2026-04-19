@@ -16,17 +16,35 @@ export function AboutUs() {
       <section className="py-24 px-4 sm:px-8 lg:px-16 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <AboutContent />
-            <AboutImage />
+            <div data-aos="fade-right">
+              <AboutContent />
+            </div>
+            <div data-aos="fade-left">
+              <AboutImage />
+            </div>
           </div>
         </div>
       </section>
 
-      <Partnerships />
-      <VideoSection />
-      {isPage && <Gallery />}
-      {isPage && <Credits />}
-      <Feedbacks />
+      <div data-aos="fade-up">
+        <Partnerships />
+      </div>
+      <div data-aos="zoom-in">
+        <VideoSection />
+      </div>
+      {isPage && (
+        <div data-aos="fade-up">
+          <Gallery />
+        </div>
+      )}
+      {isPage && (
+        <div data-aos="fade-up">
+          <Credits />
+        </div>
+      )}
+      <div data-aos="fade-up">
+        <Feedbacks />
+      </div>
     </div>
   );
 }
@@ -192,9 +210,11 @@ function Feedbacks() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 rtl"
           dir="rtl"
         >
-          {reviews.map((fb) => (
+          {reviews.map((fb, index) => (
             <div
               key={fb.id}
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
               className="bg-white rounded-md rounded-br-[80px] shadow-lg p-6 sm:p-8 hover:shadow-xl transition-shadow duration-300"
             >
               <div className="flex flex-col items-center mb-4">

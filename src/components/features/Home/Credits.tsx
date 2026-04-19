@@ -23,6 +23,8 @@ export function Credits() {
           {credits.map((item, idx) => (
             <div
               key={item.id}
+              data-aos="fade-up"
+              data-aos-delay={idx * 100}
               className="relative overflow-hidden rounded-xl flex justify-center items-center"
             >
               <img

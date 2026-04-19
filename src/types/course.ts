@@ -2,6 +2,18 @@ import type { ApiResponse } from "./api";
 import type { Lecture } from "./learning";
 import type { Topic } from "./topic";
 
+export const CourseType = {
+  ONLINE: 0,
+  KIDS: 1,
+  OFFLINE: 2,
+} as const;
+
+export const CourseTypeLabels = {
+  [CourseType.ONLINE]: "Online Courses",
+  [CourseType.KIDS]: "Kids Courses",
+  [CourseType.OFFLINE]: "Offline Courses",
+} as const;
+
 export type GetCoursesResponse = ApiResponse<Course[]>;
 
 export type GetCourseResponse = ApiResponse<Course>;
@@ -13,6 +25,7 @@ export type Course = {
   title?: string;
   price?: number;
   status?: number;
+  type?: (typeof CourseType)[keyof typeof CourseType];
   description?: string;
   duration?: number;
   currency?: string;
@@ -43,7 +56,7 @@ export type Round = {
   start_date?: string;
   status?: number;
   task_submission_rate?: number;
-  type?: number;
+  type?: (typeof CourseType)[keyof typeof CourseType];
 
   whatsapp_group_link?: string;
   google_meet_link?: string;

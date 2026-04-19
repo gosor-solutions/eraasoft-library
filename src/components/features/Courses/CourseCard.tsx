@@ -5,11 +5,15 @@ import { CiDollar } from "react-icons/ci";
 import { TfiStatsUp } from "react-icons/tfi";
 
 // Course Card Component
-export function CourseCard({ course }: { course: Course }) {
+export function CourseCard({ course, index }: { course: Course; index?: number }) {
   const navigate = useCustomNavigation();
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div
+      data-aos="fade-up"
+      data-aos-delay={index ? index * 100 : 0}
+      className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+    >
       {/* Course Image */}
       <div className="relative">
         <img

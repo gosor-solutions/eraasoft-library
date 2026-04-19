@@ -2,7 +2,12 @@ import type { Course } from "./course";
 
 export type GetTopicsResponse = Topic[];
 
-export type Topic = { id: number; name: string; order: number };
+export type Topic = {
+  id: number;
+  name: string;
+  order: number;
+  courses?: Course[];
+};
 
 export type GetTopicCoursesResponse = Course[];
 

@@ -1,9 +1,24 @@
 export interface Setting {
-  id?: number;
+  id: number;
   key: string;
   value: string;
-  category: string;
   type: string;
+}
+
+export interface OwnerSettings {
+  owner_image?: string;
+  owner_bio?: string;
+  owner_facebook?: string;
+  owner_twitter?: string;
+  owner_telegram?: string;
+  owner_instagram?: string;
+  owner_youtube?: string;
+  owner_linkedin?: string;
+}
+
+export interface MobileSettingsResponse {
+  owner_page: Setting[];
+  // other categories can be added here
 }
 
 export interface AppSettings {

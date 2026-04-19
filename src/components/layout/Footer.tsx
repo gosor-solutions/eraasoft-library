@@ -9,7 +9,7 @@ import {
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
-import { FaChevronLeft, FaPhone } from "react-icons/fa6";
+import { FaChevronRight, FaPhone } from "react-icons/fa6";
 
 export function Footer() {
   const { data: settings } = useGetSettings();
@@ -52,13 +52,15 @@ export function Footer() {
   return (
     <footer className="bg-brand-primary text-white py-12 sm:py-16 lg:py-20 px-6 sm:px-10 lg:px-16">
       <div className="max-w-7xl mx-auto">
-        {/* Grid: 1 col mobile → max cols tablet/desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-x-6">
+        {/* Grid: 1 col mobile → 4 cols tablet/desktop equally spaced */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand Column */}
-          <div className="flex flex-col items-start sm:col-span-2 lg:col-span-1">
-            <Logo className="w-28 sm:w-32" />
-            <p className="text-base sm:text-lg font-medium mt-3 mb-6 leading-relaxed">
-              Master English. Unlock the World.
+          <div className="flex flex-col items-start">
+            <div className="bg-white rounded-xl mb-4">
+              <Logo className="w-28 sm:w-32 -mt-4 mb-3" />
+            </div>
+            <p className="text-base sm:text-xl font-medium mb-6 leading-relaxed capitalize">
+              learning has no limits
             </p>
           </div>
 
@@ -130,25 +132,24 @@ function Links({
         {links.map((link) => (
           <li
             key={`${link.label}-${link.to}`}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-150"
+            className="hover:opacity-80 transition-opacity duration-150"
           >
-            {link.icon ? (
-              <link.icon className="text-white shrink-0" size={14} />
-            ) : (
-              <FaChevronLeft className="text-white shrink-0" size={14} />
-            )}
             {link.external ? (
               <a
                 href={link.to}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full h-full"
+                className="flex items-center gap-2 w-full h-full"
               >
-                {link.label}
+                {link.icon && <link.icon className="text-white shrink-0" size={14} />}
+                <span>{link.label}</span>
+                {!link.icon && <FaChevronRight className="text-white shrink-0 ml-auto" size={14} />}
               </a>
             ) : (
-              <MyLink to={link.to} className="w-full h-full">
-                {link.label}
+              <MyLink to={link.to} className="flex items-center gap-2 w-full h-full">
+                {link.icon && <link.icon className="text-white shrink-0" size={14} />}
+                <span>{link.label}</span>
+                {!link.icon && <FaChevronRight className="text-white shrink-0 ml-auto" size={14} />}
               </MyLink>
             )}
           </li>

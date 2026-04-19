@@ -6,10 +6,14 @@ export function AppShowcaseSection() {
       <div className="relative max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
-          <AppContent />
+          <div data-aos="fade-right">
+            <AppContent />
+          </div>
 
           {/* App Screenshots */}
-          <AppScreenshots />
+          <div data-aos="fade-left">
+            <AppScreenshots />
+          </div>
         </div>
       </div>
     </section>

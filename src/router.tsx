@@ -24,6 +24,7 @@ import { TrainingPage } from "./pages/Training/TrainingPage";
 import PlacementTest from "./pages/PlacmentTest/PlacmentTest";
 import { BlogsPage } from "./pages/Blogs/BlogsPage";
 import { BlogDetailsPage } from "./pages/Blogs/BlogDetailsPage";
+import { FounderPage } from "./pages/Founder";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/about",
         element: <AboutUs />,
+      },
+      {
+        path: "/founder",
+        element: <FounderPage />,
       },
       {
         path: "contact-us",

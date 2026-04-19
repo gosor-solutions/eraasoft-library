@@ -5,8 +5,17 @@ export type EnrollBody = {
   // payment_method: "visa" | "wallet" | "apple_pay";
 };
 
+export type GuestEnrollBody = {
+  name: string;
+  email: string;
+  phone: string;
+  course_id: number;
+  terms_and_conditions: boolean;
+  coupon_code?: string;
+};
+
 export type EnrollResponse = {
-  amount: string;
+  amount: number;
   redirect_url: string;
 };
 

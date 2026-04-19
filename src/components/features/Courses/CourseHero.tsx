@@ -1,6 +1,8 @@
 import { Button } from "@/components/shared/button";
 import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
+import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
 import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
+import { CourseType } from "@/types/course";
 import type { Course } from "@/types/course";
 import { Lock } from "lucide-react";
 import { useState } from "react";
@@ -12,6 +14,7 @@ import { TfiStatsUp } from "react-icons/tfi";
 
 export function CourseHeroSection({ course }: { course: Course }) {
   const navigate = useCustomNavigation();
+  const { data: settings } = useGetSettings();
 
   const [playVideo, setPlayVideo] = useState(false);
 
@@ -21,6 +24,18 @@ export function CourseHeroSection({ course }: { course: Course }) {
     { icon: LuCalendarClock, label: `${course?.duration} weeks` },
     { icon: CiDollar, label: `${course?.price} ${course?.currency}` },
   ];
+
+  const handleCTA = () => {
+    if (course.type === CourseType.KIDS || course.type === CourseType.OFFLINE) {
+      const whatsappNumber = settings?.whatsapp_num_1 || "";
+      const message = encodeURIComponent(
+        `Hello, I'm interested in the "${course.title}" course. Can I get more information?`,
+      );
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
+    } else {
+      navigate("/checkout", { state: { course } });
+    }
+  };
 
   return (
     <section className="relative w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-48 overflow-hidden py-12 md:py-16 lg:py-20">
@@ -63,10 +78,7 @@ export function CourseHeroSection({ course }: { course: Course }) {
           </button>
 
           {/* CTA */}
-          <Button
-            onClick={() => navigate("/checkout", { state: { course } })}
-            className="w-full text-lg px-8 py-6"
-          >
+          <Button onClick={handleCTA} className="w-full text-lg px-8 py-6">
             Start learn now
           </Button>
         </div>

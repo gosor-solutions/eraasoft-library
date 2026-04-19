@@ -7,6 +7,7 @@ import type {
   CheckCouponResponse,
   EnrollBody,
   EnrollResponse,
+  GuestEnrollBody,
 } from "../../types/courseEnrollment";
 
 export const useEnrollCourse = () => {
@@ -21,6 +22,16 @@ export const useEnrollCourse = () => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.learning.all() });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.courses.all() });
     },
+  });
+};
+
+export const useGuestEnrollCourse = () => {
+  return useMutation({
+    mutationFn: (data: GuestEnrollBody) =>
+      apiService.post<ApiResponse<EnrollResponse>>(
+        "/course-enrollment/guest-enroll",
+        data,
+      ),
   });
 };
 

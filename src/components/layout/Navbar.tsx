@@ -1,6 +1,7 @@
 import { Logo } from "@/components/shared/Logo";
 import { MyLink } from "@/components/shared/MyLink";
 import { authHelper } from "@/helpers/authHelper";
+import { CourseType, CourseTypeLabels } from "@/types/course";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
 import { FiChevronDown, FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
@@ -15,13 +16,24 @@ type NavLink = {
 const guestNavLinks: NavLink[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
+  { to: "/founder", label: "Founder" },
   { to: "/blogs", label: "Blog" },
   {
     label: "Courses",
     to: "/courses",
     children: [
-      { to: "/courses?type=0", label: "Adult Courses" },
-      { to: "/courses?type=1", label: "Kids Courses" },
+      {
+        to: `/courses?type=${CourseType.ONLINE}`,
+        label: CourseTypeLabels[CourseType.ONLINE],
+      },
+      {
+        to: `/courses?type=${CourseType.KIDS}`,
+        label: CourseTypeLabels[CourseType.KIDS],
+      },
+      {
+        to: `/courses?type=${CourseType.OFFLINE}`,
+        label: CourseTypeLabels[CourseType.OFFLINE],
+      },
       { to: "/training", label: "Training" },
     ],
   },
@@ -36,13 +48,24 @@ const authNavLinks: NavLink[] = [
     label: "Courses",
     to: "/courses",
     children: [
-      { to: "/courses?type=0", label: "Adult Courses" },
-      { to: "/courses?type=1", label: "Kids Courses" },
+      {
+        to: `/courses?type=${CourseType.ONLINE}`,
+        label: CourseTypeLabels[CourseType.ONLINE],
+      },
+      {
+        to: `/courses?type=${CourseType.KIDS}`,
+        label: CourseTypeLabels[CourseType.KIDS],
+      },
+      {
+        to: `/courses?type=${CourseType.OFFLINE}`,
+        label: CourseTypeLabels[CourseType.OFFLINE],
+      },
       { to: "/training", label: "Training" },
     ],
   },
   { to: "/topics", label: "Categories" },
   { to: "/about", label: "About" },
+  { to: "/founder", label: "Founder" },
   { to: "/contact-us", label: "Contact Us" },
 ];
 

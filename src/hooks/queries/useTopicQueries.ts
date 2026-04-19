@@ -8,10 +8,10 @@ import type {
 } from "../../types/topic";
 import type { ApiResponse } from "@/types/api";
 
-export const useGetTopics = () => {
+export const useGetTopics = (params?: Record<string, unknown>) => {
   return useQuery({
-    queryKey: QUERY_KEYS.topics.all(),
-    queryFn: () => apiService.get<ApiResponse<GetTopicsResponse>>("/topics"),
+    queryKey: QUERY_KEYS.topics.all(params),
+    queryFn: () => apiService.get<ApiResponse<GetTopicsResponse>>("/topics", params),
   });
 };
 

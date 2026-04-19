@@ -2,11 +2,13 @@ import { Button } from "@/components/shared/button";
 import { Loading } from "@/components/shared/Loading";
 import { NoData } from "@/components/shared/NoData";
 import { useGetCourses } from "@/hooks/queries/useCourseQueries";
+import { useNavigate } from "react-router";
 import { CoursesGrid } from "../Courses/CoursesGrid";
 
 // Main Courses Component
 export function CoursesSection() {
   const coursesQuery = useGetCourses();
+  const navigate = useNavigate();
 
   if (coursesQuery.isPending) {
     return <Loading size={40} color="#000000" />;
@@ -22,7 +24,10 @@ export function CoursesSection() {
         <SectionHeader />
         <CoursesGrid courses={coursesQuery.data.data} />
         <div className="flex justify-center">
-          <Button className="text-lg px-4 py-6 rounded-xl font-normal">
+          <Button
+            onClick={() => navigate(`/courses`)}
+            className="text-lg px-4 py-6 rounded-xl font-normal"
+          >
             Explore all Courses
           </Button>
         </div>

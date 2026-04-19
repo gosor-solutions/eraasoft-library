@@ -55,17 +55,27 @@ function SectionHeader() {
 function ServicesGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-      {services.map((service) => (
-        <ServiceCard key={service.id} service={service} />
+      {services.map((service, index) => (
+        <ServiceCard key={service.id} service={service} index={index} />
       ))}
     </div>
   );
 }
 
 // Service Card Component
-function ServiceCard({ service }: { service: (typeof services)[number] }) {
+function ServiceCard({
+  service,
+  index,
+}: {
+  service: (typeof services)[number];
+  index: number;
+}) {
   return (
-    <div className="group relative rounded-tl-3xl rounded-br-3xl rounded-tr-[78px] rounded-bl-[78px] overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+    <div
+      data-aos="fade-up"
+      data-aos-delay={index * 100}
+      className="group relative rounded-tl-3xl rounded-br-3xl rounded-tr-[78px] rounded-bl-[78px] overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+    >
       {/* Background Image */}
       <div className="relative">
         <img
@@ -114,7 +124,7 @@ const services = [
   },
   {
     id: 3,
-    title: "Adult Courses",
+    title: "Online Courses",
     description: "Professional-grade curriculum designed for career growth.",
     image: "/adult-course.jpg",
     icon: "👨",

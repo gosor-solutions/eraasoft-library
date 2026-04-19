@@ -1,14 +1,19 @@
 import { Button } from "@/components/shared/button";
 import { Checkbox } from "@/components/shared/checkbox";
 import { Input } from "@/components/shared/input";
+import { MyLink } from "@/components/shared/MyLink";
+import { authHelper } from "@/helpers/authHelper";
 import {
   useCheckCoupon,
   useEnrollCourse,
+  useGuestEnrollCourse,
 } from "@/hooks/mutations/useCourseEnrollmentMutations";
 import type { Course } from "@/types/course";
 import type { CheckCouponResponse } from "@/types/courseEnrollment";
 import { Calendar, DollarSign, TrendingUp, Video } from "lucide-react";
 import { useState } from "react";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 import { useLocation } from "react-router";
 import { toast } from "sonner";
 
@@ -18,14 +23,57 @@ export function CheckoutOrderSummary() {
   const [coupon, setCoupon] = useState<CheckCouponResponse | null>(null);
   const [terms, setTerms] = useState(false);
 
+  // Guest fields
+  const [guestName, setGuestName] = useState("");
+  const [guestEmail, setGuestEmail] = useState("");
+  const [guestPhone, setGuestPhone] = useState("");
+
   const checkCouponMutation = useCheckCoupon();
   const enrollMutation = useEnrollCourse();
+  const guestEnrollMutation = useGuestEnrollCourse();
+
+  const isAuthenticated = authHelper.isAuthenticated();
 
   const discount = coupon?.discount_percentage
     ? (course?.price * coupon.discount_percentage) / 100
     : 0;
 
   const total = course?.price - discount;
+
+  const isFormValid = isAuthenticated || (guestName && guestEmail && guestPhone);
+
+  const handlePay = () => {
+    if (isAuthenticated) {
+      enrollMutation.mutate(
+        {
+          course_id: course?.id,
+          terms_and_conditions: terms,
+          coupon_code: coupon?.code,
+        },
+        {
+          onSuccess: (data) => {
+            window.open(data.data.redirect_url, "_blank");
+          },
+        },
+      );
+    } else {
+      guestEnrollMutation.mutate(
+        {
+          name: guestName,
+          email: guestEmail,
+          phone: guestPhone,
+          course_id: course?.id,
+          terms_and_conditions: terms,
+          coupon_code: coupon?.code,
+        },
+        {
+          onSuccess: (data) => {
+            window.open(data.data.redirect_url, "_blank");
+          },
+        },
+      );
+    }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
@@ -82,6 +130,54 @@ export function CheckoutOrderSummary() {
 
         {/* Divider */}
         <div className="border-t border-gray-200"></div>
+
+        {/* Guest Info Form */}
+        {!isAuthenticated && (
+          <div className="space-y-4">
+            <h3 className="text-base font-semibold">Your Information</h3>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
+                <Input
+                  value={guestName}
+                  onChange={(e) => setGuestName(e.target.value)}
+                  placeholder="Enter your full name"
+                  className="w-full"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <Input
+                  type="email"
+                  value={guestEmail}
+                  onChange={(e) => setGuestEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Phone Number
+                </label>
+                <PhoneInput
+                  defaultCountry="eg"
+                  value={guestPhone}
+                  onChange={(phone) => setGuestPhone(phone)}
+                  className="w-full"
+                />
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                An account will be created for you automatically. You will receive login credentials via email after successful payment.
+              </p>
+            </div>
+            {/* Divider */}
+            <div className="border-t border-gray-200 pt-2"></div>
+          </div>
+        )}
 
         {/* Order Summary */}
         <div className="space-y-4">
@@ -156,29 +252,28 @@ export function CheckoutOrderSummary() {
             checked={terms}
             onCheckedChange={() => setTerms(!terms)}
           />
-          <label htmlFor="terms" className="ms-3">
-            I agree to terms and conditions
+          <label htmlFor="terms" className="ms-3 text-sm">
+            I agree to{" "}
+            <MyLink
+              to="/terms-and-conditions"
+              className="text-brand-primary underline"
+              target="_blank"
+            >
+              terms and conditions
+            </MyLink>
           </label>
         </div>
 
         {/* Pay Button */}
         <Button
-          onClick={() =>
-            enrollMutation.mutate(
-              {
-                course_id: course?.id,
-                terms_and_conditions: terms,
-                coupon_code: coupon?.code,
-              },
-              {
-                onSuccess: (data) => {
-                  window.open(data.data.redirect_url, "_blank");
-                },
-              },
-            )
+          onClick={handlePay}
+          disabled={
+            !terms ||
+            !isFormValid ||
+            enrollMutation.isPending ||
+            guestEnrollMutation.isPending
           }
-          disabled={!terms || enrollMutation.isPending}
-          isLoading={enrollMutation.isPending}
+          isLoading={enrollMutation.isPending || guestEnrollMutation.isPending}
           className="w-full bg-[#0A4275] py-6 text-base font-semibold hover:bg-[#083658]"
         >
           Pay {total} {course?.currency}

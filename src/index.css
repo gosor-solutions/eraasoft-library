@@ -130,6 +130,58 @@
   }
 }
 
+/* Hero Slide Animations */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-fade-up {
+  animation: hero-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-hero-fade-down {
+  animation: hero-fade-down 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+/* Owner Bio Rich Text Styles */
+.owner-bio h1 { @apply text-3xl font-bold mb-4 text-gray-900; }
+.owner-bio h2 { @apply text-2xl font-bold mb-3 text-gray-900; }
+.owner-bio h3 { @apply text-xl font-bold mb-2 text-gray-900; }
+.owner-bio p { @apply mb-4 text-gray-700 leading-relaxed; }
+.owner-bio ul { @apply list-disc pl-6 mb-4; }
+.owner-bio ol { @apply list-decimal pl-6 mb-4; }
+.owner-bio a { @apply text-brand-primary underline; }
+
 * {
   font-family: var(--font-inter);
 }

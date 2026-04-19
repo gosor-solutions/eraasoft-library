@@ -5,16 +5,29 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/shared/carousel";
 import { MyLink } from "@/components/shared/MyLink";
 import { useGetHeroSlides } from "@/hooks/queries/useHomeQueries";
 import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // Main Hero Component
 export function HeroSection() {
   const { data: slidesResponse, isLoading } = useGetHeroSlides();
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   if (isLoading) {
     return (
@@ -27,7 +40,7 @@ export function HeroSection() {
   }
 
   const slides = slidesResponse?.data || [];
-  
+
   if (slides.length === 0) {
     // Fallback if no slides are returned
     return <StaticHeroFallback />;
@@ -36,14 +49,15 @@ export function HeroSection() {
   return (
     <section className="min-h-[80vh] relative overflow-hidden group">
       <Carousel
-        opts={{loop: true}}
+        setApi={setApi}
+        opts={{ loop: true }}
         plugins={[plugin.current]}
         className="w-full"
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
         <CarouselContent>
-          {slides.map((slide) => (
+          {slides.map((slide, index) => (
             <CarouselItem key={slide.id}>
               <div className="min-h-[80vh] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
                 {/* Background Image with Overlay */}
@@ -57,23 +71,28 @@ export function HeroSection() {
                 </div>
 
                 {/* Content */}
-                <div className="relative w-full max-w-4xl mx-auto text-center">
+                <div
+                  key={current === index ? "active" : "inactive"}
+                  className={`relative w-full max-w-4xl mx-auto text-center ${current === index ? "block" : "hidden"}`}
+                >
                   <div className="space-y-6 sm:space-y-8 py-10 sm:py-14 lg:py-20">
-                    <Logo />
+                    <div className="animate-hero-fade-down opacity-0">
+                      <Logo />
+                    </div>
 
                     {slide.title && (
-                      <h1 className="font-inter text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight px-2">
+                      <h1 className="font-inter text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight px-2 animate-hero-fade-up animation-delay-200 opacity-0">
                         {slide.title}
                       </h1>
                     )}
 
                     {slide.description && (
-                      <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-4">
+                      <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-4 animate-hero-fade-up animation-delay-400 opacity-0">
                         {slide.description}
                       </p>
                     )}
 
-                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-6 sm:px-0 mt-6">
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-6 sm:px-0 mt-6 animate-hero-fade-up animation-delay-600 opacity-0">
                       {slide.cta_text_1 && slide.cta_link_1 && (
                         <DynamicCTA
                           text={slide.cta_text_1}
@@ -82,7 +101,10 @@ export function HeroSection() {
                         />
                       )}
                       {slide.cta_text_2 && slide.cta_link_2 && (
-                        <DynamicCTA text={slide.cta_text_2} link={slide.cta_link_2} />
+                        <DynamicCTA
+                          text={slide.cta_text_2}
+                          link={slide.cta_link_2}
+                        />
                       )}
                     </div>
                   </div>
@@ -165,15 +187,17 @@ function StaticHeroFallback() {
       </div>
       <div className="relative w-full max-w-4xl mx-auto text-center">
         <div className="space-y-6 sm:space-y-8 py-10 sm:py-14 lg:py-20">
-          <Logo />
-          <h1 className="font-inter text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight px-2">
+          <div className="animate-hero-fade-down opacity-0">
+            <Logo />
+          </div>
+          <h1 className="font-inter text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight px-2 animate-hero-fade-up animation-delay-200 opacity-0">
             Welcome to Engli-Vision
           </h1>
-          <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-4">
+          <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-4 animate-hero-fade-up animation-delay-400 opacity-0">
             Your journey to mastering English starts here. Learn smarter, not
             harder.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-6 sm:px-0 mt-6">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-6 sm:px-0 mt-6 animate-hero-fade-up animation-delay-600 opacity-0">
             <DynamicCTA text="Start now" link="/courses" variant="secondary" />
             <DynamicCTA text="Join us" link="/register" />
           </div>
