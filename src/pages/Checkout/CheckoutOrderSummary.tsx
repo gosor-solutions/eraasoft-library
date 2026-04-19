@@ -257,7 +257,6 @@ export function CheckoutOrderSummary() {
             <MyLink
               to="/terms-and-conditions"
               className="text-brand-primary underline"
-              target="_blank"
             >
               terms and conditions
             </MyLink>
