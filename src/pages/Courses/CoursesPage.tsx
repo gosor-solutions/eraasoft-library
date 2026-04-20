@@ -5,6 +5,13 @@ import { NoData } from "@/components/shared/NoData";
 import { useGetTopics } from "@/hooks/queries/useTopicQueries";
 import { CourseTypeLabels } from "@/types/course";
 import { useSearchParams } from "react-router";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/shared/select";
 
 export function CoursesPage() {
   const [params, setParams] = useSearchParams();
@@ -98,7 +105,28 @@ function Header({
     <div className="mb-14 flex flex-col items-center gap-10">
       <h1 className="text-3xl font-bold md:text-4xl">{getCourseType(type)}</h1>
 
-      <div className="flex flex-wrap justify-center gap-5">
+      {/* Mobile Dropdown */}
+      <div className="w-full px-4 md:hidden">
+        <Select
+          value={topicId || "all"}
+          onValueChange={handleTopicChange}
+        >
+          <SelectTrigger className="w-full h-12 text-[15px] font-semibold border-2 border-brand-primary/20">
+            <SelectValue placeholder="Select Topic" />
+          </SelectTrigger>
+          <SelectContent position="popper">
+            <SelectItem value="all">All Topics</SelectItem>
+            {topics.map((topic) => (
+              <SelectItem key={topic.id} value={topic.id.toString()}>
+                {topic.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Desktop Buttons */}
+      <div className="hidden flex-wrap justify-center gap-5 md:flex">
         <button
           onClick={() => handleTopicChange("all")}
           className={`px-7 py-3 rounded-md text-[15px] font-semibold transition-all duration-300 border-2 ${
