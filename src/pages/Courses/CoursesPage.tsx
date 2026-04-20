@@ -38,15 +38,18 @@ export function CoursesPage() {
 
   if (!topicsWithCourses.length) {
     return (
-      <>
+      <section className="w-full px-4 py-8 md:py-12">
+        <div className="mx-auto max-w-7xl">
+
         <Header 
           type={type} 
           setParams={setParams} 
           topicId={topicId} 
           topics={allTopics} 
-        />
+          />
         <NoData data="Courses" />
-      </>
+          </div>
+      </section>
     );
   }
 
