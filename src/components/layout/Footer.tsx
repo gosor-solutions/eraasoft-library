@@ -57,7 +57,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="flex flex-col items-start">
             <div className="bg-white rounded-xl mb-4">
-              <Logo className="w-28 sm:w-32 -mt-4 mb-3" />
+              <Logo className="w-28 sm:w-32 p-2" />
             </div>
             <p className="text-base sm:text-xl font-medium mb-6 leading-relaxed capitalize">
               learning has no limits
