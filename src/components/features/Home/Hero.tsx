@@ -31,7 +31,7 @@ export function HeroSection() {
 
   if (isLoading) {
     return (
-      <section className="min-h-[80vh] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center bg-gray-900">
+      <section className="h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center bg-gray-900">
         <div className="animate-pulse w-full max-w-4xl h-64 bg-gray-800 rounded-lg flex items-center justify-center">
           <div className="animate-pulse w-48 h-12 bg-gray-700 rounded mb-8"></div>
         </div>
@@ -47,7 +47,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="min-h-[80vh] relative overflow-hidden group">
+    <section className="h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative overflow-hidden group">
       <Carousel
         setApi={setApi}
         opts={{ loop: true }}
@@ -59,7 +59,7 @@ export function HeroSection() {
         <CarouselContent>
           {slides.map((slide, index) => (
             <CarouselItem key={slide.id}>
-              <div className="min-h-[80vh] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+              <div className="h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0">
                   <img
@@ -176,7 +176,7 @@ function Logo() {
 
 function StaticHeroFallback() {
   return (
-    <section className="min-h-[80vh] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+    <section className="h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="absolute inset-0">
         <img
           src="/hero.png"
