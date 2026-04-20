@@ -4,7 +4,7 @@ import { authHelper } from "@/helpers/authHelper";
 import { CourseType, CourseTypeLabels } from "@/types/course";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
-import { FiChevronDown, FiChevronRight, FiChevronsRight, FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
+import { FiChevronDown, FiChevronRight, FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
 
 type NavLink = {
