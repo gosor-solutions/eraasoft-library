@@ -98,7 +98,7 @@ function Header({
   };
 
   return (
-    <div className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+    <div className="mb-8 px-6 mt-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
       <h1 className="text-3xl font-bold md:text-4xl">{getCourseType(type)}</h1>
 
       <div className="flex items-center gap-3">
