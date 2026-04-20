@@ -12,7 +12,7 @@ export function BlogDetailsPage() {
   const { data: recentResponse } = useGetRecentBlogPosts(blogId);
 
   if (isBlogLoading) {
-    return <Loading />;
+    return <Loading fullScreen />;
   }
 
   const blog = blogResponse?.data;

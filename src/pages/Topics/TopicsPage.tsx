@@ -9,7 +9,7 @@ export function TopicsPage() {
   let content = null;
 
   if (topicsQuery.isPending) {
-    content = <Loading size={40} color="#000000" />;
+    content = <Loading fullScreen />;
   } else if (!topicsQuery.data?.data?.length) {
     content = <NoData data="Categories" />;
   } else {

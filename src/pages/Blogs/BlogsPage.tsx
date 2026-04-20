@@ -11,7 +11,7 @@ export function BlogsPage() {
   const { data: response, isLoading } = useGetBlogPosts(page);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading fullScreen />;
   }
 
   console.log("response", response);

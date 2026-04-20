@@ -15,7 +15,7 @@ export function TopicCoursesPage() {
   let content = null;
 
   if (coursesQuery.isPending) {
-    content = <Loading size={40} color="#000000" />;
+    content = <Loading fullScreen />;
   } else if (!coursesQuery.data?.data?.length) {
     content = <NoData data="Courses" />;
   } else {

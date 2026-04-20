@@ -12,7 +12,7 @@ export function SingleCoursePage() {
   const courseQuery = useGetCourse(Number(id));
 
   if (courseQuery.isPending) {
-    return <Loading size={40} color="#000000" />;
+    return <Loading fullScreen />;
   }
 
   if (!courseQuery.data?.data) {

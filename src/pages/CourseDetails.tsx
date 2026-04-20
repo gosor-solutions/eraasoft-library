@@ -37,11 +37,7 @@ const CoursePage = () => {
   };
 
   if (enrolledRoundQuery.isPending) {
-    return (
-      <div className="flex min-h-screen bg-gray-50 items-center justify-center">
-        <Loading size={40} color="#000000" />
-      </div>
-    );
+    return <Loading fullScreen />;
   }
 
   if (enrolledRoundQuery.isError || !enrolledRoundQuery.data) {

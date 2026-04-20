@@ -49,7 +49,7 @@ export function MyLearning() {
   let content;
 
   if (learningQuery.isLoading) {
-    content = <Loading size={40} />;
+    content = <Loading fullScreen />;
   } else if (learningQuery.data?.data?.groups.length === 0) {
     content = (
       <div className="text-center p-12 ">

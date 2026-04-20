@@ -43,7 +43,7 @@ export function FreeMaterialsPage() {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading fullScreen />;
   }
 
   const subjects = response?.data || [];

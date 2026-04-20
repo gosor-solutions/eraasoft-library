@@ -24,7 +24,7 @@ export function CoursesPage() {
   });
 
   if (topicsQuery.isPending) {
-    return <Loading size={40} color="#000000" />;
+    return <Loading fullScreen />;
   }
 
   const allTopics = topicsQuery.data?.data || [];

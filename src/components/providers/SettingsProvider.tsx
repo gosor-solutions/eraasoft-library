@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useGetSettings } from "../../hooks/queries/useSettingsQueries";
+import { Loading } from "../shared/Loading";
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const { data: settings, isLoading } = useGetSettings();
@@ -22,7 +23,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-brand-primary"></div>
+        <Loading fullScreen/>
       </div>
     );
   }

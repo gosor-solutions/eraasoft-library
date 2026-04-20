@@ -14,7 +14,7 @@ export function FounderPage() {
   const { data: owner, isLoading } = useGetOwnerSettings();
 
   if (isLoading) {
-    return <Loading size={40} color="#000000" />;
+    return <Loading fullScreen />;
   }
 
   if (!owner) {
