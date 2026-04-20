@@ -10,7 +10,7 @@ import type { ApiResponse } from "@/types/api";
 
 export const useGetTopics = (params?: Record<string, unknown>) => {
   return useQuery({
-    queryKey: QUERY_KEYS.topics.all(),
+    queryKey: QUERY_KEYS.topics.all(params?.type),
     queryFn: () => apiService.get<ApiResponse<GetTopicsResponse>>("/topics", params),
   });
 };

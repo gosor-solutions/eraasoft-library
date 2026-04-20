@@ -35,7 +35,7 @@ export const QUERY_KEYS = {
       ["quiz-results", id, params] as const,
   },
   topics: {
-    all: () => ["topics"] as const,
+    all: (type?: string) => type ? ["topics", type] : ["topics"] as const,
     courses: (id: number) =>
       [...QUERY_KEYS.topics.all(), id, "courses"] as const,
   },
