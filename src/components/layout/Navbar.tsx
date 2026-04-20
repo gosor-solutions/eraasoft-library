@@ -4,7 +4,7 @@ import { authHelper } from "@/helpers/authHelper";
 import { CourseType, CourseTypeLabels } from "@/types/course";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
-import { FiChevronDown, FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
+import { FiChevronDown, FiChevronRight, FiChevronsRight, FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
 
 type NavLink = {
@@ -71,6 +71,7 @@ const authNavLinks: NavLink[] = [
 
 export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileDropDownOpen, setMobileDropDownOpen] = useState(false);
   const navigate = useNavigate();
 
   // const logoutMutation = useLogout();
@@ -177,7 +178,7 @@ export function NavBar() {
           transition: background 0.18s ease, padding-left 0.18s ease, transform 0.18s ease;
           border-radius: 8px;
           padding: 6px 10px;
-          display: block;
+          display: flex;
         }
         .mobile-nav-link:hover {
           background: rgba(255,255,255,0.15);
@@ -295,14 +296,16 @@ export function NavBar() {
                 >
                   {children ? (
                     <div className="flex flex-col">
-                      <MyLink to={to} className="mobile-nav-link font-bold opacity-70 flex items-center gap-1">
-                        {label} <FiChevronDown />
+                      <MyLink to={to} className="mobile-nav-link font-bold opacity-70 flex flex-row items-center gap-1">
+                        {label} {!mobileDropDownOpen ? <FiChevronRight onClick={() => { setMobileDropDownOpen(true) }} /> : <FiChevronDown onClick={() => { setMobileDropDownOpen(false) }} />}
                       </MyLink>
-                      <div className="flex flex-col pl-4 border-l border-white/20 ml-2 mt-1 gap-1">
-                        {children.map(child => (
-                          <MyLink
-                            key={child.label}
-                            to={child.to}
+
+                      {mobileDropDownOpen && (
+                        <div className="flex flex-col pl-4 border-l border-white/20 ml-2 mt-1 gap-1">
+                          {children.map(child => (
+                            <MyLink
+                              key={child.label}
+                              to={child.to}
                             className="mobile-nav-link text-sm"
                             onClick={() => setMenuOpen(false)}
                           >
@@ -310,6 +313,7 @@ export function NavBar() {
                           </MyLink>
                         ))}
                       </div>
+                      )}
                     </div>
                   ) : (
                     <MyLink

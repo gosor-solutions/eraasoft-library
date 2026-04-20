@@ -1,13 +1,7 @@
 import { CoursesGrid } from "@/components/features/Courses/CoursesGrid";
 import { Loading } from "@/components/shared/Loading";
 import { NoData } from "@/components/shared/NoData";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/shared/select";
+
 import { useGetTopics } from "@/hooks/queries/useTopicQueries";
 import { CourseTypeLabels } from "@/types/course";
 import { useSearchParams } from "react-router";
@@ -101,29 +95,33 @@ function Header({
   };
 
   return (
-    <div className="mb-8 px-6 mt-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+    <div className="mb-14 flex flex-col items-center gap-10">
       <h1 className="text-3xl font-bold md:text-4xl">{getCourseType(type)}</h1>
 
-      <div className="flex items-center gap-3">
-        <span className="text-sm font-medium text-gray-500 whitespace-nowrap">
-          Filter by Topic:
-        </span>
-        <Select
-          value={topicId || "all"}
-          onValueChange={handleTopicChange}
+      <div className="flex flex-wrap justify-center gap-5">
+        <button
+          onClick={() => handleTopicChange("all")}
+          className={`px-7 py-3 rounded-md text-[15px] font-semibold transition-all duration-300 border-2 ${
+            !topicId
+              ? "bg-brand-primary text-white border-brand-primary"
+              : "bg-white text-gray-700 border-brand-primary/20 hover:border-brand-primary hover:text-brand-primary"
+          }`}
         >
-          <SelectTrigger className="w-[200px] bg-white">
-            <SelectValue placeholder="All Topics" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Topics</SelectItem>
-            {topics.map((topic) => (
-              <SelectItem key={topic.id} value={topic.id.toString()}>
-                {topic.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          All Topics
+        </button>
+        {topics.map((topic) => (
+          <button
+            key={topic.id}
+            onClick={() => handleTopicChange(topic.id.toString())}
+            className={`px-7 py-3 rounded-md text-[15px] font-semibold transition-all duration-300 border-2 ${
+              topicId === topic.id.toString()
+                ? "bg-brand-primary text-white border-brand-primary"
+                : "bg-white text-gray-700 border-brand-primary/20 hover:border-brand-primary hover:text-brand-primary"
+            }`}
+          >
+            {topic.name}
+          </button>
+        ))}
       </div>
     </div>
   );
