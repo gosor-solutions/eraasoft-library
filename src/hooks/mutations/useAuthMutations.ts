@@ -4,6 +4,7 @@ import type { ApiResponse } from "../../types/api";
 import type {
   AuthWithPhoneAndNameRequest,
   AuthWithPhoneRequest,
+  LoginRequest,
   UserResource,
   VerifyOtpRequest,
 } from "../../types/auth";
@@ -50,6 +51,16 @@ export const useLoginWithPhone = () => {
   });
 };
 
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: (data: LoginRequest) =>
+      apiService.post<ApiResponse<{
+        token: string;
+        user: UserResource;
+      }> | null>("/student/login", data),
+  });
+};
+
 export const useVerifyOtp = () => {
   return useMutation({
     mutationFn: (data: VerifyOtpRequest) =>
@@ -63,7 +74,7 @@ export const useVerifyOtp = () => {
 export const useLogout = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: () => apiService.post<ApiResponse<null>>("/logout"),
+    mutationFn: () => apiService.post<ApiResponse<null>>("/student/logout"),
     onSuccess: () => {
       queryClient.clear();
     },

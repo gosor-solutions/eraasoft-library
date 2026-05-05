@@ -1,49 +1,53 @@
 import { Button } from "@/components/shared/button";
 import { Field } from "@/components/shared/field";
 import { MyLink } from "@/components/shared/MyLink";
-import { useLoginWithPhone } from "@/hooks/mutations/useAuthMutations";
-import { PhoneNumberUtil } from "google-libphonenumber";
-import { useState } from "react";
-// import { FcGoogle } from "react-icons/fc";
+import { useLogin } from "@/hooks/mutations/useAuthMutations";
 import { Logo } from "@/components/shared/Logo";
-import { PhoneInput } from "react-international-phone";
-import "react-international-phone/style.css";
 import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { TextInput } from "@/components/shared/Inputs/TextInput";
+import { authHelper } from "@/helpers/authHelper";
+import { FieldError } from "@/components/shared/field";
 import "./Register.css";
 
-const phoneUtil = PhoneNumberUtil.getInstance();
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
+});
 
-const isPhoneValid = (phone: string) => {
-  try {
-    return phoneUtil.isValidNumber(phoneUtil.parseAndKeepRawInput(phone));
-  } catch {
-    return false;
-  }
-};
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function Login() {
-  const [phone, setPhone] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const isValid = isPhoneValid(phone);
   const navigate = useNavigate();
-  const { mutate: loginWithPhone, isPending } = useLoginWithPhone();
+  const { mutate: login, isPending } = useLogin();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isValid) return;
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    setError(null);
-    loginWithPhone(
-      { phone },
-      {
-        onSuccess: () => {
-          navigate("/otp", { state: { phone } });
-        },
-        onError: () => {
-          setError("Failed to send OTP. Please try again.");
-        },
+  const onSubmit = (data: LoginFormData) => {
+    login(data, {
+      onSuccess: (response) => {
+        if (response?.data?.token) {
+          authHelper.setAuth(response.data.token);
+          navigate("/");
+        }
       },
-    );
+      onError: () => {
+        setError("root", { message: "Invalid email or password" });
+      },
+    });
   };
 
   return (
@@ -60,7 +64,7 @@ export default function Login() {
             <form
               id="contact-us-form"
               className="flex flex-col gap-4 w-full max-w-md"
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmit(onSubmit)}
             >
               <h2 className="text-2xl font-medium text-center">
                 Welcome Back!
@@ -69,26 +73,31 @@ export default function Login() {
                 Enter your email and password to access your account.
               </p>
 
-              <label htmlFor="phone" className="font-bold">
-                Mobile number
-              </label>
-              <PhoneInput
-                defaultCountry="eg"
-                value={phone}
-                onChange={(phone) => setPhone(phone)}
+              <TextInput
+                name="email"
+                control={control}
+                title="Email Address"
+                placeholder="Enter your email"
+                type="email"
               />
 
-              {!isValid && phone && (
-                <div className="text-red-500 text-sm">Phone is not valid</div>
-              )}
+              <TextInput
+                name="password"
+                control={control}
+                title="Password"
+                placeholder="Enter your password"
+                type="password"
+              />
 
-              {error && <div className="text-red-500 text-sm">{error}</div>}
+              {errors.root && (
+                <FieldError className="text-center" errors={[errors.root]} />
+              )}
 
               <Field orientation="horizontal" className="w-full">
                 <Button
                   type="submit"
                   className="text-xl py-5 w-full"
-                  disabled={!isValid || isPending}
+                  disabled={isPending}
                   isLoading={isPending}
                 >
                   Login
@@ -108,20 +117,6 @@ export default function Login() {
                   Don't have an account? Register
                 </MyLink>
               </div>
-              {/* <div className="flex gap-2 items-center">
-                <div className="flex-1 h-px bg-[#0000001A]"></div>
-                <p className="text-[#12121280]">OR</p>
-                <div className="flex-1 h-px bg-[#0000001A]"></div>
-              </div>
-              <Field orientation="horizontal" className="w-full shadow-lg">
-                <Button
-                  type="button"
-                  className="text-base font-medium py-6 cursor-pointer w-full bg-white border border-[#0000000D] text-black hover:bg-gray-50"
-                >
-                  <FcGoogle className="text-xl" />
-                  Login with Google
-                </Button>
-              </Field> */}
             </form>
           </div>
 
@@ -151,3 +146,4 @@ export default function Login() {
     </div>
   );
 }
+

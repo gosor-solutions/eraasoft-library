@@ -36,6 +36,11 @@ export interface AuthWithPhoneRequest {
   phone: string;
 }
 
+export interface LoginRequest {
+  email: string;
+  password?: string;
+}
+
 export interface VerifyOtpRequest {
   phone: string;
   otp: string;

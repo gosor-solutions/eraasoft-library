@@ -1,5 +1,4 @@
 import { Circle } from "@/components/shared/Circle";
-import { Credits } from "./Credits";
 import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
 import { useGetCompanyImages, useGetCompanyReviews, useGetPartnerCompanyImages } from "@/hooks/queries/useAboutUsQueries";
 import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
