@@ -83,19 +83,19 @@ const Sidebar = ({ onItemClick, activeItemId }: SidebarProps) => {
               title: v.title,
               videoUrl: v.url,
             })),
-            ...(lecture.files || []).map((f) => ({
-              id: `${f.id}`,
-              type: "pdf" as const,
-              title: f.name || "Document",
-              fileUrl: f.path,
-            })),
-            ...(lecture.quizzes || []).map((q) => ({
-              id: `${q.id}`,
-              type: "test" as const,
-              title: q.name,
-              testData: q,
-              completed: q.submitted,
-            })),
+            // ...(lecture.files || []).map((f) => ({
+            //   id: `${f.id}`,
+            //   type: "pdf" as const,
+            //   title: f.name || "Document",
+            //   fileUrl: f.path,
+            // })),
+            // ...(lecture.quizzes || []).map((q) => ({
+            //   id: `${q.id}`,
+            //   type: "test" as const,
+            //   title: q.name,
+            //   testData: q,
+            //   completed: q.submitted,
+            // })),
           ];
 
           return (

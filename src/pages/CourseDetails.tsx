@@ -28,11 +28,12 @@ const CoursePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleItemClick = (item: ActiveContentItem) => {
-    if (item.type === "test") {
-      navigate(`/course-details/${id}/quiz/${item.id}`);
-    } else {
-      setActiveItem(item);
-    }
+    // if (item.type === "test") {
+    //   navigate(`/course-details/${id}/quiz/${item.id}`);
+    // } else {
+    //   setActiveItem(item);
+    // }
+    setActiveItem(item);
     setSidebarOpen(false);
   };
 

@@ -1,10 +1,9 @@
 import { Logo } from "@/components/shared/Logo";
 import { MyLink } from "@/components/shared/MyLink";
 import { authHelper } from "@/helpers/authHelper";
-import { CourseType, CourseTypeLabels } from "@/types/course";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
-import { FiChevronDown, FiChevronRight, FiLogIn, FiMenu, FiUser, FiUserPlus, FiX } from "react-icons/fi";
+import { FiChevronDown, FiChevronRight, FiLogIn, FiMenu, FiUser, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
 
 type NavLink = {
@@ -16,56 +15,56 @@ type NavLink = {
 const guestNavLinks: NavLink[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/founder", label: "Founder" },
-  { to: "/blogs", label: "Blog" },
+  // { to: "/founder", label: "Founder" },
+  // { to: "/blogs", label: "Blog" },
   {
     label: "Courses",
     to: "/courses",
-    children: [
-      {
-        to: `/courses?type=${CourseType.ONLINE}`,
-        label: CourseTypeLabels[CourseType.ONLINE],
-      },
-      {
-        to: `/courses?type=${CourseType.KIDS}`,
-        label: CourseTypeLabels[CourseType.KIDS],
-      },
-      {
-        to: `/courses?type=${CourseType.OFFLINE}`,
-        label: CourseTypeLabels[CourseType.OFFLINE],
-      },
-      { to: "/training", label: "Training" },
-    ],
+    // children: [
+    //   {
+    //     to: `/courses?type=${CourseType.ONLINE}`,
+    //     label: CourseTypeLabels[CourseType.ONLINE],
+    //   },
+    //   {
+    //     to: `/courses?type=${CourseType.KIDS}`,
+    //     label: CourseTypeLabels[CourseType.KIDS],
+    //   },
+    //   {
+    //     to: `/courses?type=${CourseType.OFFLINE}`,
+    //     label: CourseTypeLabels[CourseType.OFFLINE],
+    //   },
+    //   { to: "/training", label: "Training" },
+    // ],
   },
   { to: "/contact-us", label: "Contact Us" },
 ];
 
 const authNavLinks: NavLink[] = [
   { to: "/", label: "Home" },
-  { to: "/blogs", label: "Blog" },
-  { to: "/free-materials", label: "Free Materials" },
+  // { to: "/blogs", label: "Blog" },
+  // { to: "/free-materials", label: "Free Materials" },
   {
     label: "Courses",
     to: "/courses",
-    children: [
-      {
-        to: `/courses?type=${CourseType.ONLINE}`,
-        label: CourseTypeLabels[CourseType.ONLINE],
-      },
-      {
-        to: `/courses?type=${CourseType.KIDS}`,
-        label: CourseTypeLabels[CourseType.KIDS],
-      },
-      {
-        to: `/courses?type=${CourseType.OFFLINE}`,
-        label: CourseTypeLabels[CourseType.OFFLINE],
-      },
-      { to: "/training", label: "Training" },
-    ],
+    // children: [
+    //   {
+    //     to: `/courses?type=${CourseType.ONLINE}`,
+    //     label: CourseTypeLabels[CourseType.ONLINE],
+    //   },
+    //   {
+    //     to: `/courses?type=${CourseType.KIDS}`,
+    //     label: CourseTypeLabels[CourseType.KIDS],
+    //   },
+    //   {
+    //     to: `/courses?type=${CourseType.OFFLINE}`,
+    //     label: CourseTypeLabels[CourseType.OFFLINE],
+    //   },
+    //   { to: "/training", label: "Training" },
+    // ],
   },
-  { to: "/topics", label: "Categories" },
+  // { to: "/topics", label: "Categories" },
   { to: "/about", label: "About" },
-  { to: "/founder", label: "Founder" },
+  // { to: "/founder", label: "Founder" },
   { to: "/contact-us", label: "Contact Us" },
 ];
 
@@ -243,12 +242,12 @@ export function NavBar() {
                 >
                   <FiLogIn /> Login
                 </MyLink>
-                <MyLink
+                {/* <MyLink
                   to="register"
                   className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-all duration-200 hover:scale-105 hover:shadow-md flex items-center gap-2"
                 >
                   <FiUserPlus color="white" /> Register
-                </MyLink>
+                </MyLink> */}
               </>
             )}
           </div>
@@ -340,13 +339,13 @@ export function NavBar() {
                 >
                   <FiLogIn /> Login
                 </MyLink>
-                <MyLink
+                {/* <MyLink
                   to="register"
                   className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-colors duration-200 flex justify-center items-center gap-2"
                   onClick={() => setMenuOpen(false)}
                 >
                   <FiUserPlus color="white" /> Register
-                </MyLink>
+                </MyLink> */}
               </div>
             )}
           </div>

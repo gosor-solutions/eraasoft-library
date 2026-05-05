@@ -26,22 +26,22 @@ export function AboutUs() {
         </div>
       </section>
 
-      <div data-aos="fade-up">
+      {/* <div data-aos="fade-up">
         <Partnerships />
-      </div>
-      <div data-aos="zoom-in">
+      </div> */}
+      {/* <div data-aos="zoom-in">
         <VideoSection />
-      </div>
-      {isPage && (
+      </div> */}
+      {/* {isPage && (
         <div data-aos="fade-up">
           <Gallery />
         </div>
-      )}
-      {isPage && (
+      )} */}
+      {/* {isPage && (
         <div data-aos="fade-up">
           <Credits />
         </div>
-      )}
+      )} */}
       <div data-aos="fade-up">
         <Feedbacks />
       </div>

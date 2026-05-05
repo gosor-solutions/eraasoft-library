@@ -39,22 +39,22 @@ export const router = createBrowserRouter([
         path: "/about",
         element: <AboutUs />,
       },
-      {
-        path: "/founder",
-        element: <FounderPage />,
-      },
+      // {
+      //   path: "/founder",
+      //   element: <FounderPage />,
+      // },
       {
         path: "contact-us",
         element: <ContactUs />,
       },
-      {
-        path: "placemetn-test",
-        element: <PlacementTest />,
-      },
-      {
-        path: "training",
-        element: <TrainingPage />,
-      },
+      // {
+      //   path: "placemetn-test",
+      //   element: <PlacementTest />,
+      // },
+      // {
+      //   path: "training",
+      //   element: <TrainingPage />,
+      // },
       {
         path: "terms-and-conditions",
         element: <TermsAndConditions />,
@@ -63,19 +63,19 @@ export const router = createBrowserRouter([
         path: "privacy-policy",
         element: <PrivacyPolicy />,
       },
-      {
-        path: "free-materials",
-        children: [
-          {
-            index: true,
-            element: <FreeMaterialsPage />,
-          },
-          {
-            path: ":id",
-            element: <FreeMaterialDetailsPage />,
-          },
-        ],
-      },
+      // {
+      //   path: "free-materials",
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <FreeMaterialsPage />,
+      //     },
+      //     {
+      //       path: ":id",
+      //       element: <FreeMaterialDetailsPage />,
+      //     },
+      //   ],
+      // },
       {
         path: "courses",
         children: [
@@ -89,37 +89,37 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "topics",
-        children: [
-          {
-            index: true,
-            element: <TopicsPage />,
-          },
-          {
-            path: ":id",
-            element: <TopicCoursesPage />,
-          },
-        ],
-      },
-      {
-        path: "blogs",
-        children: [
-          {
-            index: true,
-            element: <BlogsPage />,
-          },
-          {
-            path: ":id",
-            element: <BlogDetailsPage />,
-          },
-        ],
-      },
+      // {
+      //   path: "topics",
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <TopicsPage />,
+      //     },
+      //     {
+      //       path: ":id",
+      //       element: <TopicCoursesPage />,
+      //     },
+      //   ],
+      // },
+      // {
+      //   path: "blogs",
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <BlogsPage />,
+      //     },
+      //     {
+      //       path: ":id",
+      //       element: <BlogDetailsPage />,
+      //     },
+      //   ],
+      // },
 
-      {
-        path: "checkout",
-        element: <CheckoutOrderSummary />,
-      },
+      // {
+      //   path: "checkout",
+      //   element: <CheckoutOrderSummary />,
+      // },
 
       {
         path: "profile",
@@ -129,30 +129,30 @@ export const router = createBrowserRouter([
         path: "course-details/:id",
         element: <CourseDetails />,
       },
-      {
-        path: "course-details/:id/quiz/:quizId",
-        element: <CourseTest />,
-      },
+      // {
+      //   path: "course-details/:id/quiz/:quizId",
+      //   element: <CourseTest />,
+      // },
       {
         path: "login",
         element: <Login />,
       },
-      {
-        path: "register",
-        element: <SignupForm />,
-      },
-      {
-        path: "otp",
-        element: <OTP />,
-      },
-      {
-        path: "forget-password",
-        element: <ForgetPassword />,
-      },
-      {
-        path: "reset-password",
-        element: <CreateNewPassword />,
-      },
+      // {
+      //   path: "register",
+      //   element: <SignupForm />,
+      // },
+      // {
+      //   path: "otp",
+      //   element: <OTP />,
+      // },
+      // {
+      //   path: "forget-password",
+      //   element: <ForgetPassword />,
+      // },
+      // {
+      //   path: "reset-password",
+      //   element: <CreateNewPassword />,
+      // },
     ],
   },
 ]);

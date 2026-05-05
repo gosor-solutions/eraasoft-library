@@ -1,6 +1,4 @@
 import { AboutUs } from "@/components/features/Home/AboutUs";
-import { AppShowcaseSection } from "@/components/features/Home/AppShowcase";
-import { BlogSection } from "@/components/features/Home/BlogSection";
 import { CoursesSection } from "@/components/features/Home/Courses";
 import { Credits } from "@/components/features/Home/Credits";
 import { HeroSection } from "@/components/features/Home/Hero";
@@ -19,9 +17,9 @@ export function Home() {
       <AboutUs />
       <ServicesSection />
       <CoursesSection />
-      <BlogSection />
+      {/* <BlogSection /> */}
       <Credits />
-      <AppShowcaseSection />
+      {/* <AppShowcaseSection /> */}
       {/* <ContactSection /> */}
     </div>
   );

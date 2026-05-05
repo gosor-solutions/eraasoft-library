@@ -10,9 +10,9 @@ export function AuthedHome() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20 pt-8">
       <div className="container mx-auto px-4 max-w-7xl">
-        <PlacementTestBanner />
+        {/* <PlacementTestBanner /> */}
         <MyLearning />
-        <FreeMaterialBanner />
+        {/* <FreeMaterialBanner /> */}
       </div>
     </div>
   );
