@@ -1,8 +1,4 @@
-import { Button } from "@/components/shared/button";
 import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
-import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
-import { useCustomNavigation } from "@/lib/hooks/useCustomNavigation";
-import { CourseType } from "@/types/course";
 import type { Course } from "@/types/course";
 import { Lock } from "lucide-react";
 import { useState } from "react";
@@ -13,8 +9,8 @@ import { PiVideo } from "react-icons/pi";
 import { TfiStatsUp } from "react-icons/tfi";
 
 export function CourseHeroSection({ course }: { course: Course }) {
-  const navigate = useCustomNavigation();
-  const { data: settings } = useGetSettings();
+  // const navigate = useCustomNavigation();
+  // const { data: settings } = useGetSettings();
 
   const [playVideo, setPlayVideo] = useState(false);
 
@@ -22,20 +18,20 @@ export function CourseHeroSection({ course }: { course: Course }) {
     { icon: TfiStatsUp, label: `Level: ${course?.level}` },
     { icon: PiVideo, label: `Sessions: ${course?.sessions_count}` },
     { icon: LuCalendarClock, label: `${course?.duration} weeks` },
-    { icon: CiDollar, label: `${course?.price} ${course?.currency}` },
+    { icon: CiDollar, label: `${course?.price}` },
   ];
 
-  const handleCTA = () => {
-    if (course.type === CourseType.KIDS || course.type === CourseType.OFFLINE) {
-      const whatsappNumber = settings?.whatsapp_num_1 || "";
-      const message = encodeURIComponent(
-        `Hello, I'm interested in the "${course.title}" course. Can I get more information?`,
-      );
-      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
-    } else {
-      navigate("/checkout", { state: { course } });
-    }
-  };
+  // const handleCTA = () => {
+  //   if (course.type === CourseType.KIDS || course.type === CourseType.OFFLINE) {
+  //     const whatsappNumber = settings?.whatsapp_num_1 || "";
+  //     const message = encodeURIComponent(
+  //       `Hello, I'm interested in the "${course.title}" course. Can I get more information?`,
+  //     );
+  //     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
+  //   } else {
+  //     navigate("/checkout", { state: { course } });
+  //   }
+  // };
 
   return (
     <section className="relative w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-48 overflow-hidden py-12 md:py-16 lg:py-20">
@@ -65,8 +61,8 @@ export function CourseHeroSection({ course }: { course: Course }) {
           </div>
 
           {/* Learning Plan */}
-          <button className="flex w-full items-center justify-between border-2 p-4 rounded-lg hover:bg-gray-50 transition-colors">
-            <div className="flex items-center gap-3">
+          <button  onClick={()=>window.open(course?.learning_plan, "_blank")}  className="flex w-full cursor-pointer  items-center justify-between border-2 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+            <div className=" flex items-center gap-3">
               <div className="bg-brand-secondary rounded-lg flex items-center justify-center shrink-0">
                 <FaListCheck className="m-2 p-1 size-8" />
               </div>
@@ -78,9 +74,9 @@ export function CourseHeroSection({ course }: { course: Course }) {
           </button>
 
           {/* CTA */}
-          <Button onClick={handleCTA} className="w-full text-lg px-8 py-6">
+          {/* <Button onClick={handleCTA} className="w-full text-lg px-8 py-6">
             Start learn now
-          </Button>
+          </Button> */}
         </div>
 
         {/* Right Image */}
@@ -112,7 +108,7 @@ export function CourseHeroSection({ course }: { course: Course }) {
               <>
                 <img
                   src={course?.preview_video_thumbnail}
-                  alt="English course illustration"
+                  alt="course illustration"
                   className="h-full w-full object-cover"
                 />
                 <FaRegCirclePlay

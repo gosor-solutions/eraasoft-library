@@ -11,7 +11,7 @@ export const useGetLearning = () => {
   return useQuery({
     queryKey: QUERY_KEYS.learning.all(),
     queryFn: () =>
-      apiService.get<ApiResponse<GetLearningResponse>>("/learning"),
+      apiService.get<ApiResponse<GetLearningResponse>>("/student/enrollments"),
   });
 };
 
@@ -20,7 +20,7 @@ export const useGetEnrolledRound = (roundId: number) => {
     queryKey: QUERY_KEYS.learning.enrolledRound(roundId),
     queryFn: () =>
       apiService.get<ApiResponse<GetEnrolledRoundResponse>>(
-        `/learning/enrolled-rounds/${roundId}`,
+        `/student/enrollments/rounds/${roundId}/details`,
       ),
   });
 };

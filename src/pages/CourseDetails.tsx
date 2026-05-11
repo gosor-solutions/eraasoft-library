@@ -53,7 +53,7 @@ const CoursePage = () => {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#f8f9fc]">
+    <div className="flex max-h-screen bg-[#f8f9fc]">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div

@@ -14,7 +14,7 @@ export const useGetCompanyImages = () => {
 export const useGetCompanyReviews = () => {
   return useQuery({
     queryKey: QUERY_KEYS.aboutUs.reviews(),
-    queryFn: () => apiService.get<{ data: CompanyReview[] }>("/company-reviews"),
+    queryFn: () => apiService.get<{ data: CompanyReview[] }>("/mobile/company-reviews"),
     select: (data) => data?.data || [],
   });
 };

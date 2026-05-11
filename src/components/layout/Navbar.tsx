@@ -3,7 +3,7 @@ import { MyLink } from "@/components/shared/MyLink";
 import { authHelper } from "@/helpers/authHelper";
 import { LogOut } from "lucide-react";
 import { useState } from "react";
-import { FiChevronDown, FiChevronRight, FiLogIn, FiMenu, FiUser, FiX } from "react-icons/fi";
+import { FiChevronDown, FiChevronRight, FiMenu, FiUser, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router";
 
 type NavLink = {
@@ -236,12 +236,12 @@ export function NavBar() {
               </>
             ) : (
               <>
-                <MyLink
+                {/* <MyLink
                   to="login"
                   className="px-4 py-2 rounded-lg hover:bg-white/50 transition-colors duration-200 flex items-center gap-2"
                 >
                   <FiLogIn /> Login
-                </MyLink>
+                </MyLink> */}
                 {/* <MyLink
                   to="register"
                   className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-all duration-200 hover:scale-105 hover:shadow-md flex items-center gap-2"
@@ -332,13 +332,13 @@ export function NavBar() {
                 className="flex flex-col gap-3 pt-2 border-t border-white/20 mobile-link-item"
                 style={{ animationDelay: "0.25s" }}
               >
-                <MyLink
+                {/* <MyLink
                   to="login"
                   className="px-4 py-2 rounded-lg hover:bg-white/50 transition-colors duration-200 flex justify-center items-center gap-2"
                   onClick={() => setMenuOpen(false)}
                 >
                   <FiLogIn /> Login
-                </MyLink>
+                </MyLink> */}
                 {/* <MyLink
                   to="register"
                   className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-colors duration-200 flex justify-center items-center gap-2"

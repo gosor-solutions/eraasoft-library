@@ -1,14 +1,10 @@
 import { Circle } from "@/components/shared/Circle";
-import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
-import { useGetCompanyImages, useGetCompanyReviews, useGetPartnerCompanyImages } from "@/hooks/queries/useAboutUsQueries";
+import { useGetCompanyReviews } from "@/hooks/queries/useAboutUsQueries";
 import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router";
 
 // Main AboutUs Component
 export function AboutUs() {
-  const isPage = useLocation().pathname === "/about";
+  // const isPage = useLocation().pathname === "/about";
 
   return (
     <div className="bg-white">
@@ -52,20 +48,20 @@ export function AboutUs() {
 function AboutContent() {
   const { data: settings } = useGetSettings();
 
-  const defaultText = `Engli-Vision is Egypt’s premier gateway to English mastery, blending
-world-class pedagogical standards with a deep understanding of the
-local learner's journey. We provide a sophisticated learning ecosystem
-that combines high-fidelity recorded materials with structured,
-results-oriented coursework. By focusing on measurable fluency and
+  const defaultText = `Eknowledge is a premier gateway to software engineering mastery, blending
+world-class coding standards with a deep understanding of the
+local developer's journey. We provide a sophisticated learning ecosystem
+that combines high-fidelity practical materials with structured,
+results-oriented coursework. By focusing on measurable coding skills and
 professional confidence, we empower our students to excel in global
-academic and corporate environments.
+tech environments.
 
-Our methodology is built on years of collective expertise in language
-acquisition and digital education. We bridge the gap between basic
-understanding and native-level proficiency through a rigorous,
-technology-driven curriculum designed for the modern professional. At
-Engli-Vision, we don't just teach a language; we provide the linguistic
-precision necessary to unlock a lifetime of international
+Our methodology is built on years of collective expertise in software
+development and digital education. We bridge the gap between basic
+programming concepts and production-level proficiency through a rigorous,
+technology-driven curriculum designed for the modern developer. At
+Eknowledge, we don't just teach coding; we provide the technical
+precision necessary to unlock a lifetime of international tech
 opportunities.`;
 
   return (
@@ -98,101 +94,101 @@ function formatText(text: string) {
   return text.split("\r\n\r\n").map((line, i) => <p key={i}>{line}</p>);
 }
 
-function Partnerships() {
-  const { data: partnerImages = [] } = useGetPartnerCompanyImages();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const measureRef = useRef<HTMLDivElement>(null);
-  const [repeatCount, setRepeatCount] = useState(4);
+// function Partnerships() {
+//   const { data: partnerImages = [] } = useGetPartnerCompanyImages();
+//   const containerRef = useRef<HTMLDivElement>(null);
+//   const measureRef = useRef<HTMLDivElement>(null);
+//   const [repeatCount, setRepeatCount] = useState(4);
 
-  const calculateRepeat = useCallback(() => {
-    if (!containerRef.current || !measureRef.current || partnerImages.length === 0) return;
+//   const calculateRepeat = useCallback(() => {
+//     if (!containerRef.current || !measureRef.current || partnerImages.length === 0) return;
 
-    const containerWidth = containerRef.current.offsetWidth;
-    const singleSetWidth = measureRef.current.scrollWidth;
+//     const containerWidth = containerRef.current.offsetWidth;
+//     const singleSetWidth = measureRef.current.scrollWidth;
 
-    if (singleSetWidth > 0) {
-      const needed = Math.ceil((containerWidth * 2) / singleSetWidth);
-      setRepeatCount(Math.max(2, needed));
-    }
-  }, [partnerImages.length]);
+//     if (singleSetWidth > 0) {
+//       const needed = Math.ceil((containerWidth * 2) / singleSetWidth);
+//       setRepeatCount(Math.max(2, needed));
+//     }
+//   }, [partnerImages.length]);
 
-  useEffect(() => {
-    calculateRepeat();
+//   useEffect(() => {
+//     calculateRepeat();
 
-    const observer = new ResizeObserver(calculateRepeat);
-    if (containerRef.current) observer.observe(containerRef.current);
+//     const observer = new ResizeObserver(calculateRepeat);
+//     if (containerRef.current) observer.observe(containerRef.current);
 
-    window.addEventListener("resize", calculateRepeat);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", calculateRepeat);
-    };
-  }, [calculateRepeat]);
+//     window.addEventListener("resize", calculateRepeat);
+//     return () => {
+//       observer.disconnect();
+//       window.removeEventListener("resize", calculateRepeat);
+//     };
+//   }, [calculateRepeat]);
 
-  if (partnerImages.length === 0) return null;
+//   if (partnerImages.length === 0) return null;
 
-  const logos = Array.from({ length: repeatCount }, () => partnerImages).flat();
+//   const logos = Array.from({ length: repeatCount }, () => partnerImages).flat();
 
-  return (
-    <section className="py-16 bg-gray-50/50 overflow-hidden">
-      <style>{`
-        @keyframes infinite-slide {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(calc(-100% / 2));
-          }
-        }
-        .animate-infinite-slide {
-          animation: infinite-slide 10s linear infinite;
-        }
-        .animate-infinite-slide:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
-      <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-gray-900 mb-2">
-          Our Trusted Partners
-        </h2>
-        <p className="text-gray-600 mb-10">
-          Collaborating with industry leaders to provide the best opportunities
-        </p>
+//   return (
+//     <section className="py-16 bg-gray-50/50 overflow-hidden">
+//       <style>{`
+//         @keyframes infinite-slide {
+//           0% {
+//             transform: translateX(0);
+//           }
+//           100% {
+//             transform: translateX(calc(-100% / 2));
+//           }
+//         }
+//         .animate-infinite-slide {
+//           animation: infinite-slide 10s linear infinite;
+//         }
+//         .animate-infinite-slide:hover {
+//           animation-play-state: paused;
+//         }
+//       `}</style>
+//       <div className="max-w-7xl mx-auto text-center">
+//         <h2 className="text-3xl font-semibold text-gray-900 mb-2">
+//           Our Trusted Partners
+//         </h2>
+//         <p className="text-gray-600 mb-10">
+//           Collaborating with industry leaders to provide the best opportunities
+//         </p>
 
-        <div
-          ref={containerRef}
-          className="relative w-full overflow-hidden flex"
-        >
-          <div className="animate-infinite-slide flex gap-16 sm:gap-24 items-center whitespace-nowrap w-max pr-16 sm:pr-24">
-            {logos.map((logo, idx) => (
-              <img
-                key={`${logo.id}-${idx}`}
-                src={logo.image_path}
-                alt={logo.name}
-                className="h-12 sm:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
-              />
-            ))}
-          </div>
-        </div>
+//         <div
+//           ref={containerRef}
+//           className="relative w-full overflow-hidden flex"
+//         >
+//           <div className="animate-infinite-slide flex gap-16 sm:gap-24 items-center whitespace-nowrap w-max pr-16 sm:pr-24">
+//             {logos.map((logo, idx) => (
+//               <img
+//                 key={`${logo.id}-${idx}`}
+//                 src={logo.image_path}
+//                 alt={logo.name}
+//                 className="h-12 sm:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+//               />
+//             ))}
+//           </div>
+//         </div>
 
-        <div
-          ref={measureRef}
-          className="absolute -left-[9999px] -top-[9999px] flex gap-16 sm:gap-24 items-center whitespace-nowrap"
-          aria-hidden="true"
-        >
-          {partnerImages.map((logo) => (
-            <img
-              key={`measure-${logo.id}`}
-              src={logo.image_path}
-              alt=""
-              className="h-12 sm:h-16 w-auto object-contain"
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+//         <div
+//           ref={measureRef}
+//           className="absolute -left-[9999px] -top-[9999px] flex gap-16 sm:gap-24 items-center whitespace-nowrap"
+//           aria-hidden="true"
+//         >
+//           {partnerImages.map((logo) => (
+//             <img
+//               key={`measure-${logo.id}`}
+//               src={logo.image_path}
+//               alt=""
+//               className="h-12 sm:h-16 w-auto object-contain"
+//             />
+//           ))}
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
 function Feedbacks() {
   const { data: reviews = [] } = useGetCompanyReviews();
@@ -247,135 +243,135 @@ function Feedbacks() {
   );
 }
 
-function VideoSection() {
-  const { data: settings } = useGetSettings();
+// function VideoSection() {
+//   const { data: settings } = useGetSettings();
 
-  const videoUrl = settings?.student_video;
+//   const videoUrl = settings?.student_video;
 
-  if (!videoUrl) return null;
+//   if (!videoUrl) return null;
 
-  return (
-    <section className="py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 lg:px-16 text-center">
-        <div className="relative rounded-3xl overflow-hidden shadow-2xl group bg-black aspect-video flex items-center justify-center">
-          <YoutubeEmbed url={videoUrl} />
-        </div>
-      </div>
-    </section>
-  );
-}
+//   return (
+//     <section className="py-20 bg-white">
+//       <div className="max-w-5xl mx-auto px-4 sm:px-8 lg:px-16 text-center">
+//         <div className="relative rounded-3xl overflow-hidden shadow-2xl group bg-black aspect-video flex items-center justify-center">
+//           <YoutubeEmbed url={videoUrl} />
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
 
-function Gallery() {
-  const { data: images = [] } = useGetCompanyImages();
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+// function Gallery() {
+//   const { data: images = [] } = useGetCompanyImages();
+//   const [lightboxOpen, setLightboxOpen] = useState(false);
+//   const [currentIndex, setCurrentIndex] = useState(0);
 
   
 
-  useEffect(() => {
-    if (lightboxOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [lightboxOpen]);
+//   useEffect(() => {
+//     if (lightboxOpen) {
+//       document.body.style.overflow = "hidden";
+//     } else {
+//       document.body.style.overflow = "auto";
+//     }
+//     return () => {
+//       document.body.style.overflow = "auto";
+//     };
+//   }, [lightboxOpen]);
 
-  if (images.length === 0) return null;
+//   if (images.length === 0) return null;
 
-  const openLightbox = (index: number) => {
-    setCurrentIndex(index);
-    setLightboxOpen(true);
-  };
+//   const openLightbox = (index: number) => {
+//     setCurrentIndex(index);
+//     setLightboxOpen(true);
+//   };
 
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
+//   const closeLightbox = () => {
+//     setLightboxOpen(false);
+//   };
 
-  const nextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1,
-    );
-  };
+//   const nextImage = (e: React.MouseEvent) => {
+//     e.stopPropagation();
+//     setCurrentIndex((prev) =>
+//       prev === images.length - 1 ? 0 : prev + 1,
+//     );
+//   };
 
-  const prevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1,
-    );
-  };
+//   const prevImage = (e: React.MouseEvent) => {
+//     e.stopPropagation();
+//     setCurrentIndex((prev) =>
+//       prev === 0 ? images.length - 1 : prev - 1,
+//     );
+//   };
 
-  const fullUrl = (path: string) => {
-    if (!path) return "";
-    if (path.startsWith("http")) return path;
-    const baseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/?$/, '') || "";
-    return `${baseUrl}/storage/${path.replace(/^\/+/, '')}`;
-  };
+//   const fullUrl = (path: string) => {
+//     if (!path) return "";
+//     if (path.startsWith("http")) return path;
+//     const baseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/?$/, '') || "";
+//     return `${baseUrl}/storage/${path.replace(/^\/+/, '')}`;
+//   };
 
-  return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-        <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center mb-12">
-          Gallery
-        </h2>
+//   return (
+//     <section className="py-20 bg-gray-50">
+//       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+//         <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center mb-12">
+//           Gallery
+//         </h2>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-          {images.map((img, idx) => (
-            <div
-              key={img.id}
-              className="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl"
-              onClick={() => openLightbox(idx)}
-            >
-              <img
-                src={fullUrl(img.image_path)}
-                alt={img.name || `Gallery image ${idx}`}
-                className="w-full h-auto rounded-xl group-hover:scale-110 transition-transform duration-500 ease-in-out"
-              />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-            </div>
-          ))}
-        </div>
+//         {/* Masonry Grid */}
+//         <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+//           {images.map((img, idx) => (
+//             <div
+//               key={img.id}
+//               className="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl"
+//               onClick={() => openLightbox(idx)}
+//             >
+//               <img
+//                 src={fullUrl(img.image_path)}
+//                 alt={img.name || `Gallery image ${idx}`}
+//                 className="w-full h-auto rounded-xl group-hover:scale-110 transition-transform duration-500 ease-in-out"
+//               />
+//               <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+//             </div>
+//           ))}
+//         </div>
 
-        {/* Lightbox */}
-        {lightboxOpen && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm transition-opacity"
-            onClick={closeLightbox}
-          >
-            <button
-              className="cursor-pointer absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
-              onClick={closeLightbox}
-            >
-              <X className="w-10 h-10" />
-            </button>
+//         {/* Lightbox */}
+//         {lightboxOpen && (
+//           <div
+//             className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm transition-opacity"
+//             onClick={closeLightbox}
+//           >
+//             <button
+//               className="cursor-pointer absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+//               onClick={closeLightbox}
+//             >
+//               <X className="w-10 h-10" />
+//             </button>
 
-            <button
-              className="cursor-pointer absolute left-6 text-white/70 hover:text-white transition-colors p-2"
-              onClick={prevImage}
-            >
-              <ChevronLeft className="w-12 h-12" />
-            </button>
+//             <button
+//               className="cursor-pointer absolute left-6 text-white/70 hover:text-white transition-colors p-2"
+//               onClick={prevImage}
+//             >
+//               <ChevronLeft className="w-12 h-12" />
+//             </button>
 
-            <button
-              className="cursor-pointer absolute right-6 text-white/70 hover:text-white transition-colors p-2"
-              onClick={nextImage}
-            >
-              <ChevronRight className="w-12 h-12" />
-            </button>
+//             <button
+//               className="cursor-pointer absolute right-6 text-white/70 hover:text-white transition-colors p-2"
+//               onClick={nextImage}
+//             >
+//               <ChevronRight className="w-12 h-12" />
+//             </button>
 
-            <img
-              src={fullUrl(images[currentIndex].image_path)}
-              alt={images[currentIndex].name || `Gallery image ${currentIndex}`}
-              className="max-h-[85vh] max-w-[85vw] object-contain select-none"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
+//             <img
+//               src={fullUrl(images[currentIndex].image_path)}
+//               alt={images[currentIndex].name || `Gallery image ${currentIndex}`}
+//               className="max-h-[85vh] max-w-[85vw] object-contain select-none"
+//               onClick={(e) => e.stopPropagation()}
+//             />
+//           </div>
+//         )}
+//       </div>
+//     </section>
+//   );
+// }

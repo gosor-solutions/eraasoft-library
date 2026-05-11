@@ -24,7 +24,7 @@ export function SingleCoursePage() {
       <CourseHeroSection course={courseQuery.data.data} />
       <WhatWillYouLearn learn={courseQuery.data.data.what_you_will_learn} />
       <Testimonials />
-      <RelatedCourses />
+      <RelatedCourses courseId={Number(id)}/>
     </div>
   );
 }

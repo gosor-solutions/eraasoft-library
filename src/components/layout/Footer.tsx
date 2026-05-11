@@ -102,7 +102,7 @@ export function Footer() {
         <div className="mb-4 mt-10 border-t-[1.75px] border-white/60" />
 
         <p className="text-center text-sm sm:text-base">
-          Copyright © 2026 Engli-Vision. All rights reserved.
+          Copyright © 2026 Eknowledge. All rights reserved.
         </p>
       </div>
     </footer>

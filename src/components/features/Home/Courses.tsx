@@ -44,7 +44,7 @@ function SectionHeader() {
         Courses
       </h2>
       <p className="text-brand-gray text-lg max-w-2xl mx-auto">
-        Elevate your language skills with our expert-led programs, designed to
+        Elevate your skills with our expert-led programs, designed to
         take you from foundational understanding to professional mastery.
       </p>
     </div>

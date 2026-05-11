@@ -23,7 +23,7 @@ const ContentViewer = ({ activeItem }) => {
   }
 
   return (
-    <div className="animate-in fade-in duration-300">
+    <div className="animate-in fade-in duration-300 h-full">
       {(() => {
         switch (activeItem.type) {
           case "video":

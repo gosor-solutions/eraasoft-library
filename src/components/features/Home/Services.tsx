@@ -44,8 +44,8 @@ function SectionHeader() {
         Our Services.
       </h2>
       <p className="text-brand-gray font-base text-lg max-w-2xl mx-auto">
-        Expert-led English programs and premium recorded resources designed to
-        bridge the gap between local talent and global opportunities.
+        Expert-led programming bootcamps and premium resources designed to
+        bridge the gap between local developers and global tech opportunities.
       </p>
     </div>
   );
@@ -110,23 +110,23 @@ function ServiceCard({
 const services = [
   {
     id: 1,
-    title: "Training Programs",
-    description: "Premium, in-person training programs with our top trainers.",
+    title: "Coding Bootcamps",
+    description: "Intensive, hands-on programming bootcamps with senior engineers.",
     image: "/training.png",
-    icon: "🎓",
+    icon: "💻",
   },
   {
     id: 2,
-    title: "Kids Courses",
-    description: "Engaging, foundational programs built for young learners.",
+    title: "Kids Coding",
+    description: "Engaging, foundational programming concepts built for young learners.",
     image: "/kids-course.jpg",
     icon: "👦",
   },
   {
     id: 3,
-    title: "Online Courses",
-    description: "Professional-grade curriculum designed for career growth.",
+    title: "Advanced Courses",
+    description: "Professional-grade software architecture and development courses.",
     image: "/adult-course.jpg",
-    icon: "👨",
+    icon: "🚀",
   },
 ];

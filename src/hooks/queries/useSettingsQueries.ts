@@ -7,7 +7,7 @@ import type { ApiResponse } from "@/types/api";
 export const useGetSettings = () => {
   return useQuery({
     queryKey: QUERY_KEYS.settings.all(),
-    queryFn: () => apiService.get<{ data: Setting[] }>("/settings"),
+    queryFn: () => apiService.get<{ data: Setting[] }>("/student/settings"),
     select: (data): AppSettings => {
       return data?.data.reduce((acc, setting) => {
         acc[setting.key] = setting.value;

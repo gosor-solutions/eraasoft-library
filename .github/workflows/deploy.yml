@@ -3,12 +3,12 @@ name: Deploy to Hostinger Staging
 on:
   push:
     branches:
-      - englivision
+      - tarek-knowledge
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: englivision # Specifies the environment to use
+    environment: tarek-knowledge # Specifies the environment to use
 
     steps:
       - name: Checkout code
@@ -38,5 +38,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-          TARGET: /home/u928593761/domains/engli-vision.com/public_html/library/
+          TARGET: /home/u257846429/domains/eknowledge.ps/public_html/
           SOURCE: ./dist/

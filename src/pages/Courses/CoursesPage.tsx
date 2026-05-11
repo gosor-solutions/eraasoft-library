@@ -1,55 +1,36 @@
 import { CoursesGrid } from "@/components/features/Courses/CoursesGrid";
 import { Loading } from "@/components/shared/Loading";
 import { NoData } from "@/components/shared/NoData";
-
-import { useGetTopics } from "@/hooks/queries/useTopicQueries";
+import { useGetCourses } from "@/hooks/queries/useCourseQueries";
 import { CourseTypeLabels } from "@/types/course";
 import { useSearchParams } from "react-router";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/shared/select";
 
 export function CoursesPage() {
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
 
   const type = params.get("type");
-  const topicId = params.get("category_id"); // Keeping param name for compatibility
 
-  const topicsQuery = useGetTopics({
+  const coursesQuery = useGetCourses({
     ...(type ? { type } : {}),
   });
 
-  if (topicsQuery.isPending) {
+  if (coursesQuery.isPending) {
     return <Loading fullScreen />;
   }
 
-  const allTopics = topicsQuery.data?.data || [];
-  
-  // Filter topics based on topicId if selected
-  const displayTopics = topicId 
-    ? allTopics.filter(t => t.id.toString() === topicId)
-    : allTopics;
+  const allCourses = coursesQuery.data?.data || [];
 
-  // Only show topics that have courses
-  const topicsWithCourses = displayTopics.filter(t => t.courses && t.courses.length > 0);
-
-  if (!topicsWithCourses.length) {
+  if (!allCourses.length) {
     return (
       <section className="w-full px-4 py-8 md:py-12">
         <div className="mx-auto max-w-7xl">
-
-        <Header 
-          type={type} 
-          setParams={setParams} 
-          topicId={topicId} 
-          topics={allTopics} 
-          />
-        <NoData data="Courses" />
+          <div className="mb-14 flex flex-col items-center gap-10">
+            <h1 className="text-3xl font-bold md:text-4xl">
+              {getCourseType(type)}
+            </h1>
           </div>
+          <NoData data="Courses" />
+        </div>
       </section>
     );
   }
@@ -58,100 +39,16 @@ export function CoursesPage() {
     <>
       <section className="w-full px-4 py-8 md:py-12">
         <div className="mx-auto max-w-7xl">
-          <Header
-            type={type}
-            setParams={setParams}
-            topicId={topicId}
-            topics={allTopics}
-          />
+          <div className="mb-14 flex flex-col items-center gap-10">
+            <h1 className="text-3xl font-bold md:text-4xl">
+              {getCourseType(type)}
+            </h1>
+          </div>
 
-          {topicsWithCourses.map((topic) => (
-            <div key={topic.id} className="mb-12">
-              <h2 className="mb-6 text-2xl font-bold text-gray-800 border-b pb-2">
-                {topic.name}
-              </h2>
-              <CoursesGrid courses={topic.courses!} />
-            </div>
-          ))}
+          <CoursesGrid courses={allCourses} />
         </div>
       </section>
     </>
-  );
-}
-
-function Header({
-  type,
-  setParams,
-  topicId,
-  topics,
-}: {
-  type: string | null;
-  setParams: (p: URLSearchParams) => void;
-  topicId: string | null;
-  topics: any[];
-}) {
-  const handleTopicChange = (value: string) => {
-    const newParams = new URLSearchParams(window.location.search);
-    if (value === "all") {
-      newParams.delete("category_id");
-    } else {
-      newParams.set("category_id", value);
-    }
-    newParams.set("page", "1");
-    setParams(newParams);
-  };
-
-  return (
-    <div className="mb-14 flex flex-col items-center gap-10">
-      <h1 className="text-3xl font-bold md:text-4xl">{getCourseType(type)}</h1>
-
-      {/* Mobile Dropdown */}
-      <div className="w-full px-4 md:hidden">
-        <Select
-          value={topicId || "all"}
-          onValueChange={handleTopicChange}
-        >
-          <SelectTrigger className="w-full h-12 text-[15px] font-semibold border-2 border-brand-primary/20">
-            <SelectValue placeholder="Select Topic" />
-          </SelectTrigger>
-          <SelectContent position="popper">
-            <SelectItem value="all">All Topics</SelectItem>
-            {topics.map((topic) => (
-              <SelectItem key={topic.id} value={topic.id.toString()}>
-                {topic.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Desktop Buttons */}
-      <div className="hidden flex-wrap justify-center gap-5 md:flex">
-        <button
-          onClick={() => handleTopicChange("all")}
-          className={`px-7 py-3 rounded-md text-[15px] font-semibold transition-all duration-300 border-2 ${
-            !topicId
-              ? "bg-brand-primary text-white border-brand-primary"
-              : "bg-white text-gray-700 border-brand-primary/20 hover:border-brand-primary hover:text-brand-primary"
-          }`}
-        >
-          All Topics
-        </button>
-        {topics.map((topic) => (
-          <button
-            key={topic.id}
-            onClick={() => handleTopicChange(topic.id.toString())}
-            className={`px-7 py-3 rounded-md text-[15px] font-semibold transition-all duration-300 border-2 ${
-              topicId === topic.id.toString()
-                ? "bg-brand-primary text-white border-brand-primary"
-                : "bg-white text-gray-700 border-brand-primary/20 hover:border-brand-primary hover:text-brand-primary"
-            }`}
-          >
-            {topic.name}
-          </button>
-        ))}
-      </div>
-    </div>
   );
 }
 

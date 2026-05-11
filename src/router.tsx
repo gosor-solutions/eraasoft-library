@@ -1,30 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import { AboutUs } from "./components/features/Home/AboutUs";
-import CreateNewPassword from "./pages/AuthPages/CreateNewPassword";
-import ForgetPassword from "./pages/AuthPages/ForgetPassword";
-import Login from "./pages/AuthPages/Login";
-import OTP from "./pages/AuthPages/OTP";
-import SignupForm from "./pages/AuthPages/Register";
-import { CheckoutOrderSummary } from "./pages/Checkout/CheckoutOrderSummary";
 import { ContactUs } from "./pages/ContactUs";
-import CourseDetails from "./pages/CourseDetails";
-import CourseTest from "./pages/CourseTest";
-import { TermsAndConditions } from "./pages/TermsAndConditions";
-import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { CoursesPage } from "./pages/Courses/CoursesPage";
 import { SingleCoursePage } from "./pages/Courses/SingleCoursePage";
-import { FreeMaterialDetailsPage } from "./pages/FreeMaterials/FreeMaterialDetailsPage";
-import { FreeMaterialsPage } from "./pages/FreeMaterials/FreeMaterialsPage";
 import { Home } from "./pages/Home";
 import { MainLayout } from "./pages/Layouts/MainLayout";
-import { ProfilePage } from "./pages/Profile";
-import { TopicCoursesPage } from "./pages/Topics/TopicCoursesPage";
-import { TopicsPage } from "./pages/Topics/TopicsPage";
-import { TrainingPage } from "./pages/Training/TrainingPage";
-import PlacementTest from "./pages/PlacmentTest/PlacmentTest";
-import { BlogsPage } from "./pages/Blogs/BlogsPage";
-import { BlogDetailsPage } from "./pages/Blogs/BlogDetailsPage";
-import { FounderPage } from "./pages/Founder";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { TermsAndConditions } from "./pages/TermsAndConditions";
 
 export const router = createBrowserRouter([
   {
@@ -121,22 +103,22 @@ export const router = createBrowserRouter([
       //   element: <CheckoutOrderSummary />,
       // },
 
-      {
-        path: "profile",
-        element: <ProfilePage />,
-      },
-      {
-        path: "course-details/:id",
-        element: <CourseDetails />,
-      },
+      // {
+      //   path: "profile",
+      //   element: <ProfilePage />,
+      // },
+      // {
+      //   path: "course-details/:id",
+      //   element: <CourseDetails />,
+      // },
       // {
       //   path: "course-details/:id/quiz/:quizId",
       //   element: <CourseTest />,
       // },
-      {
-        path: "login",
-        element: <Login />,
-      },
+      // {
+      //   path: "login",
+      //   element: <Login />,
+      // },
       // {
       //   path: "register",
       //   element: <SignupForm />,

@@ -72,30 +72,16 @@ const Sidebar = ({ onItemClick, activeItemId }: SidebarProps) => {
         </h2>
       </div>
       <div className="flex-1 overflow-y-auto">
-        {lectures.map((lecture) => {
+        {lectures?.toReversed().map((lecture) => {
           const isExpanded = expandedSections.includes(lecture.id);
-          // const pct = Math.round((lecture.progress / lecture.total) * 100);
 
           const items: ActiveContentItem[] = [
-            ...(lecture.lecture_videos || []).map((v) => ({
+            ...(lecture?.lecture_videos || [])?.toReversed().map((v) => ({
               id: `${v.id}`,
               type: "video" as const,
               title: v.title,
               videoUrl: v.url,
             })),
-            // ...(lecture.files || []).map((f) => ({
-            //   id: `${f.id}`,
-            //   type: "pdf" as const,
-            //   title: f.name || "Document",
-            //   fileUrl: f.path,
-            // })),
-            // ...(lecture.quizzes || []).map((q) => ({
-            //   id: `${q.id}`,
-            //   type: "test" as const,
-            //   title: q.name,
-            //   testData: q,
-            //   completed: q.submitted,
-            // })),
           ];
 
           return (
@@ -104,23 +90,9 @@ const Sidebar = ({ onItemClick, activeItemId }: SidebarProps) => {
                 onClick={() => toggleSection(lecture)}
                 className="w-full flex items-center justify-between px-6 py-4 bg-gray-100 hover:bg-gray-200 transition-colors"
               >
-                <div className="flex-1 min-w-0 text-left">
                   <span className="text-sm font-semibold text-gray-800 block truncate">
                     {lecture.name}
                   </span>
-                  <div className="flex items-center gap-2 mt-1.5">
-                    <div className="flex-1 h-1 bg-gray-200 rounded-full overflow-hidden">
-                      {/* <div
-                        className="h-full bg-blue-500 rounded-full transition-all"
-                        style={{ width: `${pct}%` }}
-                      /> */}
-                    </div>
-                    {/* <span className="text-xs text-gray-400 shrink-0">
-                      {section.progress}/{section.total}
-                    </span> */}
-                  </div>
-
-                  <div className="flex items-center gap-3 ml-3 shrink-0">
                     <div
                       className={`transform transition-transform duration-300 ${
                         isExpanded ? "rotate-0" : "rotate-0"
@@ -132,15 +104,13 @@ const Sidebar = ({ onItemClick, activeItemId }: SidebarProps) => {
                         <ChevronRight className="w-4 h-4 text-gray-600" />
                       )}
                     </div>
-                  </div>
-                </div>
               </button>
 
               {/* Items */}
               <div
                 className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? "max-h-[1000px]" : "max-h-0"}`}
               >
-                {items.map((item) => {
+                {items?.map((item) => {
                   const cfg = typeConfig[item.type] || typeConfig.video;
                   const Icon = cfg.icon;
                   const isActive = activeItemId === item.id;
@@ -168,14 +138,14 @@ const Sidebar = ({ onItemClick, activeItemId }: SidebarProps) => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start gap-1">
-                          <span className="text-sm font-bold text-gray-800 capitalize whitespace-nowrap">
+                          {/* <span className="text-sm font-bold text-gray-800 capitalize whitespace-nowrap">
                             {item.type === "pdf" ? "Material" : item.type}:
-                          </span>
-                          <span className="text-sm text-gray-600 leading-relaxed truncate">
+                          </span> */}
+                          <span className="font-semibold capitalize text-gray-600 leading-relaxed truncate">
                             {item.title}
                           </span>
                           {/* Text */}
-                          <div className="flex-1 min-w-0">
+                          {/* <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-1.5 mb-0.5">
                               <span
                                 className={`text-xs font-semibold uppercase tracking-wide ${isActive ? cfg.color : "text-gray-400"}`}
@@ -188,10 +158,7 @@ const Sidebar = ({ onItemClick, activeItemId }: SidebarProps) => {
                             >
                               {item.title}
                             </p>
-                            {/* <p className="text-xs text-gray-400 mt-0.5">
-                              {item.duration}
-                            </p> */}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       <div className="border-b border-gray-100" />

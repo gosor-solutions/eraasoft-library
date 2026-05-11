@@ -19,15 +19,15 @@ export function Loading({
             style={{ width: "120px", height: "120px" }}
           ></div>
           {/* Logo pulsed */}
-          <img 
+          {/* <img 
             src="/englivision-logo-color.png" 
             alt="Englivision" 
             className="w-24 h-24 object-contain animate-pulse-logo z-10"
-          />
+          /> */}
         </div>
         
         {/* Text with fade in/out effect */}
-        <p className="mt-12 text-lg md:text-3xl capitalize font-medium text-brand-primary animate-fade-text tracking-wide px-4 text-center">
+        <p className="mt-16 text-lg md:text-3xl capitalize font-medium text-brand-primary animate-fade-text tracking-wide px-4 text-center">
           start your learning journey today...
         </p>
       </div>

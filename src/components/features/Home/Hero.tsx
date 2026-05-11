@@ -62,11 +62,11 @@ export function HeroSection() {
               <div className="h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] relative py-20 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
                 {/* Background Image with Overlay */}
                 <div className="absolute inset-0">
-                  <img
+                  {/* <img
                     src={slide.image_path}
                     alt={slide.title || "Hero image"}
                     className="w-full h-full object-cover object-center"
-                  />
+                  /> */}
                   <div className="absolute inset-0 bg-gray-900/60"></div>
                 </div>
 
@@ -168,7 +168,7 @@ function Logo() {
       <img
         className="w-48 sm:w-64 md:w-72 lg:w-80"
         src="/englivision-logo.svg"
-        alt="Engli-Vision-logo"
+        alt="Eknowledge-logo"
       />
     </div>
   );
@@ -187,14 +187,14 @@ function StaticHeroFallback() {
       </div>
       <div className="relative w-full max-w-4xl mx-auto text-center">
         <div className="space-y-6 sm:space-y-8 py-10 sm:py-14 lg:py-20">
-          <div className="animate-hero-fade-down opacity-0">
+          {/* <div className="animate-hero-fade-down opacity-0">
             <Logo />
-          </div>
+          </div> */}
           <h1 className="font-inter text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight px-2 animate-hero-fade-up animation-delay-200 opacity-0">
-            Welcome to Engli-Vision
+            Welcome to Eknowledge
           </h1>
           <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-xl mx-auto px-4 animate-hero-fade-up animation-delay-400 opacity-0">
-            Your journey to mastering English starts here. Learn smarter, not
+            Your journey to mastering Programming starts here. Learn smarter, not
             harder.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-6 sm:px-0 mt-6 animate-hero-fade-up animation-delay-600 opacity-0">

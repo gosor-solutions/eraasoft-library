@@ -6,7 +6,6 @@ import {
 } from "@/components/shared/tabs";
 import { useState } from "react";
 import { CoursesTab } from "./CoursesTab";
-import { LanguagesTab } from "./LanguagesTab";
 import { PersonalDataTab } from "./PersonalDataTab";
 
 const triggerClass =
@@ -29,9 +28,9 @@ export function ProfileTabs() {
           <TabsTrigger value="courses" className={triggerClass}>
             Courses
           </TabsTrigger>
-          <TabsTrigger value="language" className={triggerClass}>
+          {/* <TabsTrigger value="language" className={triggerClass}>
             Language
-          </TabsTrigger>
+          </TabsTrigger> */}
         </TabsList>
 
         <TabsContent value="personal-data" className="mt-0">
@@ -41,10 +40,10 @@ export function ProfileTabs() {
         <TabsContent value="courses" className="mt-0">
           <CoursesTab />
         </TabsContent>
-
+{/* 
         <TabsContent value="language" className="mt-0">
           <LanguagesTab />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   );

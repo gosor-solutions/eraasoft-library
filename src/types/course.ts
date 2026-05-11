@@ -40,6 +40,7 @@ export type Course = {
   what_you_will_learn?: string[];
   preview_video?: string;
   preview_video_thumbnail?: string;
+  learning_plan?:string
 };
 
 export type Round = {

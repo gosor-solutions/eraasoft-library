@@ -1,8 +1,6 @@
 import type { Course, Round } from "./course";
 
-export type GetLearningResponse = {
-  groups: Round[];
-};
+export type GetLearningResponse = Round[]
 
 export type GetEnrolledRoundResponse = Round;
 

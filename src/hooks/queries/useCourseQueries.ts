@@ -10,14 +10,14 @@ import type {
 export const useGetCourses = (params?: Record<string, unknown>) => {
   return useQuery({
     queryKey: QUERY_KEYS.courses.list(params),
-    queryFn: () => apiService.get<GetCoursesResponse>("/courses", params),
+    queryFn: () => apiService.get<GetCoursesResponse>("/student/courses", params),
   });
 };
 
 export const useGetCourse = (courseId: number) => {
   return useQuery({
     queryKey: QUERY_KEYS.courses.detail(courseId),
-    queryFn: () => apiService.get<GetCourseResponse>(`/courses/${courseId}`),
+    queryFn: () => apiService.get<GetCourseResponse>(`/student/courses/${courseId}`),
   });
 };
 
@@ -26,7 +26,7 @@ export const useGetUserSessions = (courseId: number) => {
     queryKey: QUERY_KEYS.courses.userSessions(courseId),
     queryFn: () =>
       apiService.get<GetUserSessionsResponse>(
-        `/courses/${courseId}/user-sessions`,
+        `/student/courses/${courseId}/user-sessions`,
       ),
   });
 };

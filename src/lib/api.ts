@@ -34,8 +34,8 @@ api.interceptors.response.use(
     logger.error(`← ${status} ${error.config?.url}`, error.response?.data);
 
     if (status === 401) {
-      authHelper.revokeAuth();
-      window.location.href = "/login";
+      // authHelper.revokeAuth();
+      // window.location.href = "/login";
     }
 
     return Promise.reject(error);

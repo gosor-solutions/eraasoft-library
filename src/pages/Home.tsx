@@ -1,6 +1,5 @@
 import { AboutUs } from "@/components/features/Home/AboutUs";
 import { CoursesSection } from "@/components/features/Home/Courses";
-import { Credits } from "@/components/features/Home/Credits";
 import { HeroSection } from "@/components/features/Home/Hero";
 import { ServicesSection } from "@/components/features/Home/Services";
 import { authHelper } from "@/helpers/authHelper";
@@ -18,7 +17,7 @@ export function Home() {
       <ServicesSection />
       <CoursesSection />
       {/* <BlogSection /> */}
-      <Credits />
+      {/* <Credits /> */}
       {/* <AppShowcaseSection /> */}
       {/* <ContactSection /> */}
     </div>

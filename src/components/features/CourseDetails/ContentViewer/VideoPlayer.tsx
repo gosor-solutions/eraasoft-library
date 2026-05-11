@@ -1,4 +1,4 @@
-import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
+import { DriveEmbed } from "@/components/shared/driveEmbed";
 
 const VideoPlayer = ({
   videoData,
@@ -7,14 +7,17 @@ const VideoPlayer = ({
     videoUrl: string;
     title: string;
   };
-}) => {
+  }) => {
+  
+    console.log(videoData);
+    
+  
   return (
-    <div className="w-full max-w-5xl mx-auto">
+    <div className="h-full w-full flex flex-col items-center justify-center">
       <div
-        className="relative w-full bg-black rounded-lg overflow-hidden shadow-lg"
-        style={{ paddingBottom: "56.25%" }}
+        className="relative w-full aspect-video bg-black rounded-lg overflow-hidden shadow-lg"
       >
-        <YoutubeEmbed url={videoData?.videoUrl} title={videoData?.title} />
+        <DriveEmbed url={videoData?.videoUrl} title={videoData?.title} />
       </div>
     </div>
   );
