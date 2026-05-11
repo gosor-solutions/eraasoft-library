@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: tarek-knowledge # Specifies the environment to use
+    environment: eknowledge # Specifies the environment to use
 
     steps:
       - name: Checkout code
