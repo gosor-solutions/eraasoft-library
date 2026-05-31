@@ -5,7 +5,7 @@ export function ServicesSection() {
       {/* Decorative Background Elements */}
       <DecorativeElements />
 
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative mx-auto">
         {/* Section Header */}
         <SectionHeader />
 
@@ -54,7 +54,7 @@ function SectionHeader() {
 // Services Grid Component
 function ServicesGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
       {services.map((service, index) => (
         <ServiceCard key={service.id} service={service} index={index} />
       ))}
@@ -128,5 +128,12 @@ const services = [
     description: "Professional-grade curriculum designed for career growth.",
     image: "/adult-course.jpg",
     icon: "👨",
+  },
+  {
+    id: 4,
+    title: "Offline Courses",
+    description: "Immersive, face-to-face programs for maximum engagement.",
+    image: "/offline.jpg",
+    icon: "👨‍💼",
   },
 ];

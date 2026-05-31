@@ -53,6 +53,7 @@ export const QUERY_KEYS = {
     reviews: () => ["company-reviews"] as const,
     partnerImages: () => ["partner-company-images"] as const,
     credits: () => ["credits"] as const,
+    galleryCategories: () => ["gallery-categories"] as const,
   },
   blogs: {
     all: () => ["blogs"] as const,

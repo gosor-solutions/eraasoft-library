@@ -1,5 +1,5 @@
 import { Banner } from "@/components/shared/Banner";
-import { MapPin, Phone, ExternalLink } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -74,18 +74,6 @@ export default function BranchesPage() {
                       </div>
                     </div>
                   </div>
-
-                  {branch.mapUrl && (
-                    <a
-                      href={branch.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 bg-brand-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-brand-primary/90 transition-all duration-300 hover:gap-3 group/btn w-fit"
-                    >
-                      View on Map
-                      <ExternalLink className="w-4 h-4 transition-transform group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5" />
-                    </a>
-                  )}
                 </div>
               </div>
             </div>

@@ -1,10 +1,11 @@
 import { Circle } from "@/components/shared/Circle";
 import { Credits } from "./Credits";
 import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
-import { useGetCompanyImages, useGetCompanyReviews, useGetPartnerCompanyImages } from "@/hooks/queries/useAboutUsQueries";
+import { useGetCompanyImages, useGetCompanyReviews, useGetGalleryCategories, useGetPartnerCompanyImages } from "@/hooks/queries/useAboutUsQueries";
 import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, GraduationCap, Star, BookOpen, Users, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLocation } from "react-router";
 
 // Main AboutUs Component
@@ -26,17 +27,17 @@ export function AboutUs() {
         </div>
       </section>
 
+      <Stats />
+
       <div data-aos="fade-up">
         <Partnerships />
       </div>
       <div data-aos="zoom-in">
         <VideoSection />
       </div>
-      {isPage && (
-        <div data-aos="fade-up">
-          <Gallery />
-        </div>
-      )}
+      <div data-aos="fade-up">
+        <Gallery />
+      </div>
       {isPage && (
         <div data-aos="fade-up">
           <Credits />
@@ -132,7 +133,7 @@ function Partnerships() {
 
   if (partnerImages.length === 0) return null;
 
-  const logos = Array.from({ length: repeatCount }, () => partnerImages).flat();
+  const logos = Array.from({ length: repeatCount * 2 }, () => partnerImages).flat();
 
   return (
     <section className="py-16 bg-gray-50/50 overflow-hidden">
@@ -142,11 +143,11 @@ function Partnerships() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-100% / 2));
+            transform: translateX(calc(-300%));
           }
         }
         .animate-infinite-slide {
-          animation: infinite-slide 10s linear infinite;
+          animation: infinite-slide 20s linear infinite;
         }
         .animate-infinite-slide:hover {
           animation-play-state: paused;
@@ -267,116 +268,326 @@ function VideoSection() {
 }
 
 function Gallery() {
-  const { data: images = [] } = useGetCompanyImages();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
+    null,
+  );
+  const { data: categories = [], isLoading: catsLoading } =
+    useGetGalleryCategories();
+  const { data: images = [], isLoading: imgsLoading } = useGetCompanyImages(
+    selectedCategoryId
+      ? { company_image_category_id: selectedCategoryId }
+      : undefined,
+  );
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  
+  const nextImage = useCallback(() => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
+
+  const prevImage = useCallback(() => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false);
+  }, []);
 
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
     if (lightboxOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
+
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "auto";
     };
-  }, [lightboxOpen]);
-
-  if (images.length === 0) return null;
+  }, [lightboxOpen, nextImage, prevImage, closeLightbox]);
 
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
 
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
-
-  const nextImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1,
-    );
-  };
-
-  const prevImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCurrentIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1,
-    );
-  };
-
   const fullUrl = (path: string) => {
     if (!path) return "";
     if (path.startsWith("http")) return path;
-    const baseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/?$/, '') || "";
-    return `${baseUrl}/storage/${path.replace(/^\/+/, '')}`;
+    const baseUrl =
+      import.meta.env.VITE_API_BASE_URL?.replace(/\/api\/?$/, "") || "";
+    return `${baseUrl}/storage/${path.replace(/^\/+/, "")}`;
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-24 bg-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-        <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center mb-12">
-          Gallery
+        <h2 className="text-4xl font-bold text-gray-900 text-center mb-16">
+          Our Events
         </h2>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-          {images.map((img, idx) => (
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Sidebar */}
+          <div className="lg:w-1/4">
+            <div className="sticky top-24 space-y-2">
+              <h3 className="text-lg font-bold text-gray-900 mb-6 px-4">
+                Categories
+              </h3>
+              <button
+                onClick={() => setSelectedCategoryId(null)}
+                className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${
+                  selectedCategoryId === null
+                    ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
+                    : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
+                }`}
+              >
+                <span>All Collections</span>
+                <div
+                  className={`w-2 h-2 rounded-full transition-all ${selectedCategoryId === null ? "bg-white scale-125" : "bg-gray-300 group-hover:bg-brand-primary"}`}
+                />
+              </button>
+
+              {catsLoading
+                ? Array.from({ length: 4 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-full h-14 bg-gray-200 animate-pulse rounded-2xl"
+                    />
+                  ))
+                : categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategoryId(cat.id)}
+                      className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${
+                        selectedCategoryId === cat.id
+                          ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
+                          : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
+                      }`}
+                    >
+                      <span>{cat.name}</span>
+                      <div
+                        className={`w-2 h-2 rounded-full transition-all ${selectedCategoryId === cat.id ? "bg-white scale-125" : "bg-gray-300 group-hover:bg-brand-primary"}`}
+                      />
+                    </button>
+                  ))}
+            </div>
+          </div>
+
+          {/* Main Gallery Area */}
+          <div className="lg:w-3/4">
+            {imgsLoading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="aspect-[4/3] bg-gray-200 animate-pulse rounded-2xl"
+                  />
+                ))}
+              </div>
+            ) : images.length === 0 ? (
+              <div className="bg-white rounded-3xl p-12 text-center border-2 border-dashed border-gray-100">
+                <p className="text-gray-400 text-lg">
+                  No images found in this collection.
+                </p>
+              </div>
+            ) : (
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                {images.map((img, idx) => (
+                  <div
+                    key={img.id}
+                    className="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500"
+                    onClick={() => openLightbox(idx)}
+                  >
+                    <img
+                      src={fullUrl(img.image_path)}
+                      alt={img.name || `Gallery image ${idx}`}
+                      className="w-full h-auto rounded-2xl group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                      <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
+                        <ChevronRight className="w-6 h-6 text-brand-primary" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Lightbox Portal */}
+      {lightboxOpen &&
+        images.length > 0 &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 backdrop-blur-xl transition-all duration-300"
+            onClick={closeLightbox}
+          >
+            {/* Close Button */}
+            <button
+              className="absolute top-8 right-8 text-white/70 hover:text-white transition-all bg-white/10 hover:bg-white/20 p-3 rounded-full z-[10000]"
+              onClick={closeLightbox}
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            {/* Counter */}
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 text-white/90 font-bold tracking-widest text-lg z-[10000] bg-black/40 px-6 py-2 rounded-full border border-white/10">
+              {currentIndex + 1} / {images.length}
+            </div>
+
+            {/* Navigation Buttons */}
+            <button
+              className="hidden sm:flex absolute left-8 text-white/80 hover:text-white transition-all bg-white/10 hover:bg-white/20 p-4 rounded-full items-center justify-center z-[10000] backdrop-blur-md"
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+            >
+              <ChevronLeft className="w-10 h-10" />
+            </button>
+
+            <button
+              className="hidden sm:flex absolute right-8 text-white/80 hover:text-white transition-all bg-white/10 hover:bg-white/20 p-4 rounded-full items-center justify-center z-[10000] backdrop-blur-md"
+              onClick={(e) => {
+                e.stopPropagation();
+                nextImage();
+              }}
+            >
+              <ChevronRight className="w-10 h-10" />
+            </button>
+
+            {/* Main Image Container */}
             <div
-              key={img.id}
-              className="break-inside-avoid relative group cursor-pointer overflow-hidden rounded-xl"
-              onClick={() => openLightbox(idx)}
+              className="relative p-6 flex items-center justify-center z-[9999]"
+              onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={fullUrl(img.image_path)}
-                alt={img.name || `Gallery image ${idx}`}
-                className="w-full h-auto rounded-xl group-hover:scale-110 transition-transform duration-500 ease-in-out"
+                src={fullUrl(images[currentIndex].image_path)}
+                alt={
+                  images[currentIndex].name || `Gallery image ${currentIndex}`
+                }
+                className="max-h-[85vh] max-w-[90vw] object-contain select-none rounded-2xl animate-in zoom-in-95 duration-500 shadow-[0_0_80px_rgba(0,0,0,0.5)]"
               />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+            </div>
+
+            {/* Mobile Navigation Area */}
+            <div className="sm:hidden absolute inset-0 flex z-[9998]">
+              <div
+                className="w-1/2 h-full"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevImage();
+                }}
+              />
+              <div
+                className="w-1/2 h-full"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
+              />
+            </div>
+          </div>,
+          document.body,
+        )}
+    </section>
+  );
+}
+
+function Stats() {
+  const stats = [
+    { label: "Trainees", value: 15000, suffix: "+", icon: GraduationCap },
+    { label: "Expert Instructors", value: 60, prefix: "+", icon: Users },
+    { label: "Courses", value: 50, prefix: "+", icon: BookOpen },
+    { label: "Student Satisfaction", value: 98, suffix: "%", icon: Star },
+  ];
+
+  return (
+    <section className="py-16 bg-[#F8FBFF]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          {stats.map((stat, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm text-center flex flex-col items-center justify-center space-y-3 hover:shadow-md transition-shadow group"
+              data-aos="zoom-in"
+              data-aos-delay={idx * 100}
+            >
+              <div className="p-3 bg-brand-primary/10 rounded-xl group-hover:bg-brand-primary/20 transition-colors">
+                <stat.icon className="w-8 h-8 text-brand-primary" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold text-blue-900">
+                {stat.prefix}
+                <Counter end={stat.value} />
+                {stat.suffix}
+              </div>
+              <span className="text-gray-600 font-medium text-sm sm:text-base">{stat.label}</span>
             </div>
           ))}
         </div>
-
-        {/* Lightbox */}
-        {lightboxOpen && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm transition-opacity"
-            onClick={closeLightbox}
-          >
-            <button
-              className="cursor-pointer absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
-              onClick={closeLightbox}
-            >
-              <X className="w-10 h-10" />
-            </button>
-
-            <button
-              className="cursor-pointer absolute left-6 text-white/70 hover:text-white transition-colors p-2"
-              onClick={prevImage}
-            >
-              <ChevronLeft className="w-12 h-12" />
-            </button>
-
-            <button
-              className="cursor-pointer absolute right-6 text-white/70 hover:text-white transition-colors p-2"
-              onClick={nextImage}
-            >
-              <ChevronRight className="w-12 h-12" />
-            </button>
-
-            <img
-              src={fullUrl(images[currentIndex].image_path)}
-              alt={images[currentIndex].name || `Gallery image ${currentIndex}`}
-              className="max-h-[85vh] max-w-[85vw] object-contain select-none"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-        )}
       </div>
     </section>
   );
+}
+
+function Counter({ end, duration = 2000 }: { end: number; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const countRef = useRef<HTMLSpanElement>(null);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let startTime: number | null = null;
+    let animationFrame: number;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const currentCount = Math.min(
+        Math.floor((progress / duration) * end),
+        end
+      );
+
+      setCount(currentCount);
+
+      if (currentCount < end) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [hasStarted, end, duration]);
+
+  return <span ref={countRef}>{count.toLocaleString()}</span>;
 }
