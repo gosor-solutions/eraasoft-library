@@ -59,4 +59,7 @@ export const QUERY_KEYS = {
     list: (page?: number) => [...QUERY_KEYS.blogs.all(), "per page", page] as const,
     detail: (id: number) => [...QUERY_KEYS.blogs.all(),"by id", id] as const,
   },
+  branches: {
+    all: () => ["branches"] as const,
+  },
 } as const;

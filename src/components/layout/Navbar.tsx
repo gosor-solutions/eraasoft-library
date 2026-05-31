@@ -17,6 +17,7 @@ const guestNavLinks: NavLink[] = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/founder", label: "Founder" },
+  { to: "/branches", label: "Branches" },
   { to: "/blogs", label: "Blog" },
   {
     label: "Courses",
@@ -66,6 +67,7 @@ const authNavLinks: NavLink[] = [
   { to: "/topics", label: "Categories" },
   { to: "/about", label: "About" },
   { to: "/founder", label: "Founder" },
+  { to: "/branches", label: "Branches" },
   { to: "/contact-us", label: "Contact Us" },
 ];
 
