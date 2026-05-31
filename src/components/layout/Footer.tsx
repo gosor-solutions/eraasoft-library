@@ -9,7 +9,7 @@ import {
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
-import { FaChevronRight, FaPhone } from "react-icons/fa6";
+import { FaChevronLeft, FaPhone } from "react-icons/fa6";
 
 export function Footer() {
   const { data: settings } = useGetSettings();
@@ -39,12 +39,12 @@ export function Footer() {
     {
       icon: FaPhone,
       url: settings?.phone_1 ? `tel:${settings.phone_1}` : undefined,
-      label: "Phone 1",
+      label: `Phone ${settings?.phone_1}`,
     },
     {
       icon: FaPhone,
       url: settings?.phone_2 ? `tel:${settings.phone_2}` : undefined,
-      label: "Phone 2",
+      label: `Phone ${settings?.phone_2}`,
     },
     { icon: FaTelegramPlane, url: settings?.telegram, label: "Telegram" },
   ].filter((link) => link.url);
@@ -69,6 +69,7 @@ export function Footer() {
             links={[
               { to: "/", label: "Home" },
               { to: "/about", label: "About Us" },
+              { to: "/branches", label: "Branches" },
               { to: "/blogs", label: "Blog" },
               { to: "/courses", label: "Courses" },
               { to: "/contact-us", label: "Contact Us" },
@@ -142,14 +143,14 @@ function Links({
                 className="flex items-center gap-2 w-full h-full"
               >
                 {link.icon && <link.icon className="text-white shrink-0" size={14} />}
+                {!link.icon && <FaChevronLeft className="text-white shrink-0" size={14} />}
                 <span>{link.label}</span>
-                {!link.icon && <FaChevronRight className="text-white shrink-0 ml-auto" size={14} />}
               </a>
             ) : (
               <MyLink to={link.to} className="flex items-center gap-2 w-full h-full">
                 {link.icon && <link.icon className="text-white shrink-0" size={14} />}
+                {!link.icon && <FaChevronLeft className="text-white shrink-0" size={14} />}
                 <span>{link.label}</span>
-                {!link.icon && <FaChevronRight className="text-white shrink-0 ml-auto" size={14} />}
               </MyLink>
             )}
           </li>
