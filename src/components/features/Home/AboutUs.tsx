@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, GraduationCap, Star, BookOpen, Users, X } fr
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/shared/carousel";
 
 // Main AboutUs Component
 export function AboutUs() {
@@ -28,6 +29,8 @@ export function AboutUs() {
       </section>
 
       <Stats />
+
+      <FeatureShowcase />
 
       <div data-aos="fade-up">
         <Partnerships />
@@ -207,42 +210,58 @@ function Feedbacks() {
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 text-center mb-12 sm:mb-16">
           Feedbacks
         </h2>
-        <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 rtl"
-          dir="rtl"
-        >
-          {reviews.map((fb, index) => (
-            <div
-              key={fb.id}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              className="bg-white rounded-md rounded-br-[80px] shadow-lg p-6 sm:p-8 hover:shadow-xl transition-shadow duration-300"
-            >
-              <div className="flex flex-col items-center mb-4">
-                <div className="w-16 h-16 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold mb-3">
-                  {fb.reviewer_name.charAt(0)}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {fb.reviewer_name}
-                </h3>
-              </div>
-              <div className="flex justify-center gap-1 mb-4">
-                {[...Array(fb.rating)].map((_, idx) => (
-                  <svg
-                    key={idx}
-                    className="w-5 h-5 text-yellow-400"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-gray-600 text-sm text-center leading-relaxed font-medium">
-                "{fb.content}"
-              </p>
-            </div>
-          ))}
+        <div className="px-12" dir="rtl">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+              direction: "rtl",
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {reviews.map((fb, index) => (
+                <CarouselItem
+                  key={fb.id}
+                  className="md:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="p-2 h-full">
+                    <div
+                      data-aos="fade-up"
+                      data-aos-delay={index * 100}
+                      className="bg-white rounded-md rounded-br-[80px] shadow-lg p-6 sm:p-8 hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"
+                    >
+                      <div className="flex flex-col items-center mb-4">
+                        <div className="w-16 h-16 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold mb-3">
+                          {fb.reviewer_name.charAt(0)}
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          {fb.reviewer_name}
+                        </h3>
+                      </div>
+                      <div className="flex justify-center gap-1 mb-4">
+                        {[...Array(fb.rating)].map((_, idx) => (
+                          <svg
+                            key={idx}
+                            className="w-5 h-5 text-yellow-400"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        ))}
+                      </div>
+                      <p className="text-gray-600 text-sm text-center leading-relaxed font-medium flex-grow">
+                        "{fb.content}"
+                      </p>
+                    </div>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </div>
     </section>
@@ -344,11 +363,10 @@ function Gallery() {
               </h3>
               <button
                 onClick={() => setSelectedCategoryId(null)}
-                className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${
-                  selectedCategoryId === null
-                    ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
-                    : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
-                }`}
+                className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${selectedCategoryId === null
+                  ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
+                  : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
+                  }`}
               >
                 <span>All Collections</span>
                 <div
@@ -358,27 +376,26 @@ function Gallery() {
 
               {catsLoading
                 ? Array.from({ length: 4 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-full h-14 bg-gray-200 animate-pulse rounded-2xl"
-                    />
-                  ))
+                  <div
+                    key={i}
+                    className="w-full h-14 bg-gray-200 animate-pulse rounded-2xl"
+                  />
+                ))
                 : categories.map((cat) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategoryId(cat.id)}
-                      className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${
-                        selectedCategoryId === cat.id
-                          ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
-                          : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategoryId(cat.id)}
+                    className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${selectedCategoryId === cat.id
+                      ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
+                      : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
                       }`}
-                    >
-                      <span>{cat.name}</span>
-                      <div
-                        className={`w-2 h-2 rounded-full transition-all ${selectedCategoryId === cat.id ? "bg-white scale-125" : "bg-gray-300 group-hover:bg-brand-primary"}`}
-                      />
-                    </button>
-                  ))}
+                  >
+                    <span>{cat.name}</span>
+                    <div
+                      className={`w-2 h-2 rounded-full transition-all ${selectedCategoryId === cat.id ? "bg-white scale-125" : "bg-gray-300 group-hover:bg-brand-primary"}`}
+                    />
+                  </button>
+                ))}
             </div>
           </div>
 
@@ -590,4 +607,123 @@ function Counter({ end, duration = 2000 }: { end: number; duration?: number }) {
   }, [hasStarted, end, duration]);
 
   return <span ref={countRef}>{count.toLocaleString()}</span>;
+}
+
+const showcaseItems = [
+  {
+    title: "Innovative Learning Methods",
+    description: "We employ cutting-edge pedagogical techniques to ensure that our students not only learn English but master it for real-world applications.",
+    image: "/adult-course.jpg"
+  },
+  {
+    title: "Expert Guidance",
+    description: "Our instructors are more than just teachers; they are mentors dedicated to your linguistic growth and professional success.",
+    image: "/kids-course.jpg"
+  },
+  {
+    title: "Comprehensive Resources",
+    description: "Access a vast library of high-fidelity materials, structured coursework, and interactive digital tools designed for excellence.",
+    image: "/training.png"
+  },
+  {
+    title: "Interactive Ecosystem",
+    description: "Engage with a sophisticated learning environment that bridges the gap between theory and practical fluency.",
+    image: "/hero.png"
+  },
+  {
+    title: "Proven Results",
+    description: "Our methodology is built on years of expertise, delivering measurable improvements in fluency and confidence.",
+    image: "/course-hero.jpg"
+  }
+];
+
+function FeatureShowcase() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const next = () => setActiveIndex((prev) => (prev + 1) % showcaseItems.length);
+  const prev = () => setActiveIndex((prev) => (prev - 1 + showcaseItems.length) % showcaseItems.length);
+
+  const visibleIndices = [
+    activeIndex,
+    (activeIndex + 1) % showcaseItems.length,
+    (activeIndex + 2) % showcaseItems.length
+  ];
+
+  return (
+    <section className="py-24 bg-white border-t border-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          {/* Left Column: Preview Image */}
+          <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-gray-100 group" data-aos="fade-right">
+            <img
+              key={activeIndex}
+              src={showcaseItems[activeIndex].image}
+              alt={showcaseItems[activeIndex].title}
+              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 animate-in fade-in zoom-in-95"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          </div>
+
+          {/* Right Column */}
+          <div className="flex flex-col gap-10" data-aos="fade-left">
+            {/* Top Part: Title and Paragraph */}
+            <div className="space-y-4">
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 transition-all duration-300">
+                {showcaseItems[activeIndex].title}
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed max-w-xl">
+                {showcaseItems[activeIndex].description}
+              </p>
+            </div>
+
+            {/* Bottom Part: 3 Thumbnails */}
+            <div className="space-y-8">
+              <div className="flex gap-4">
+                {visibleIndices.map((idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`relative w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden transition-all duration-300 border-4 ${idx === activeIndex ? "border-brand-primary scale-105 shadow-lg" : "border-transparent opacity-60 hover:opacity-100"
+                      }`}
+                  >
+                    <img
+                      src={showcaseItems[idx].image}
+                      className="w-full h-full object-cover"
+                      alt="Thumbnail"
+                    />
+                  </button>
+                ))}
+              </div>
+
+              {/* Pagination Controls */}
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  onClick={prev}
+                  className="p-3 rounded-full bg-gray-50 text-gray-600 hover:bg-brand-primary hover:text-white transition-all shadow-sm"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <div className="flex gap-2">
+                  {showcaseItems.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveIndex(idx)}
+                      className={`h-2 rounded-full transition-all duration-300 ${idx === activeIndex ? "w-8 bg-brand-primary" : "w-2 bg-gray-200 hover:bg-gray-300"
+                        }`}
+                    />
+                  ))}
+                </div>
+                <button
+                  onClick={next}
+                  className="p-3 rounded-full bg-gray-50 text-gray-600 hover:bg-brand-primary hover:text-white transition-all shadow-sm"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

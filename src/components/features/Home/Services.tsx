@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 // Main Services Component
 export function ServicesSection() {
   return (
@@ -70,11 +72,18 @@ function ServiceCard({
   service: (typeof services)[number];
   index: number;
 }) {
+  const navigate = useNavigate();
+  const handleCardClick = () => {
+    if (service.to) {
+      navigate(service.to);
+    }
+  };
   return (
     <div
       data-aos="fade-up"
       data-aos-delay={index * 100}
-      className="group relative rounded-tl-3xl rounded-br-3xl rounded-tr-[78px] rounded-bl-[78px] overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+      onClick={handleCardClick}
+      className="group cursor-pointer relative rounded-tl-3xl rounded-br-3xl rounded-tr-[78px] rounded-bl-[78px] overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
     >
       {/* Background Image */}
       <div className="relative">
@@ -114,6 +123,7 @@ const services = [
     description: "Premium, in-person training programs with our top trainers.",
     image: "/training.png",
     icon: "🎓",
+    to: "/training"
   },
   {
     id: 2,
@@ -121,6 +131,7 @@ const services = [
     description: "Engaging, foundational programs built for young learners.",
     image: "/kids-course.jpg",
     icon: "👦",
+    to: "/courses?type=1"
   },
   {
     id: 3,
@@ -128,6 +139,7 @@ const services = [
     description: "Professional-grade curriculum designed for career growth.",
     image: "/adult-course.jpg",
     icon: "👨",
+    to: "/courses?type=0"
   },
   {
     id: 4,
@@ -135,5 +147,6 @@ const services = [
     description: "Immersive, face-to-face programs for maximum engagement.",
     image: "/offline.jpg",
     icon: "👨‍💼",
+    to: "/courses?type=2"
   },
 ];
