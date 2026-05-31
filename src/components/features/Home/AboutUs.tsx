@@ -208,7 +208,7 @@ function Feedbacks() {
     <section className="py-20 bg-[#E9F2FB] to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 text-center mb-12 sm:mb-16">
-          Feedbacks
+          Success Stories
         </h2>
         <div className="px-12" dir="rtl">
           <Carousel
@@ -612,27 +612,27 @@ function Counter({ end, duration = 2000 }: { end: number; duration?: number }) {
 const showcaseItems = [
   {
     title: "Innovative Learning Methods",
-    description: "We employ cutting-edge pedagogical techniques to ensure that our students not only learn English but master it for real-world applications.",
+    description: "Cutting-edge pedagogical techniques ensure students master English for real-world professional and academic applications.",
     image: "/adult-course.jpg"
   },
   {
     title: "Expert Guidance",
-    description: "Our instructors are more than just teachers; they are mentors dedicated to your linguistic growth and professional success.",
+    description: "Expert mentors dedicated to your linguistic growth, providing guidance for professional success and confidence.",
     image: "/kids-course.jpg"
   },
   {
     title: "Comprehensive Resources",
-    description: "Access a vast library of high-fidelity materials, structured coursework, and interactive digital tools designed for excellence.",
+    description: "Access high-fidelity materials, structured coursework, and interactive digital tools designed for absolute learning excellence.",
     image: "/training.png"
   },
   {
     title: "Interactive Ecosystem",
-    description: "Engage with a sophisticated learning environment that bridges the gap between theory and practical fluency.",
+    description: "Engage with a sophisticated learning environment bridging the gap between theory and practical fluency.",
     image: "/hero.png"
   },
   {
     title: "Proven Results",
-    description: "Our methodology is built on years of expertise, delivering measurable improvements in fluency and confidence.",
+    description: "Years of expertise delivering measurable improvements in fluency and professional confidence for every student.",
     image: "/course-hero.jpg"
   }
 ];
@@ -646,51 +646,61 @@ function FeatureShowcase() {
   const visibleIndices = [
     activeIndex,
     (activeIndex + 1) % showcaseItems.length,
-    (activeIndex + 2) % showcaseItems.length
+    (activeIndex + 2) % showcaseItems.length,
+    (activeIndex + 3) % showcaseItems.length
   ];
 
   return (
     <section className="py-24 bg-white border-t border-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left Column: Preview Image */}
-          <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-gray-100 group" data-aos="fade-right">
+          {/* Left Column: Preview Image (Portrait) */}
+          <div className="relative aspect-[3/4] max-w-md mx-auto lg:mx-0 rounded-3xl overflow-hidden shadow-2xl bg-gray-100 group" data-aos="fade-right">
             <img
               key={activeIndex}
               src={showcaseItems[activeIndex].image}
               alt={showcaseItems[activeIndex].title}
               className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 animate-in fade-in zoom-in-95"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6 sm:p-10 pt-32">
+              <p className="text-white text-base sm:text-lg md:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-500 font-medium text-center">
+                {showcaseItems[activeIndex].description}
+              </p>
+            </div>
           </div>
 
           {/* Right Column */}
           <div className="flex flex-col gap-10" data-aos="fade-left">
-            {/* Top Part: Title and Paragraph */}
+            {/* Top Part: Title */}
             <div className="space-y-4">
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 transition-all duration-300">
                 {showcaseItems[activeIndex].title}
               </h2>
-              <p className="text-gray-600 text-lg leading-relaxed max-w-xl">
-                {showcaseItems[activeIndex].description}
-              </p>
             </div>
 
-            {/* Bottom Part: 3 Thumbnails */}
+            {/* Bottom Part: 4 Thumbnail Cards */}
             <div className="space-y-8">
-              <div className="flex gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {visibleIndices.map((idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveIndex(idx)}
-                    className={`relative w-24 h-24 sm:w-32 sm:h-32 rounded-2xl overflow-hidden transition-all duration-300 border-4 ${idx === activeIndex ? "border-brand-primary scale-105 shadow-lg" : "border-transparent opacity-60 hover:opacity-100"
+                    className={`group flex flex-col gap-3 p-3 rounded-2xl transition-all duration-300 text-left border-2 ${idx === activeIndex
+                      ? "bg-brand-primary/5 border-brand-primary shadow-md scale-105"
+                      : "bg-gray-50 border-transparent opacity-70 hover:opacity-100 hover:bg-white hover:shadow-sm"
                       }`}
                   >
-                    <img
-                      src={showcaseItems[idx].image}
-                      className="w-full h-full object-cover"
-                      alt="Thumbnail"
-                    />
+                    <div className="relative aspect-square rounded-xl overflow-hidden">
+                      <img
+                        src={showcaseItems[idx].image}
+                        className="w-full h-full object-cover"
+                        alt="Thumbnail"
+                      />
+                    </div>
+                    <p className={`text-[10px] sm:text-xs leading-tight line-clamp-4 font-medium transition-colors ${idx === activeIndex ? "text-brand-primary" : "text-gray-500"
+                      }`}>
+                      {showcaseItems[idx].description}
+                    </p>
                   </button>
                 ))}
               </div>
