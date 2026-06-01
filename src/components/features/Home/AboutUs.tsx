@@ -351,7 +351,7 @@ function Gallery() {
     <section className="py-24 bg-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
         <h2 className="text-4xl font-bold text-gray-900 text-center mb-16">
-          Our Events
+          Our Gallery
         </h2>
 
         <div className="flex flex-col lg:flex-row gap-12">
@@ -611,29 +611,24 @@ function Counter({ end, duration = 2000 }: { end: number; duration?: number }) {
 
 const showcaseItems = [
   {
-    title: "Innovative Learning Methods",
-    description: "Cutting-edge pedagogical techniques ensure students master English for real-world professional and academic applications.",
-    image: "/adult-course.jpg"
+    title: "Forging global excellence: A landmark international partnership aimed at elevating Engli-Vision's pedagogical standards and expanding world-class learning opportunities.",
+    image: "/events/1.jpg"
   },
   {
-    title: "Expert Guidance",
-    description: "Expert mentors dedicated to your linguistic growth, providing guidance for professional success and confidence.",
-    image: "/kids-course.jpg"
+    title: "Mastering the IELTS: Staying ahead with the latest exam updates and expert strategies to ensure our students achieve their target scores for global success.",
+    image: "/events/2.jpg"
   },
   {
-    title: "Comprehensive Resources",
-    description: "Access high-fidelity materials, structured coursework, and interactive digital tools designed for absolute learning excellence.",
-    image: "/training.png"
+    title: "Nurturing young minds: Proudly announcing our comprehensive kids' diplomas, designed to build a solid linguistic foundation through interactive immersion.",
+    image: "/events/3.jpg"
   },
   {
-    title: "Interactive Ecosystem",
-    description: "Engage with a sophisticated learning environment bridging the gap between theory and practical fluency.",
-    image: "/hero.png"
+    title: "Empowered change makers: A highlight from the TED Talk event, where Engli-Vision visionaries share insights on language as a catalyst for transformation.",
+    image: "/events/4.jpg"
   },
   {
-    title: "Proven Results",
-    description: "Years of expertise delivering measurable improvements in fluency and professional confidence for every student.",
-    image: "/course-hero.jpg"
+    title: "Visionary leadership in the spotlight: An exclusive TV interview featuring Dr. Muhammed Khalil Moussa discussing the future of innovative English education.",
+    image: "/events/5.jpg"
   }
 ];
 
@@ -647,85 +642,97 @@ function FeatureShowcase() {
     activeIndex,
     (activeIndex + 1) % showcaseItems.length,
     (activeIndex + 2) % showcaseItems.length,
-    (activeIndex + 3) % showcaseItems.length
   ];
 
   return (
     <section className="py-24 bg-white border-t border-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left Column: Preview Image (Portrait) */}
-          <div className="relative aspect-[3/4] max-w-md mx-auto lg:mx-0 rounded-3xl overflow-hidden shadow-2xl bg-gray-100 group" data-aos="fade-right">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Column: Preview Image */}
+          <div className="lg:col-span-5 relative aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-2xl group" data-aos="fade-right">
             <img
               key={activeIndex}
               src={showcaseItems[activeIndex].image}
-              alt={showcaseItems[activeIndex].title}
-              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 animate-in fade-in zoom-in-95"
+              alt="Showcase"
+              className="w-full h-full object-cover transition-all duration-700 animate-in fade-in zoom-in-95"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-6 sm:p-10 pt-32">
-              <p className="text-white text-base sm:text-lg md:text-xl leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-500 font-medium text-center">
-                {showcaseItems[activeIndex].description}
+            {/* Counter Badge */}
+            <div className="absolute top-6 left-6 bg-black/40 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+              {activeIndex + 1}/{showcaseItems.length}
+            </div>
+            {/* Bottom Gradient & Text */}
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#205b7a] via-[#205b7a]/80 to-transparent p-8 pt-32">
+              <p className="text-white text-lg sm:text-xl font-bold leading-snug animate-in fade-in slide-in-from-bottom-4 duration-500 text-center">
+                {showcaseItems[activeIndex].title}
               </p>
             </div>
           </div>
 
           {/* Right Column */}
-          <div className="flex flex-col gap-10" data-aos="fade-left">
-            {/* Top Part: Title */}
-            <div className="space-y-4">
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 transition-all duration-300">
-                {showcaseItems[activeIndex].title}
+          <div className="lg:col-span-7 flex flex-col gap-10" data-aos="fade-left">
+            {/* Header Text */}
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#145374] mb-5 leading-tight">
+                Engli-Vision Partnerships & Educational Events
               </h2>
+              <p className="text-gray-600 leading-relaxed text-base">
+                Discover the latest partnerships, educational events, and strategic collaborations by Engli-Vision, reflecting our trusted role in developing immersive English language learning experiences for students and institutions worldwide.
+              </p>
             </div>
 
-            {/* Bottom Part: 4 Thumbnail Cards */}
-            <div className="space-y-8">
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {visibleIndices.map((idx) => (
+            {/* Thumbnails (3 items) */}
+            <div className="grid grid-cols-3 gap-5">
+              {visibleIndices.map((idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`group flex flex-col bg-white rounded-2xl overflow-hidden transition-all duration-300 text-center shadow-[0_4px_20px_rgb(0,0,0,0.05)] hover:shadow-lg ${idx === activeIndex
+                    ? "ring-2 ring-brand-primary"
+                    : ""
+                    }`}
+                >
+                  <div className="relative aspect-[4/3] w-full overflow-hidden">
+                    <img
+                      src={showcaseItems[idx].image}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      alt="Thumbnail"
+                    />
+                  </div>
+                  <div className="p-4 flex-grow flex items-center justify-center">
+                    <p className="text-[11px] sm:text-xs font-bold text-gray-500 line-clamp-4 leading-relaxed group-hover:text-gray-800 transition-colors">
+                      {showcaseItems[idx].title}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex items-center justify-between mt-2">
+              {/* Dots */}
+              <div className="flex gap-2">
+                {showcaseItems.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveIndex(idx)}
-                    className={`group flex flex-col gap-3 p-3 rounded-2xl transition-all duration-300 text-left border-2 ${idx === activeIndex
-                      ? "bg-brand-primary/5 border-brand-primary shadow-md scale-105"
-                      : "bg-gray-50 border-transparent opacity-70 hover:opacity-100 hover:bg-white hover:shadow-sm"
+                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeIndex ? "w-8 bg-brand-primary" : "w-6 bg-gray-200 hover:bg-gray-300"
                       }`}
-                  >
-                    <div className="relative aspect-square rounded-xl overflow-hidden">
-                      <img
-                        src={showcaseItems[idx].image}
-                        className="w-full h-full object-cover"
-                        alt="Thumbnail"
-                      />
-                    </div>
-                    <p className={`text-[10px] sm:text-xs leading-tight line-clamp-4 font-medium transition-colors ${idx === activeIndex ? "text-brand-primary" : "text-gray-500"
-                      }`}>
-                      {showcaseItems[idx].description}
-                    </p>
-                  </button>
+                  />
                 ))}
               </div>
 
-              {/* Pagination Controls */}
-              <div className="flex items-center justify-between gap-3">
+              {/* Arrows */}
+              <div className="flex gap-3">
                 <button
                   onClick={prev}
-                  className="p-3 rounded-full bg-gray-50 text-gray-600 hover:bg-brand-primary hover:text-white transition-all shadow-sm"
+                  className="p-3 rounded-full border border-gray-100 bg-white text-brand-primary hover:bg-brand-primary/10
+                   transition-all shadow-sm flex items-center justify-center"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-                <div className="flex gap-2">
-                  {showcaseItems.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveIndex(idx)}
-                      className={`h-2 rounded-full transition-all duration-300 ${idx === activeIndex ? "w-8 bg-brand-primary" : "w-2 bg-gray-200 hover:bg-gray-300"
-                        }`}
-                    />
-                  ))}
-                </div>
                 <button
                   onClick={next}
-                  className="p-3 rounded-full bg-gray-50 text-gray-600 hover:bg-brand-primary hover:text-white transition-all shadow-sm"
+                  className="p-3 rounded-full border border-gray-100 bg-white text-brand-primary hover:bg-brand-primary/10 transition-all shadow-sm flex items-center justify-center"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
