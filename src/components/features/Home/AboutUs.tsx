@@ -368,7 +368,7 @@ function Gallery() {
                   : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
                   }`}
               >
-                <span>All Collections</span>
+                <span>All Events</span>
                 <div
                   className={`w-2 h-2 rounded-full transition-all ${selectedCategoryId === null ? "bg-white scale-125" : "bg-gray-300 group-hover:bg-brand-primary"}`}
                 />
