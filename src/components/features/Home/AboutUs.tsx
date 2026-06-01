@@ -150,7 +150,7 @@ function Partnerships() {
           }
         }
         .animate-infinite-slide {
-          animation: infinite-slide 35s linear infinite;
+          animation: infinite-slide 45s linear infinite;
         }
         .animate-infinite-slide:hover {
           animation-play-state: paused;
@@ -358,9 +358,9 @@ function Gallery() {
           {/* Sidebar */}
           <div className="lg:w-1/4">
             <div className="sticky top-24 space-y-2">
-              <h3 className="text-lg font-bold text-gray-900 mb-6 px-4">
+              {/* <h3 className="text-lg font-bold text-gray-900 mb-6 px-4">
                 Categories
-              </h3>
+              </h3> */}
               <button
                 onClick={() => setSelectedCategoryId(null)}
                 className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${selectedCategoryId === null
