@@ -136,7 +136,7 @@ function Partnerships() {
 
   if (partnerImages.length === 0) return null;
 
-  const logos = Array.from({ length: repeatCount * 2 }, () => partnerImages).flat();
+  const logos = Array.from({ length: repeatCount * 3 }, () => partnerImages).flat();
 
   return (
     <section className="py-16 bg-gray-50/50 overflow-hidden">
@@ -146,11 +146,11 @@ function Partnerships() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-300%));
+            transform: translateX(calc(-200%));
           }
         }
         .animate-infinite-slide {
-          animation: infinite-slide 20s linear infinite;
+          animation: infinite-slide 35s linear infinite;
         }
         .animate-infinite-slide:hover {
           animation-play-state: paused;
@@ -174,7 +174,7 @@ function Partnerships() {
                 key={`${logo.id}-${idx}`}
                 src={logo.image_path}
                 alt={logo.name}
-                className="h-12 sm:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
+                className="h-20 sm:h-32 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
               />
             ))}
           </div>
