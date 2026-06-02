@@ -290,6 +290,13 @@ function Gallery() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
     null,
   );
+  const galleryRef = useRef<HTMLElement>(null);
+
+  const handleCategorySelect = (id: number | null) => {
+    setSelectedCategoryId(id);
+    galleryRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const { data: categories = [], isLoading: catsLoading } =
     useGetGalleryCategories();
   const { data: images = [], isLoading: imgsLoading } = useGetCompanyImages(
@@ -348,7 +355,7 @@ function Gallery() {
   };
 
   return (
-    <section className="py-24 bg-gray-50/50">
+    <section ref={galleryRef} className="py-24 bg-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
         <h2 className="text-4xl font-bold text-gray-900 text-center mb-16">
           Our Gallery
@@ -362,7 +369,7 @@ function Gallery() {
                 Categories
               </h3> */}
               <button
-                onClick={() => setSelectedCategoryId(null)}
+                onClick={() => handleCategorySelect(null)}
                 className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${selectedCategoryId === null
                   ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
                   : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
@@ -384,7 +391,7 @@ function Gallery() {
                 : categories.map((cat) => (
                   <button
                     key={cat.id}
-                    onClick={() => setSelectedCategoryId(cat.id)}
+                    onClick={() => handleCategorySelect(cat.id)}
                     className={`w-full text-left px-6 py-4 rounded-2xl font-semibold transition-all duration-300 flex items-center justify-between group ${selectedCategoryId === cat.id
                       ? "bg-brand-primary text-white shadow-lg shadow-brand-primary/20 scale-[1.02]"
                       : "bg-white text-gray-600 hover:bg-white hover:shadow-md border border-transparent hover:border-gray-100"
