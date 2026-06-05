@@ -1,11 +1,12 @@
 import { Banner } from "@/components/shared/Banner";
-import { MapPin, Phone } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useGetBranches } from "@/hooks/queries/useBranchQueries";
 import { Loading } from "@/components/shared/Loading";
 import { NoData } from "@/components/shared/NoData";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function BranchesPage() {
   const { data: branches, isLoading } = useGetBranches();
@@ -47,16 +48,30 @@ export default function BranchesPage() {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {branches.map((branch, index) => (
             <div
               key={branch.id}
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
-              <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col sm:flex-row group border border-gray-100 cursor-pointer">
+              <div className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col group border border-gray-100">
+                {/* Map Section */}
+                <div className="h-64 w-full bg-gray-200">
+                  <iframe
+                    title={`${branch.name} location`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    src={branch.location_url}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+
                 {/* Content Section */}
-                <div className="px-14 py-6 flex flex-col justify-between">
+                <div className="p-8 flex flex-col justify-between flex-1">
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-brand-primary transition-colors duration-300">
                       {branch.name}
@@ -69,8 +84,15 @@ export default function BranchesPage() {
                       </div>
 
                       <div className="flex items-center gap-3 text-gray-600">
-                        <Phone className="shrink-0 text-brand-primary w-5 h-5" />
-                        <span className="text-base font-medium">{branch.phone}</span>
+                        <FaWhatsapp className="shrink-0 text-green-500 w-5 h-5" />
+                        <a
+                          href={`https://wa.me/${branch.phone.replace(/\D/g, "")}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-base font-medium flex items-center gap-2 hover:text-brand-primary transition-colors"
+                        >
+                          {branch.phone}
+                        </a>
                       </div>
                     </div>
                   </div>
