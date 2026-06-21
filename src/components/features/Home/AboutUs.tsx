@@ -27,17 +27,19 @@ export function AboutUs() {
           </div>
         </div>
       </section>
-
-      <Stats />
-
-      <FeatureShowcase />
-
       <div data-aos="fade-up">
         <Partnerships />
       </div>
       <div data-aos="zoom-in">
         <VideoSection />
       </div>
+
+      <Stats />
+      <div data-aos="fade-up">
+        <Feedbacks />
+      </div>
+
+      <FeatureShowcase />
       <div data-aos="fade-up">
         <Gallery />
       </div>
@@ -46,9 +48,6 @@ export function AboutUs() {
           <Credits />
         </div>
       )}
-      <div data-aos="fade-up">
-        <Feedbacks />
-      </div>
     </div>
   );
 }
