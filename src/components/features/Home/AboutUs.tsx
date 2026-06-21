@@ -149,7 +149,7 @@ function Partnerships() {
           }
         }
         .animate-infinite-slide {
-          animation: infinite-slide 45s linear infinite;
+          animation: infinite-slide 60s linear infinite;
         }
         .animate-infinite-slide:hover {
           animation-play-state: paused;
