@@ -8,6 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/shared/carousel";
+import { ServicesSection } from "./Services";
 
 // Main AboutUs Component
 export function AboutUs() {
@@ -33,6 +34,7 @@ export function AboutUs() {
       <div data-aos="zoom-in">
         <VideoSection />
       </div>
+      <ServicesSection />
 
       <Stats />
       <div data-aos="fade-up">
