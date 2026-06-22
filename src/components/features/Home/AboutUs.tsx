@@ -2,7 +2,7 @@ import { Circle } from "@/components/shared/Circle";
 import { Credits } from "./Credits";
 import { YoutubeEmbed } from "@/components/shared/youtubeEmbed";
 import { useGetCompanyImages, useGetCompanyReviews, useGetGalleryCategories, useGetPartnerCompanyImages } from "@/hooks/queries/useAboutUsQueries";
-import { useGetSettings } from "@/hooks/queries/useSettingsQueries";
+import { useGetOwnerSettings, useGetSettings } from "@/hooks/queries/useSettingsQueries";
 import { ChevronLeft, ChevronRight, GraduationCap, Star, BookOpen, Users, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -13,6 +13,7 @@ import { ServicesSection } from "./Services";
 // Main AboutUs Component
 export function AboutUs() {
   const isPage = useLocation().pathname === "/about";
+  const isHome = !isPage;
 
   return (
     <div className="bg-white">
@@ -28,23 +29,30 @@ export function AboutUs() {
           </div>
         </div>
       </section>
+      {isPage && (
+        <div data-aos="fade-up">
+          <FounderSection />
+        </div>
+      )}
       <div data-aos="fade-up">
         <Partnerships />
       </div>
       <div data-aos="zoom-in">
         <VideoSection />
       </div>
-      <ServicesSection />
 
-      <Stats />
+      {isHome && <ServicesSection />}
+
+      {isHome && <Stats />}
       <div data-aos="fade-up">
         <Feedbacks />
       </div>
 
-      <FeatureShowcase />
-      <div data-aos="fade-up">
+
+      {isHome && <FeatureShowcase />}
+      {isHome && <div data-aos="fade-up">
         <Gallery />
-      </div>
+      </div>}
       {isPage && (
         <div data-aos="fade-up">
           <Credits />
@@ -97,6 +105,57 @@ function AboutImage() {
         />
       </div>
     </div>
+  );
+}
+
+function FounderSection() {
+
+  const { data: owner } = useGetOwnerSettings();
+
+  if (!owner) {
+    return null;
+  }
+
+
+  return (
+    <section className="py-20 bg-gray-50/50 px-4 sm:px-8 lg:px-16 overflow-hidden border-t border-b border-gray-100">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Text Content */}
+          <div className="lg:col-span-7 space-y-6 order-2" data-aos="fade-left">
+            <div className="inline-block px-4 py-1.5 bg-brand-secondary text-brand-primary rounded-full text-sm font-bold tracking-wider uppercase">
+              Vision & Leadership
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
+              Our Founder
+            </h2>
+            <div className="space-y-4 text-gray-600 text-lg leading-relaxed">
+              <p>
+                Driven by a passion for education and a vision of global empowerment, our founder established Engli-Vision to bridge the gap in language learning. With years of pedagogical experience and innovative curriculum design, they have transformed how students achieve English mastery.
+              </p>
+              <p>
+                Under their inspiring leadership, the academy has grown into a premier hub for language acquisition. Their dedication to excellence, interactive teaching methodologies, and high-fidelity educational content continues to guide our mission and empower professionals, students, and children across the region.
+              </p>
+            </div>
+          </div>
+
+          {/* Image Content */}
+          <div className="lg:col-span-5 order-1" data-aos="fade-right">
+            <div className="relative">
+              <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-brand-secondary/40 rounded-full blur-2xl"></div>
+              <div className="absolute -top-6 -right-6 w-48 h-48 bg-blue-100 rounded-full blur-2xl"></div>
+              <div className="relative rounded-3xl overflow-hidden shadow-xl border border-gray-100/50 bg-white p-4">
+                <img
+                  src={owner.owner_image || "/user-placeholder.png"}
+                  alt="Our Founder"
+                  className="w-full h-auto rounded-2xl object-cover aspect-[4/5] bg-gray-100"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
