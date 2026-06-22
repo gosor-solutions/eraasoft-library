@@ -1,9 +1,18 @@
 import { useEffect } from "react";
-import { useGetSettings } from "../../hooks/queries/useSettingsQueries";
+import { useGetOwnerSettings, useGetSettings } from "../../hooks/queries/useSettingsQueries";
 import { Loading } from "../shared/Loading";
+import { useGetCompanyImages, useGetCompanyReviews, useGetGalleryCategories, useGetPartnerCompanyImages } from "@/hooks/queries/useAboutUsQueries";
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
-  const { data: settings, isLoading } = useGetSettings();
+  const { data: settings, isLoading: settingsLoading } = useGetSettings();
+  const { isLoading: ownerLoading } = useGetOwnerSettings();
+  const { isLoading: reviewsLoading } = useGetCompanyReviews();
+  const { isLoading: companyImagesLoading } = useGetCompanyImages();
+  const { isLoading: galleryCategoriesLoading } = useGetGalleryCategories();
+  const { isLoading: partnerCompanyImagesLoading } = useGetPartnerCompanyImages();
+
+  const loading = settingsLoading || ownerLoading || reviewsLoading || companyImagesLoading || galleryCategoriesLoading || partnerCompanyImagesLoading;
+
 
   useEffect(() => {
     if (settings) {
@@ -11,36 +20,16 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       if (settings.primary_color) {
         root.style.setProperty("--color-brand-primary", settings.primary_color);
       }
-      // if (settings.secondary_color) {
-      //   root.style.setProperty(
-      //     "--color-brand-secondary",
-      //     settings.secondary_color,
-      //   );
-      // }
     }
   }, [settings]);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loading fullScreen/>
+        <Loading fullScreen />
       </div>
     );
   }
-
-  // if (isError) {
-  //   return (
-  //     <div className="flex flex-col items-center justify-center min-h-screen">
-  //       <p className="text-red-500 mb-4">Failed to load application settings.</p>
-  //       <button
-  //         onClick={() => window.location.reload()}
-  //         className="px-4 py-2 bg-brand-primary text-white rounded-lg"
-  //       >
-  //         Retry
-  //       </button>
-  //     </div>
-  //   );
-  // }
 
   return <>{children}</>;
 }
